@@ -67,7 +67,7 @@ Route::group(['prefix' => 'dash', 'as' => 'dash'], function () {
     Route::resource('admin/sucursales', 'SucursalesController');
     Route::resource('admin/cupones', 'CuponesController');
     Route::resource('admin/ofertasimg', 'ImgOfertasController');
-    Route::resource('admin/ofertaspdf', 'OfertasPdfController');
+    Route::resource('admin/ofertaspdf', 'PdfOfertasController');
     
 });
 Auth::routes();

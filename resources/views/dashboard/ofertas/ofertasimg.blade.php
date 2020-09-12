@@ -530,7 +530,7 @@ var resize2 = $('#Edit-demo').croppie({
 //Cargar datos en el formulario
   $(".btnEditar").click(function(){ 
 
-$("#id_Edit").val($(this).data('id'));
+$("#idEdit").val($(this).data('id'));
 $("#id_userEdit").val($(this).data('id_user'));
 $("#nombreEdit").val($(this).data('nombre'));
 
