@@ -77,7 +77,10 @@ class ImgOfertasController extends Controller
         //dd($id);
 
         $borrar = Ofertasimg::find($id);
+        $imagen =$borrar->nombre;
 
+        unlink(public_path('/ofertas/img/'.$imagen)); 
+        
         $borrar->delete();
         return back()->with('Listo','La imagen fue eliminada con exito.');
     } 

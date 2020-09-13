@@ -124,6 +124,11 @@ class ProductosController extends Controller
         //dd($id);
         $Dprod = Producto::find($id);
 
+        $imagen = $Dprod->imagen;
+      
+            unlink(public_path('/img/'.$imagen)); 
+
+
         $Dprod->delete();
         return back()->with('Listo','El producto fue eliminado con exito.');
     } 

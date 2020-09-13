@@ -7,7 +7,7 @@
 
 
 <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm ml-auto mr-auto" 
-style="float: right" data-toggle="modal" data-target="#modalAgregarC"><i class="fas fa-plus fa-sm text-white-50"></i> Nueva Categoria</a>
+style="float: right" data-toggle="modal" data-target="#modalAgregarC"><i class="fas fa-plus fa-sm text-white-50"></i> Nuevo Rol</a>
 <h1 class="h3 mb-2 text-gray-800">Roles</h1>
 <p class="mb-4">Bienvenido a roles.</p>
 
