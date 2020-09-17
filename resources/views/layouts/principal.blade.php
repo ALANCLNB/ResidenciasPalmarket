@@ -10,7 +10,7 @@
         <!-- Font Awesome icons (free version)-->
         <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js" crossorigin="anonymous"></script>
         {{-- PDF reader --}}
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.3.200/pdf_viewer.js"></script>
+        {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.3.200/pdf_viewer.js"></script> --}}
         <!-- Google fonts-->
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
         <link href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
@@ -63,6 +63,8 @@
                     <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
                 </div>
                 <div class="row text-center">
+
+                
                     <div class="col-md-4">
                         <span class="fa-stack fa-4x">
                             <i class="fas fa-circle fa-stack-2x text-primary"></i>
@@ -71,6 +73,9 @@
                         <h4 class="my-3">E-Commerce</h4>
                         <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
                     </div>
+                  
+
+
                     <div class="col-md-4">
                         <span class="fa-stack fa-4x">
                             <i class="fas fa-circle fa-stack-2x text-primary"></i>
@@ -102,105 +107,24 @@
                         
 
                     {{-- DIVICION DE DEPARTAMENTOS--}}
-                    {{-- FRUTAS Y VERDURAS --}}
-                    <div class="col-lg-4 col-sm-6 mb-4">
-                        <div class="departamentos-item">
-                            <a class="departamentos-link" data-toggle="modal" href="#departamentosModal1">
-                                <div class="departamentos-hover">
-                                    <div class="departamentos-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                    @foreach ($categoria as $item)
+                        <div class="col-lg-4 col-sm-6 mb-4">
+                            <div class="departamentos-item">
+                            <a class="departamentos-link"  href="/products/{{$item->id}}">
+                                    <div class="departamentos-hover">
+                                        <div class="departamentos-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                                    </div>
+                                    <img class="img-fluid" src="{{asset('/principal-archivos/assets/img/departamentos/FRUTERIA.png')}}" alt="" />
+                                </a>
+                                <div class="departamentos-caption">
+                                    <div class="departamentos-caption-heading">{{$item->descripcion}}</div>
+                                    {{-- <div class="departamentos-caption-subheading text-muted">Illustration</div> --}}
                                 </div>
-                                <img class="img-fluid" src="{{asset('/principal-archivos/assets/img/departamentos/FRUTERIA.png')}}" alt="" />
-                            </a>
-                            <div class="departamentos-caption">
-                                <div class="departamentos-caption-heading">FRUTAS Y VERDURAS</div>
-                                {{-- <div class="departamentos-caption-subheading text-muted">Illustration</div> --}}
                             </div>
                         </div>
-                    </div>
-                    {{-- CARNICERIA --}}
-                    <div class="col-lg-4 col-sm-6 mb-4">
-                        <div class="departamentos-item">
-                            <a class="departamentos-link" data-toggle="modal" href="#departamentosModal2">
-                                <div class="departamentos-hover">
-                                    <div class="departamentos-hover-content"><i class="fas fa-plus fa-3x"></i></div>
-                                </div>
-                                <img class="img-fluid" src="{{asset('/principal-archivos/assets/img/departamentos/CARNICERIA.png')}}" alt="" />
-                            </a>
-                            <div class="departamentos-caption">
-                                <div class="departamentos-caption-heading">CARNICERIA</div>
-                                {{-- <div class="departamentos-caption-subheading text-muted">Graphic Design</div> --}}
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
 
-                    {{-- LACTEOS --}}
-                    <div class="col-lg-4 col-sm-6 mb-4">
-                        <div class="departamentos-item">
-                            <a class="departamentos-link" data-toggle="modal" href="#departamentosModal3">
-                                <div class="departamentos-hover">
-                                    <div class="departamentos-hover-content"><i class="fas fa-plus fa-3x"></i></div>
-                                </div>
-                                <img class="img-fluid" src="{{asset('/principal-archivos/assets/img/departamentos/LACTEOS.png')}}" alt="" />
-                            </a>
-                            <div class="departamentos-caption">
-                                <div class="departamentos-caption-heading">LACTEOS</div>
-                                {{-- <div class="departamentos-caption-subheading text-muted">Identity</div> --}}
-                            </div>
-                        </div>
-                    </div>
-
-                    {{-- PANADERIS Y TORTILLERIA --}}
-                    <div class="col-lg-4 col-sm-6 mb-4 mb-lg-0">
-                        <div class="departamentos-item">
-                            <a class="departamentos-link" data-toggle="modal" href="#departamentosModal4">
-                                <div class="departamentos-hover">
-                                    <div class="departamentos-hover-content"><i class="fas fa-plus fa-3x"></i></div>
-                                </div>
-
-                                <div class="" style="">
-                                    <img class=" img-fluid" src="{{asset('/principal-archivos/assets/img/departamentos/PANADERIA.png')}}" alt=""  style=";"/>
-                                </div>
-                            </a>
-                            <div class="departamentos-caption">
-                                <div class="departamentos-caption-heading">PANADERIA Y TORTILLERIA</div>
-                                {{-- <div class="departamentos-caption-subheading text-muted">Branding</div> --}}
-                            </div>
-                        </div>
-                    </div>
-
-                    {{-- HIGIENE PERSONAL Y LIMPIEZA --}}
-                    <div class="col-lg-4 col-sm-6 mb-4 mb-sm-0">
-                        <div class="departamentos-item">
-                            <a class="departamentos-link" data-toggle="modal" href="#departamentosModal5">
-                                <div class="departamentos-hover">
-                                    <div class="departamentos-hover-content"><i class="fas fa-plus fa-3x"></i></div>
-                                </div>
-                                <div class="" style="">
-                                    <img class="img-fluid" src="{{asset('/principal-archivos/assets/img/departamentos/LIMPIEZA.png')}}" alt="" />
-                                </div>
-                            </a>
-                            <div class="departamentos-caption">
-                                <div class="departamentos-caption-heading">HIGIENE PERSONAL Y LIMPIEZA</div>
-                                {{-- <div class="departamentos-caption-subheading text-muted">Website Design</div> --}}
-                            </div>
-                        </div>
-                    </div>
-                    {{-- ABARROTES --}}
-                    <div class="col-lg-4 col-sm-6">
-                        <div class="departamentos-item">
-                            <a class="departamentos-link" data-toggle="modal" href="#departamentosModal6">
-                                <div class="departamentos-hover">
-                                    <div class="departamentos-hover-content"><i class="fas fa-plus fa-3x"></i></div>
-                                </div>
-                                <img class="img-fluid" src="{{asset('/principal-archivos/assets/img/departamentos/ABARROTES.png')}}" alt="" />
-                            </a>
-                            <div class="departamentos-caption">
-                                <div class="departamentos-caption-heading">ABARROTES Y DEMÁS</div>
-                                
-                                {{-- <div class="departamentos-caption-subheading text-muted">ABARROTES</div> --}}
-                            </div>
-                        </div>
-                    </div>
+                   
                 </div>
             </div>
         </section>
@@ -220,22 +144,28 @@
                 
                 <a target="_blank" href="{{ asset('pdf/miku.pdf') }}">PDF</a>
 
+
+        </section>
+                <section class="page-section" id="">
+                    <div class="container">
                 {{-- Carrusel de imagenes --}}
-                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                
+
+                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" >
                     <ol class="carousel-indicators">
                       <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
                       <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
                       <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
                     </ol>
-                    <div class="carousel-inner">
+                    <div class="carousel-inner" style="height: 500px">
                       <div class="carousel-item active">
-                        <img src="..." class="d-block w-100" alt="...">
+                        <img src="{{asset('/principal-archivos/assets/img/departamentos/FRUTERIA.png')}}" class="d-block w-100" alt="...">
                       </div>
-                      <div class="carousel-item">
-                        <img src="..." class="d-block w-100" alt="...">
+                      <div class="carousel-item"  style="height: 500px">
+                        <img src="{{asset('/principal-archivos/assets/img/departamentos/FRUTERIA.png')}}" class="d-block w-100" alt="...">
                       </div>
-                      <div class="carousel-item">
-                        <img src="..." class="d-block w-100" alt="...">
+                      <div class="carousel-item"  style="height: 500px">
+                        <img src="{{asset('/principal-archivos/assets/img/departamentos/FRUTERIA.png')}}" class="d-block w-100" alt="...">
                       </div>
                     </div>
                     <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -247,25 +177,11 @@
                       <span class="sr-only">Next</span>
                     </a>
                   </div>
+
+                
                 {{-- Fin Carrusel de imagenes --}}
 
-
-                {{-- <div id="pdf_viewer">
-                    <canvas id="pdf_renderer"></canvas>
-                </div>
-
-                <div id="navigation-controls">
-                    <button id="go_previous">Anterior</button>
-                    <input type="number" value="1" id="current_page">
-                    <button id="go_next">Siguiente</button>
-                </div>
-
-                <div id="zoom-controls">
-                    <button id="zoom_in">+</button>
-                    <button id="zoom_out">-</button>
-                </div> --}}
-           
-
+            </div>
         </section>
 
        
@@ -281,12 +197,18 @@
 
 
                     <div class="col-lg-2 col-md-1 col-sm-0    ml-auto mb-auto mr-auto mt-auto"></div>
-                        {{-- Div de cupones --}}
+                        
+                    {{-- Div verde de cupones --}}
                     <div class="col-lg-8 col-md-10 col-sm-12    ml-auto mb-auto mr-auto mt-auto" id="cupones">
-                            <h3 id="codigocupon"> 4DSA4D8D6AS4D8S</h2>
-                            <br>
-                            <label for="" id="descipcioncupon">20% de descuento en carnes</label>
+                        
+                        @foreach ($cupones as $cupon)
+                            <h3 id="codigocupon">{{$cupon->codigo}}</h2>
+                                <br>
+                            <label for="" id="descipcioncupon">{{$cupon->descripcion}}</label>
+                         @endforeach
+                            
                     </div>
+                        
                         {{-- -------------------------- --}}
                     <div class="col-lg-2 col-md-1 col-sm-0    ml-auto mb-auto mr-auto mt-auto"></div>
 
@@ -368,8 +290,8 @@
 
 
         <!-- departamentos Modals-->
-        @include('partials.departamentosmodals')
-
+        @include('partials.departamentosmodals') 
+        
      
 
 
@@ -395,33 +317,5 @@
 
     </body>
 
-    <script>
-        var myState = {
-            pdf: null,
-            current_page:1,
-            zoom:1
-        }
-        pdfjsLib.getDocument("prueba.pdf").then(pdf =>{
-            myState.pdf = pdf
-            render
-        })
-        function render(){
-            myState.pdf.getPage(myState.current_page.then(page =>{
-                var canvas = document.getElementById("pdf_renderer")
-                var ctx = canvas.getContext("2d")
-                var viewport = page.getViewPort(myState.zoom)
-
-                canvas.width = viewport.width
-                canvas.height = viewport.height
-
-                //render page
-                page.render({
-                    canvasContext:ctx,
-                    viewport:viewport
-                })
-            }))
-        }
-
-    </script>
 
 </html>
