@@ -33,6 +33,7 @@ class ImgOfertasController extends Controller
 
     public  function store(Request $request)
     {
+      dd($request->all());
       /* $validator = Validator::make($request->all(),[
                 'id_user' => 'required|min:1|max:50',
                 'nombre' => 'required|min:3|max:30'
@@ -65,7 +66,7 @@ class ImgOfertasController extends Controller
                 
             ]);
 
-
+            
             return response()->json(['status'=>true]);
            
             //}

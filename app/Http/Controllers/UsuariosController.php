@@ -89,9 +89,16 @@ class UsuariosController extends Controller
 
             ]);
 
-           // $users = User::pluck('email');
-           // Mail::to($users)->send(new TestEmail($data));
-        
+           //$users = User::pluck('email');
+           //Mail::to($users)->send(new TestEmail($data));
+           /////////Este es el que jala///////////
+           /*$correos = User::pluck('email')->toArray();
+
+           Mail::send('correo.correo',[],function($message )use($correos) {               
+               $message->to($correos,'')
+               ->subject("Boletin de ofertas");
+
+           }); */
 
 
             return back()

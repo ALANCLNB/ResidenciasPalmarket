@@ -64,6 +64,7 @@ style="float: right" data-toggle="modal" data-target="#modalAgregarP"><i class="
             <th>Precio Anterior</th>
             <th>Usuario</th>
             <th>Categoría</th>
+            <th>Embalaje</th>
             <th>Imagen</th>
             <th>Acciones</th>
         </thead>
@@ -77,6 +78,7 @@ style="float: right" data-toggle="modal" data-target="#modalAgregarP"><i class="
             <th>Precio Anterior</th>
             <th>Usuario</th>
             <th>Categoría</th>
+            <th>Embalaje</th>
             <th>Imagen</th>
             <th>Acciones</th> 
           </tfoot>
@@ -91,6 +93,7 @@ style="float: right" data-toggle="modal" data-target="#modalAgregarP"><i class="
                         <td>{{ $producto ->precio_ant }}</td>
                         <td>{{ $producto ->Usernombre }}</td>
                         <td>{{ $producto ->Cateid }}</td>
+                        <td>{{ $producto ->embalaje }}</td>
                         <td>
                           
                         <img class="ml-auto mr-auto" style="height: 50px; widht: 60;" src="{{ asset('/img/'.$producto ->imagen) }}" alt="">
@@ -102,13 +105,15 @@ style="float: right" data-toggle="modal" data-target="#modalAgregarP"><i class="
                           
                           data-id="{{ $producto->id }}" 
 
+                          data-id_user="{{ $producto->id_user }}" 
                           data-nombre="{{ $producto->nombre }}" 
                           data-oferta="{{ $producto->oferta }}" 
                           data-stock="{{ $producto->stock }}" 
                           data-marca="{{ $producto->marca }}" 
+                          data-embalaje="{{ $producto->embalaje }}"
                           data-precio="{{ $producto->precio }}" 
                           data-categoria="{{ $producto->categoria }}" 
-                          
+                          data-imagen="{{ $producto->imagen }}" 
                     
                           data-toggle="modal" data-target="#modalEditar">
                       <i class="fa fa-edit"></i></button>  
@@ -167,23 +172,27 @@ style="float: right" data-toggle="modal" data-target="#modalAgregarP"><i class="
 
                 {{-- Alerta Error al llenar campos --}}
                 <div class="row">
-                    @if ($message = Session::get('ErrorInsert'))
-                        <div class="col-12 alert alert-danger alert-dismissable fade show" role="alert">
-                            <h5>Errores:</h5>
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>                    
-                                @endforeach    
-                            </ul>    
-                        </div>    
-                
-                    @endif
-                
-                </div>
-                {{-- Fin Alerta Errores --}}
+                  @if ($message = Session::get('ErrorInsert'))
+                      <div class="col-12 alert alert-danger alert-dismissable fade show" role="alert">
+                          <h5>Errores:</h5>
+                          <ul>
+                              @foreach ($errors->all() as $error)
+                                  <li>{{ $error }}</li>                    
+                              @endforeach    
+                          </ul>    
+                      </div>    
+              
+                  @endif
+              
+              </div>
+              {{-- Fin Alerta Errores --}}
 
                 <div class="form-group">
-                <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre" value="{{ old('nombre') }}">
+                  <input type="text" class="form-control" id="id_user" name="id_user" placeholder="Usuario" value="{{ Auth::user()->id }}">
+                </div>
+
+                <div class="form-group">
+                  <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre" value="{{ old('nombre') }}">
                 </div>
 
                 <div class="form-group">
@@ -209,7 +218,19 @@ style="float: right" data-toggle="modal" data-target="#modalAgregarP"><i class="
                     <option value="1">No</option>
                   </select>
                     
-                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label  class="col-lg-12 col-md-12 col-sm-12">Embalaje</label>
+              
+                  <select class="custom-select   col-lg-12 col-md-12 col-sm-12    ml-auto mb-auto mr-auto mt-auto" id="embalaje" name="embalaje" required>
+                    <option selected disabled value="">Seleccionar</option>
+                    <option value="Kg">Kg</option>
+                    <option value="Pza">Pza</option>
+                    <option value="Manojo">Manojo</option>
+                  </select>
+                    
+                </div>
 
                 <div class="form-group">
                     <input type="text" class="form-control" id="marca" name="marca" placeholder="Marca" value="{{ old('marca') }}">
@@ -340,7 +361,11 @@ style="float: right" data-toggle="modal" data-target="#modalAgregarP"><i class="
               </div>
               {{-- Fin Alerta Errores --}}
               <div class="form-group">
-              <input type="hidden" name="id" id="idEdit">
+                  <input type="hidden" name="id_user" id="id_userEdit">
+              </div>
+
+              <div class="form-group">
+                  <input type="hidden" name="id" id="idEdit">
               </div>
 
               <div class="form-group">
@@ -370,7 +395,19 @@ style="float: right" data-toggle="modal" data-target="#modalAgregarP"><i class="
                     <option value="1">No</option>
                   </select>
                     
-                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label  class="col-lg-12 col-md-12 col-sm-12">Embalaje</label>
+              
+                  <select class="custom-select   col-lg-12 col-md-12 col-sm-12    ml-auto mb-auto mr-auto mt-auto" id="embalajeEdit" name="embalajeEdit" required>
+                    <option selected disabled value="">Seleccionar</option>
+                    <option value="Kg">Kg</option>
+                    <option value="Pza">Pza</option>
+                    <option value="Manojo">Manojo</option>
+                  </select>
+                    
+                </div>
 
                 <div class="form-group">
                     <input type="text" class="form-control" id="marcaEdit" name="marca" placeholder="Marca" >
@@ -379,6 +416,10 @@ style="float: right" data-toggle="modal" data-target="#modalAgregarP"><i class="
                 <div class="form-group">
                     <input type="text" class="form-control" id="precioEdit" name="precio" placeholder="Precio" >
                 </div>
+
+                <div class="form-group">
+                  <input type="hidden" class="form-control" id="precio_antEdit" name="precio_ant" placeholder="Precio Anterior" >
+              </div>
 
                 
 
@@ -402,7 +443,7 @@ style="float: right" data-toggle="modal" data-target="#modalAgregarP"><i class="
       <div class="row">
         
         <div class="col-md-12 text-center">
-          <label   class="col-lg-12 col-md-12 col-sm-12">Imagen</label>
+          <label class="col-lg-12 col-md-12 col-sm-12">Imagen</label>
         <div id="Edit-demo"></div>
         </div>
       </div>
@@ -412,7 +453,7 @@ style="float: right" data-toggle="modal" data-target="#modalAgregarP"><i class="
         <div class="col-md-12 text-center" style="padding:5%;">
         <strong>Seleccione una imagen:</strong>
       {{-- ///////////////////////////////////Input////////////////////////////////// --}}
-        <input name="" type="file" id="image_fileEdit">
+        <input name="img" type="file" id="image_fileEdit" value="">
 
         <div class="btn-group mt-4 d-flex w-100" role="group" >
           <button class="btn btn-primary edit-image " style="float: right !important;">Guardar</button>
@@ -493,13 +534,15 @@ style="float: right" data-toggle="modal" data-target="#modalAgregarP"><i class="
       url: "{{route('croppie.upload-image')}}",
       type: "POST",
       data: {"imagen":img, 
-        
+      
+        "id_user":$('#id_user').val(),
         "nombre":$('#nombre').val(),
         "categoria":$('#categoria').val(),
         "oferta":$('#oferta').val(),
         "marca":$('#marca').val(),
         "precio":$('#precio').val(),
         "stock":$('#stock').val(),
+        "embalaje":$('#embalaje').val(),
         "_token":$('input[name="_token"]').val()
         
 
@@ -561,11 +604,14 @@ var resize2 = $('#Edit-demo').croppie({
       data: {"image":img, 
         //Enviar datos por AJAX
         "id":$('#idEdit').val(),
+        "id_user":$('#id_userEdit').val(),
+        "embalaje":$('#embalajeEdit').val(),
         "nombre":$('#nombreEdit').val(),
         "categoria":$('#categoriaEdit').val(),
         "oferta":$('#ofertaEdit').val(),
         "marca":$('#marcaEdit').val(),
         "precio":$('#precioEdit').val(),
+        "precio_ant":$('#precio_antEdit').val(),
         "stock":$('#stockEdit').val(),
         "_token":$('input[name="_token"]').val()
         
@@ -592,11 +638,14 @@ var resize2 = $('#Edit-demo').croppie({
   $(".btnEditar").click(function(){ 
 
 $("#idEdit").val($(this).data('id'));
+$("#id_userEdit").val($(this).data('id_user'));
+$("#embalajeEdit").val($(this).data('embalaje'));
 $("#nombreEdit").val($(this).data('nombre'));
 $("#categoriaEdit").val($(this).data('categoria'));
 $("#ofertaEdit").val($(this).data('oferta'));
 $("#marcaEdit").val($(this).data('marca'));
 $("#precioEdit").val($(this).data('precio'));
+$("#precio_antEdit").val($(this).data('precio'));
 $("#stockEdit").val($(this).data('stock'));
 
 });

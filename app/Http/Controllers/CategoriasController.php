@@ -33,10 +33,11 @@ class CategoriasController extends Controller
 
     public  function store(Request $request)
     {
+        //dd($request->all());
         $validator = Validator::make($request->all(),[
                 'id_user' => 'required|min:1|max:3',
                 'descripcion' => 'required|min:1|max:50',
-                'token' => 'required|min:1|max:3',
+                //'token' => 'required|min:1|max:3',
                 //'imagen' => 'required|min:3|max:100'
 
         ]);
@@ -50,17 +51,36 @@ class CategoriasController extends Controller
 
         }else{
             //dd('Guardado'.$request->nombre);
+            //$categorias = Categoria::create([
+               /* 'id_user' => $request->id_user,
+                'descripcion' => $request->descripcion
+                //'token' => $request->token           
+            //]);
+            return back()
+            ->with('Listo', 'Se ha insertado el producto correctamente');*/
+            $image_file = $request->imagen;
+
+            list($type, $image_file) = explode(';', $image_file);
+            list(, $image_file)      = explode(',', $image_file);
+      
+              $image_file = base64_decode($image_file);
+              $image_name= time().'cate'.'.png';
+              $path = public_path('/img/categorias/'.$image_name);
+      
+              file_put_contents($path, $image_file);
+      
+              
+
+            //dd('si se subio');
+
             $categorias = Categoria::create([
                 'id_user' => $request->id_user,
                 'descripcion' => $request->descripcion,
-                'token' => $request->token
-            
+                'imagen' => $image_name
                 
-
             ]);
-            
-            return back()
-            ->with('Listo', 'Se ha insertado el producto correctamente');
+                
+            return response()->json(['status'=>true]);
            
         }
     }
@@ -70,8 +90,23 @@ class CategoriasController extends Controller
         //dd($id);
         $Dcat = Categoria::find($id);
 
-        $Dcat->delete();
-        return back()->with('Listo','La categoria fue eliminada con exito.');
+        $imagen = $Dcat->imagen;
+
+
+        if ($imagen == '') {
+            $Dcat->delete();
+            return back()->with('Listo','La categoria fue eliminada con exito.');
+
+        } elseif (!file_exists(public_path('/img/categorias/'.$imagen))){
+            $Dcat->delete();
+            return back()->with('Listo','La categoria fue eliminada con exito.');
+
+        }else{
+            unlink(public_path('/img/categorias/'.$imagen));
+            $Dcat->delete();
+            return back()->with('Listo','La categoria fue eliminada con exito.');
+        }
+            
     } 
 
 
@@ -90,28 +125,73 @@ class CategoriasController extends Controller
             'descripcion' => 'required|min:1|max:50'
 
     ]);
-
+/*9
         if($validator -> fails()){
             //dd('Llena todos los campos');
             return back()
             ->withInput()
             ->with('ErrorInsert', 'Favor de llenar todos los campos')
             ->withErrors($validator);
-
         }else{
 
             $cate ->id_user = $request ->id_user;
             $cate ->descripcion = $request ->descripcion;
             
-
-
-
             $cate->save();
             return back()
             ->with('Listo', 'El usuario se actualizo correctamente');
-
         }//else validator
+*/
 
+
+            if ($request->image == 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZAAAAEsCAYAAADtt+XCAAAB6ElEQVR4nO3BMQEAAADCoPVPbQ0PoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHg3VJUAAfkd0+cAAAAASUVORK5CYII=') {
+            
+                    $cate ->id_user = $request ->id_user;
+                    $cate ->descripcion = $request ->descripcion;
+                    
+                    $cate->save();
+                    return response()->json(['status'=>true]);
+
+            } else {
+                //////////SI SE CARGO IMAGEN SE ACTUALIZA/////////////
+                    $image_file = $request->image;
+
+                    list($type, $image_file) = explode(';', $image_file);
+                    list(, $image_file)      = explode(',', $image_file);
+            
+                    $image_file = base64_decode($image_file);
+                    $image_name= time().'cate'.'.png';
+                    $path = public_path('/img/categorias/'.$image_name);
+                    
+                    //dd($prod);
+                    //file_put_contents($path, $image_file);
+                    
+                    $image_path = public_path('/img/categorias/'.$cate->imagen);  // Value is not URL but directory file path
+                    
+                    ///////////VALIDAR SI LA IMAGEN EXISTE EN LA BD Y EN LA CARPETA///////////
+                    if ($cate->imagen == '') {
+                        file_put_contents($path, $image_file);
+
+                    } elseif (file_exists($image_path)){
+
+                        unlink($image_path);
+                        file_put_contents($path, $image_file);
+                    }else{
+
+                        file_put_contents($path, $image_file);
+                    }
+                    
+                    
+
+                    $cate ->id_user = $request ->id_user;
+                    $cate ->descripcion = $request ->descripcion;
+                    $cate ->imagen = $image_name;
+
+
+                    $cate->save();
+                    return response()->json(['status'=>true]);
+            
+            }//else imagen
     }
 
 

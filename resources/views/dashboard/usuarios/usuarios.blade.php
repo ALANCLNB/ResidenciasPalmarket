@@ -77,7 +77,13 @@
                         <td>{{ $usuario ->apellidos }}</td>
                         <td>{{ $usuario ->email }}</td>
                         <td>{{ $usuario ->Rol }}</td>
-                        <td>{{ $usuario ->Sucursal }}</td>
+                        
+                        @if (($usuario ->sucursal) == 2)
+                            <td>S/S - Cliente</td>
+                        @else
+                            <td>{{ $usuario ->Sucursal }}</td>
+                        @endif 
+                        
                         
                         {{-- @if ($usuario ->sucursal == '0')
                             <td>hughfh</td>
@@ -199,9 +205,9 @@
                     <input type="password" class="form-control" name="pass2" placeholder="Confirmar contraseña">
                 </div>
 
-                <div class="form-group">
+                {{-- <div class="form-group">
                     <input type="file" class="form-control" name="imagen" placeholder="Imagen">
-                </div>
+                </div> --}}
 
                 <div class="form-group">
                   <label for="" class="col-lg-12 col-md-12 col-sm-12">Rol</label>

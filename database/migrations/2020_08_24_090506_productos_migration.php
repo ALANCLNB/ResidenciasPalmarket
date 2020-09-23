@@ -22,6 +22,7 @@ class ProductosMigration extends Migration
             $table->string('imagen');
             $table->string('precio_ant');
             $table->string('stock');
+            $table->string('embalaje');
             $table->string('id_user');
             $table->string('oferta');
             $table->rememberToken();

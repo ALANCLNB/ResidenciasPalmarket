@@ -64,7 +64,7 @@
     <div class="row justify-content-center" style="margin-top: 5rem;" id="">
     <div class="container d-block" style="margin-top: 3rem; background-color: green;">
 
-    <div class="row no-gutters" style="background-color: RED; ">
+    <div class="row no-gutters" style="background-color: white; ">
 
 
 
@@ -72,15 +72,36 @@
                 
                @foreach ($productos as $prod)
                    
-                    <div class="col-lg-3 col-md-4 col-sm-12        ml-auto mb-auto mr-auto mt-auto " 
-                    style="margin-bottom: 0.5rem;height:300px background-color: green; text-align: center;">
+                    <div class="col-lg-3 col-md-4 col-sm-12  mb-auto  mt-auto home--product-item" 
+                    style="margin-bottom: 0.5rem;height:300px background-color: green; text-align: center;  border-radius: 25px;">
+                           
+                    @if ($prod->oferta == '0')
+                        <div class="mr-auto ml-auto" style="background:#f50808; width: 95%; height: 10%; top: 0px; position: absolute;  border-radius: 25px 25px 0px 0px;">
+                            <label for="" style="color: white"><strong>OFERTA</strong></label>
+                        </div>
+                    @endif
+                    
 
-                            <img src="{{asset('/img/'.$prod->imagen)}}" class="img-fluid " style="width: 95%; height: 95%; float: left;">
+                            <img src="{{asset('/img/'.$prod->imagen)}}" class="img-fluid mr-auto ml-auto" style="width: 95%; height: 95%;   border-radius: 25px;">
+                            
+                            
                     <div>
                             <ul class="list-inline">
-                                <li>{{$prod ->nombre}}</li>
                                 <li>{{$prod ->marca}}</li>
-                                <li>{{$prod ->precio}}</li>
+                                <li>{{$prod ->nombre}}</li>
+                                <li>1 {{$prod ->embalaje}}</li>
+
+                                @if ($prod->oferta == '0')
+                                    <div class="color--green">Precio Rebajado:</div>
+                                @endif
+                                <div class="row">
+                                    @if ($prod->oferta == '0')
+                                    
+                                        <s class="mr-auto ml-auto color--gray">$ {{$prod->precio_ant}}</s>
+                                    @endif
+                                        <b class="mr-auto ml-auto color--green">$ {{$prod ->precio}}</b>
+                                </div>
+                                
                             </ul>
                     </div>
                     </div>

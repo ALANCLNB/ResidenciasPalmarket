@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Validator;
+use App\Mail\TestMail;
+use Illuminate\Support\Facades\Mail;
+use App\User;
+
 use App\Ofertasimg;
 use App\Ofertaspdf;
 use Illuminate\Http\Request;
@@ -79,8 +83,20 @@ class PdfOfertasController extends Controller
                 'id_user' => $request->id_user
             ]);
                 
+            /////////////Enviar E-mail a todos los usuarios registrados////////////////
+            $correos = User::pluck('email')->toArray();
+
+            Mail::send('correo.correo',[],function($message )use($correos) {               
+               $message->to($correos,'')
+               ->subject("Boletin de ofertas");
+               
+
+           });
+
             return back()
             ->with('Listo', 'Archivo guardado correctamente');
+
+
            
         }
     }

@@ -46,16 +46,17 @@ class ProductosController extends Controller
 
     public  function store(Request $request)
     {
+        //dd($request->all());
         $validator = Validator::make($request->all(),[
-                'nombre' => 'required|min:3|max:50',
+                'nombre' => 'required|min:2|max:50',
                 'categoria' => 'required|min:1|max:3',
-                'marca' => 'required|min:3|max:50',
+                'marca' => 'required|min:2|max:50',
                 'precio' => 'required|min:4|max:10',
                 //'imagen' => 'required|image|mimes:jpg,jpeg,png,gif,svg|max:2048',
                 
                 //'precio_ant' => 'required|min:5|max:50',
-                'stock' => 'required|min:1|max:5'
-                //'id_user' => 'required|min:1|max:5'
+                'stock' => 'required|min:1|max:5',
+                'id_user' => 'required|min:1|max:5'
 
         ]);
 
@@ -105,12 +106,14 @@ class ProductosController extends Controller
                 'nombre' => $request->nombre,
                 'categoria' => $request->categoria,
                 'marca' => $request->marca,
+                'oferta' => $request->oferta,
                 'precio' => $request->precio,
                 'imagen' => $image_name,
                 //'imagen' => $request->file('imagen'),
                 'stock' => $request->stock,
-                'precio_ant' =>15.20,
-                'id_user' => 1
+                'embalaje' => $request->embalaje,
+                'precio_ant' =>00.00,
+                'id_user' => $request->id_user
                 
             ]);
                 
@@ -140,16 +143,17 @@ class ProductosController extends Controller
 
     public function editar(Request $request)
     {
-        //dd($request);
+        //dd($request->all());
         $prod = Producto::find($request ->id);
 
 
-        $validator = Validator::make($request->all(),[
-            'nombre' => 'required|min:3|max:50',
+       $validator = Validator::make($request->all(),[
+            'nombre' => 'required|min:2|max:50',
             'categoria' => 'required|min:1|max:3',
-            'marca' => 'required|min:3|max:50',
+            'marca' => 'required|min:2|max:50',
             'precio' => 'required|min:4|max:10',
-            'stock' => 'required|min:1|max:5'
+            'stock' => 'required|min:1|max:5',
+            'id_user' => 'required|min:1|max:5'
 
     ]);
 
@@ -161,67 +165,68 @@ class ProductosController extends Controller
             ->withErrors($validator);
 
         }else{
-
-            $image_file = $request->image;
-
-            list($type, $image_file) = explode(';', $image_file);
-            list(, $image_file)      = explode(',', $image_file);
-      
-              $image_file = base64_decode($image_file);
-              $image_name= time().'prod'.'.png';
-              $path = public_path('/img/'.$image_name);
-              
-              //dd($prod);
-              
-              //file_put_contents($path, $image_file);
-              
-               
-           
-              $image_path = public_path('/img/'.$prod->imagen);  // Value is not URL but directory file path
-              
-              unlink($image_path);
-              file_put_contents($path, $image_file);
-
-/*
-              if(File::exists($image_path)) {
-                  File::delete($image_path);
-                  file_put_contents($path, $image_file);
-              }*/
-              
+            //dd($request->image);
             
             
-            $prod ->nombre = $request ->nombre;
-            $prod ->categoria = $request ->categoria;
-            $prod ->marca = $request ->marca;
-            $prod ->precio = $request ->precio;
-            $prod ->stock = $request ->stock;
-            $prod ->oferta = $request ->oferta;
-            $prod ->imagen = $image_name;
+                ////////INFORMACION QUE MANDA EL CROPPIE AL ESTAR VACIO//////////
+            if ($request->image == 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZAAAAEsCAYAAADtt+XCAAAB6ElEQVR4nO3BMQEAAADCoPVPbQ0PoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHg3VJUAAfkd0+cAAAAASUVORK5CYII=') {
+            
+                    $prod ->nombre = $request ->nombre;
+                    $prod ->categoria = $request ->categoria;
+                    $prod ->marca = $request ->marca;
+                    $prod ->precio = $request ->precio;
+                    $prod ->precio_ant = $request ->precio_ant;
+                    $prod ->stock = $request ->stock;
+                    $prod ->id_user = $request ->id_user;
+                    $prod ->embalaje = $request ->embalaje;
+                    $prod ->oferta = $request ->oferta;
+                    
+                    $prod->save();
+                    return response()->json(['status'=>true]);
+
+            } else {
+                //////////SI SE CARGO IMAGEN SE ACTUALIZA/////////////
+                    $image_file = $request->image;
+
+                    list($type, $image_file) = explode(';', $image_file);
+                    list(, $image_file)      = explode(',', $image_file);
+            
+                    $image_file = base64_decode($image_file);
+                    $image_name= time().'prod'.'.png';
+                    $path = public_path('/img/'.$image_name);
+                    
+                    //dd($prod);
+                    //file_put_contents($path, $image_file);
+                    
+                    $image_path = public_path('/img/'.$prod->imagen);  // Value is not URL but directory file path
+                    
+                    unlink($image_path);
+                    file_put_contents($path, $image_file);
+
+                    
+                    $prod ->nombre = $request ->nombre;
+                    $prod ->categoria = $request ->categoria;
+                    $prod ->marca = $request ->marca;
+                    $prod ->precio = $request ->precio;
+                    $prod ->precio_ant = $request ->precio_ant;
+                    $prod ->stock = $request ->stock;
+                    $prod ->id_user = $request ->id_user;
+                    $prod ->embalaje = $request ->embalaje;
+                    $prod ->oferta = $request ->oferta;
+                    $prod ->imagen = $image_name;
 
 
-            /*
-                'nombre' => $request->nombre,
-                'categoria' => $request->categoria,
-                'marca' => $request->marca,
-                'precio' => $request->precio,
-                'imagen' => $image_name,
-                'stock' => $request->stock,
-                'precio_ant' =>15.20,
-                'id_user' => 1
-*/
+                    $prod->save();
+                    return response()->json(['status'=>true]);
+            
+            }//else imagen
 
-            $prod->save();
-            return response()->json(['status'=>true]);
-            /*return back()
-            ->with('Listo', 'El usuario se actualizo correctamente');*/
 
         }//else validator
 
-    }
 
 
-
-
+    }//public editar
 
 
 }

@@ -1,12 +1,20 @@
 @extends('dashboard.dash')
 
+@section('head')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.2/croppie.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.2/croppie.js"></script>
 
+{{-- <meta name="csrf-token" content="{{ csrf_token() }}"> --}}
+
+@endsection
 
 
 @section('categorias')
 
 <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm ml-auto mr-auto" 
-style="float: right" data-toggle="modal" data-target="#modalAgregarC"><i class="fas fa-plus fa-sm text-white-50"></i> Nueva Categoria</a>
+style="float: right" data-toggle="modal" data-target="#modalAgregar"><i class="fas fa-plus fa-sm text-white-50"></i> Nueva Categoria</a>
 <h1 class="h3 mb-2 text-gray-800">Categorias</h1>
 <p class="mb-4">Bienvenido a categorias.</p>
 
@@ -37,7 +45,7 @@ style="float: right" data-toggle="modal" data-target="#modalAgregarC"><i class="
               <th>ID</th>
               <th>Registrado</th>
               <th>Descripcion</th>
-              <th>Token</th>
+              <th>Imagen</th>
               <th>Acciones</th>
           </thead>
           
@@ -45,7 +53,7 @@ style="float: right" data-toggle="modal" data-target="#modalAgregarC"><i class="
               <th>ID</th>
               <th>Registrado</th>
               <th>Descripcion</th>
-              <th>Token</th>
+              <th>Imagen</th>
               <th>Acciones</th>
           </tfoot>
   
@@ -54,7 +62,11 @@ style="float: right" data-toggle="modal" data-target="#modalAgregarC"><i class="
                           <td>{{ $c ->id }}</td>
                           <td>{{ $c ->Usernombre }}</td>
                           <td>{{ $c ->descripcion }}</td>
-                          <td>{{ $c ->token }}</td>
+                          <td>
+                          
+                        <img class="ml-auto mr-auto" style="height: 50px; widht: 60;" src="{{ asset('/img/categorias/'.$c ->imagen) }}" alt="">
+
+                        </td>
                           <td>
                               
                                   <button class="btn btn-info  btnEditar" 
@@ -98,77 +110,111 @@ style="float: right" data-toggle="modal" data-target="#modalAgregarC"><i class="
 
 </div>
 
+    
+                   
+    
     <!-- Modal Agregar -->
-    <div class="modal fade" id="modalAgregarC" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Agregar categoria</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-    
-
-            <form action="/dash/admin/categorias" method="POST">
-                @csrf
-                <div class="modal-body">
-    
-                    {{-- Alerta Error al llenar campos --}}
-                    <div class="row">
-                        @if ($message = Session::get('ErrorInsert'))
-                            <div class="col-12 alert alert-danger alert-dismissable fade show" role="alert">
-                                <h5>Errores:</h5>
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>                    
-                                    @endforeach    
-                                </ul>    
-                            </div>    
-                    
-                        @endif
-                    
-                    </div>
-                    {{-- Fin Alerta Errores --}}
-    
-                    <div class="form-group">
-                    <input type="hidden" class="form-control" name="id_user" placeholder="Usuario" value="{{ auth()->user()->id }}">
-                    </div>
-
-                    <div class="form-group">
-                        <input type="hidden" class="form-control" name="token" placeholder="Token" value="1">
-                    </div>
-
-                    <div class="form-group">
-                    <input type="text" class="form-control" name="descripcion" placeholder="Descripción" value="{{ old('descripcion') }}">
-                    </div>
-    
-    
-                    <div class="form-group">
-                        <input type="hidden" class="form-control" name="imagen" placeholder="hgg">
-                    </div>
-    
-    
-                    
-                </div>
-    
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-primary">Guardar</button>
-                </div>
-    
-            </form>
-    
+    <div class="modal fade" id="modalAgregar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Agregar producto</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
           </div>
+  
+          <form action="/dash/admin/categorias" method="POST" enctype="multipart/form-data">
+              
+            @csrf
+              <div class="modal-body">
+  
+                  {{-- Alerta Error al llenar campos --}}
+                  <div class="row">
+                    @if ($message = Session::get('ErrorInsert'))
+                        <div class="col-12 alert alert-danger alert-dismissable fade show" role="alert">
+                            <h5>Errores:</h5>
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>                    
+                                @endforeach    
+                            </ul>    
+                        </div>    
+                
+                    @endif
+                
+                </div>
+                {{-- Fin Alerta Errores --}}
+
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="id_user" name="id_user" placeholder="Usuario" value="{{ auth()->user()->id }}">
+                    </div>
+
+
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="descripcion" name="descripcion" placeholder="Descripción" value="{{ old('descripcion') }}">
+                    </div>
+    
+  
+               {{-- ////////////////////////////////////////////// --}}
+                  
+  
+              </div>
+  
+              {{-- <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                  <button type="submit" class="btn btn-primary" id="guardar">Guardar</button>
+              </div> --}}
+  
+          </form>
+  
+          
+        {{-- ///////////////////CROPPIE/////////////////////////// --}}
+  <div class="row">
+    
+    <div class="col-md-12 text-center">
+      <label   class="col-lg-12 col-md-12 col-sm-12">Imagen</label>
+    <div id="upload-demo"></div>
+    </div>
+  </div>
+  
+  
+  <div class="row">
+    <div class="col-md-12 text-center" style="padding:5%;">
+    <strong>Seleccione una imagen:</strong>
+  {{-- ///////////////////////////////////Input////////////////////////////////// --}}
+    <input name="" type="file" id="image_file">
+  
+    <div class="btn-group mt-4 d-flex w-100" role="group" >
+      <button class="btn btn-primary upload-image " style="float: right !important;">Guardar</button>
+    <button class="btn btn-secondary "  data-dismiss="modal" style="float: right !important;">Cerrar</button>
+    
+    </div>
+    {{-- <div class="alert alert-success" id="upload-success" style="display: none;margin-top:10px;"></div> --}}
+    </div> 
+  </div>
+  
+  {{-- ///////////////////FIN CROPPIE/////////////////////////// --}}
+  
+  
+  
+  
+  
         </div>
       </div>
+  
+    </div>   
+                    
+        
+    
+                
 
   <!-- Modal Eliminar -->
   <div class="modal fade" id="modalEliminar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Eleminar Categoria</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Eliminar Categoria</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -194,76 +240,94 @@ style="float: right" data-toggle="modal" data-target="#modalAgregarC"><i class="
 
 
 
-
-
-   <!-- Modal Modificar -->
-   <div class="modal fade" id="modalEditar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Modificar categoria</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-
-
-        <form action="/dash/admin/categorias/editar" method="POST">
-            @csrf
-            <div class="modal-body">
-
-                {{-- Alerta Error al llenar campos --}}
-                <div class="row">
-                    @if ($message = Session::get('ErrorInsert'))
-                        <div class="col-12 alert alert-danger alert-dismissable fade show" role="alert">
-                            <h5>Errores:</h5>
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>                    
-                                @endforeach    
-                            </ul>    
-                        </div>    
-                
-                    @endif
-                
-                </div>
-                {{-- Fin Alerta Errores --}}
-
-                <div class="form-group">
-                  <input type="hidden" name="id" id="idEdit">
-                </div>
-
-                <div class="form-group">
-                <input type="text" class="form-control" name="id_user" id="usuarioEditt" placeholder="Usuario" value="{{ auth()->user()->id }}">
-                </div>
-
-                <div class="form-group">
-                    <input type="hidden" class="form-control" name="token"  placeholder="Token" value="1">
-                </div>
-
-                <div class="form-group">
-                <input type="text" class="form-control" name="descripcion" id="descripcionEdit" placeholder="Descripción" >
-                </div>
-
-
-                <div class="form-group">
-                    <input type="hidden" class="form-control" name="imagen" placeholder="hgg">
-                </div>
-
-
-                
-            </div>
-
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                <button type="submit" class="btn btn-primary">Guardar</button>
-            </div>
-
-        </form>
-
+  
+<!-- Modal Editar -->
+<div class="modal fade" id="modalEditar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Editar Caregoria</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
+
+      <form action="/dash/admin/productos/categorias/editar" method="POST">
+          @csrf
+          <div class="modal-body">
+
+              {{-- Alerta Error al llenar campos --}}
+              <div class="row">
+                  @if ($message = Session::get('ErrorInsert'))
+                      <div class="col-12 alert alert-danger alert-dismissable fade show" role="alert">
+                          <h5>Errores:</h5>
+                          <ul>
+                              @foreach ($errors->all() as $error)
+                                  <li>{{ $error }}</li>                    
+                              @endforeach    
+                          </ul>    
+                      </div>    
+              
+                  @endif
+              
+              </div>
+              {{-- Fin Alerta Errores --}}
+              <div class="form-group">
+              <input type="text" name="id_user" id="id_userEdit" value="{{Auth::user()->id}}">
+              </div>
+
+              <div class="form-group">
+                  <input type="text" name="id" id="idEdit">
+              </div>
+
+              <div class="form-group">
+                <input type="text" class="form-control" id="descripcionEdit" name="descripcionEdit" placeholder="Descripcion" >
+              </div>
+ 
+          </div>
+
+          {{-- <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+              <button type="submit" class="btn btn-primary">Guardar</button>
+          </div> --}}
+
+      </form>
+
+
+            {{-- ///////////////////CROPPIE/////////////////////////// --}}
+      <div class="row">
+        
+        <div class="col-md-12 text-center">
+          <label class="col-lg-12 col-md-12 col-sm-12">Imagen</label>
+        <div id="Edit-demo"></div>
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="col-md-12 text-center" style="padding:5%;">
+        <strong>Seleccione una imagen:</strong>
+      {{-- ///////////////////////////////////Input////////////////////////////////// --}}
+        <input name="img" type="file" id="image_fileEdit" value="">
+
+        <div class="btn-group mt-4 d-flex w-100" role="group" >
+          <button class="btn btn-primary edit-image " style="float: right !important;">Guardar</button>
+        <button class="btn btn-secondary "  data-dismiss="modal" style="float: right !important;">Cerrar</button>
+        
+        </div>
+        {{-- <div class="alert alert-success" id="upload-success" style="display: none;margin-top:10px;"></div> --}}
+        </div> 
+      </div>
+
+      {{-- ///////////////////FIN CROPPIE/////////////////////////// --}}
+
+
+
     </div>
   </div>
+</div>
+
+
 @endsection
 
 
@@ -274,10 +338,168 @@ style="float: right" data-toggle="modal" data-target="#modalAgregarC"><i class="
 
 @section('scripts')
 
+<script src="{{asset('/js/croppie.js')}}"></script>
+
+<script>
+ 
+
+
+
+  var resize = $('#upload-demo').croppie({
+      enableExif: true,
+      enableOrientation: true,    
+      viewport: { // Default { width: 100, height: 100, type: 'square' } 
+          width: 400,
+          height: 300,
+          type: 'square' //square,circle
+      },
+      boundary: {
+          width: 500,
+          height: 400
+      }
+  });
+  
+  $('#image_file').on('change', function () { 
+    var reader = new FileReader();
+      reader.onload = function (e) {
+        resize.croppie('bind',{
+          url: e.target.result
+        }).then(function(){
+          console.log('jQuery bind complete');
+        });
+      }
+      reader.readAsDataURL(this.files[0]);
+  });
+
+
+//$('.upload-image').click(function() {
+    //$('.upload-image').click();
+  //  console.log('gg');
+//});
+
+  $('.upload-image').on('click', function (ev) {
+    resize.croppie('result', {
+      type: 'canvas',
+      size: 'viewport'
+      
+
+    }).then(function (img) {
+    
+      $.ajax({
+      url: "{{route('croppie.upload-image')}}",
+      type: "POST",
+      data: {"imagen":img, 
+      
+        "id_user":$('#id_user').val(),
+        "descripcion":$('#descripcion').val(),
+        "_token":$('input[name="_token"]').val()
+        
+
+       },
+    
+      success: function (data) {
+        console.log(data);
+
+          if (data.status == true) {
+            location.href="/dash/admin/categorias";
+          }
+        }
+        
+       });
+       
+    });
+  });
+
+
+
+//////////////////////////////////////////////////////////////////////////////////
+var resize2 = $('#Edit-demo').croppie({
+      enableExif: true,
+      enableOrientation: true,    
+      viewport: { // Default { width: 100, height: 100, type: 'square' } 
+          width: 400,
+          height: 300,
+          type: 'square' //square,circle
+      },
+      boundary: {
+          width: 500,
+          height: 400
+      }
+  });
+  
+  $('#image_fileEdit').on('change', function () { 
+    var reader = new FileReader();
+      reader.onload = function (e) {
+        resize2.croppie('bind',{
+          url: e.target.result
+        }).then(function(){
+          console.log('jQuery bind complete');
+        });
+      }
+      reader.readAsDataURL(this.files[0]);
+  });
+
+  $('.edit-image').on('click', function (ev) {
+    resize2.croppie('result', {
+      type: 'canvas',
+      size: 'viewport'
+      
+
+    }).then(function (img) {
+    
+      $.ajax({
+      url: "{{route('croppie.editarcate-image')}}",
+      type: "POST",
+      data: {"image":img, 
+        //Enviar datos por AJAX
+        "id":$('#idEdit').val(),
+        "id_user":$('#id_userEdit').val(),
+        "descripcion":$('#descripcionEdit').val(),
+        "_token":$('input[name="_token"]').val()
+       
+        
+
+       },
+    
+      success: function (data) {
+        console.log(data);
+
+          if (data.status == true) {
+            location.href="/dash/admin/categorias";
+          }
+        }
+        
+       });
+       
+    });
+    
+  });
+
+
+
+//Cargar datos en el formulario
+$(".btnEditar").click(function(){ 
+
+$("#idEdit").val($(this).data('id'));
+//$("#usuarioEdit").val($(this).data('id_user'));
+$("#descripcionEdit").val($(this).data('descripcion'));
+
+});
+
+</script>
+
+
+
+
+
+
+
+
+
   <script>
       $(document).ready(function(){
         @if ($message = Session::get('ErrorInsert'))
-                $("#modalAgregarC").modal('show');  
+                $("#modalAgregar").modal('show');  
         
             @endif
       });
@@ -298,14 +520,7 @@ $(".btnModalEliminar").click(function(){
 
 
 
-//Cargar datos en el formulario
-$(".btnEditar").click(function(){ 
 
-$("#idEdit").val($(this).data('id'));
-//$("#usuarioEdit").val($(this).data('id_user'));
-$("#descripcionEdit").val($(this).data('descripcion'));
-
-});
 
 
   </script>

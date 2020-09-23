@@ -21,7 +21,13 @@ class PrincipalController extends Controller
         ->orderBy('id','DESC')
         ->get();
 
-        return view('layouts.principal', compact('categoria','cupones'));
+        $pdf = DB::table('ofertaspdfs')
+        ->select('ofertaspdfs.*')
+        ->orderBy('created_at','DESC')
+        ->take(1)
+        ->get();
+
+        return view('layouts.principal', compact('categoria','cupones','pdf'));
         //return view('welcome');
     }
 }

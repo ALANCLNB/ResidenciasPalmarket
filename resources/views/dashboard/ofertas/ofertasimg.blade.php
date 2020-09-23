@@ -176,7 +176,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Agregar producto</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Agregar oferta (imagen)</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -264,7 +264,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Agregar producto</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Modificar Imagen</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -293,15 +293,15 @@
               {{-- Fin Alerta Errores --}}
               
               <div class="form-group">
-                <input type="text" class="form-control" id="idEdit" name="" placeholder="Id" >
+                <input type="hidden" class="form-control" id="idEdit" name="" placeholder="Id" >
               </div>
 
               <div class="form-group">
-                  <input type="text" class="form-control" id="id_userEdit" name="" placeholder="Usuario" >
+                  <input type="hidden" class="form-control" id="id_userEdit" name="" placeholder="Usuario" >
               </div>
 
               <div class="form-group">
-                <input type="text" class="form-control" id="nombreEdit" name="" placeholder="Nombre" >
+                <input type="hidden" class="form-control" id="nombreEdit" name="" placeholder="Nombre" >
               </div>
 
               

@@ -22,7 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('imagen');
             $table->string('rol');
-            $table->string('sucursal');
+            $table->string('sucursal');//0=cliente(sin sucursal)
             $table->string('estado');///1=activo , 0=desactivado
             $table->rememberToken();
             $table->timestamps();

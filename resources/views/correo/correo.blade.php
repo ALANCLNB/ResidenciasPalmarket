@@ -1,1 +1,1 @@
-Nuestro boletin de ofertas de Superettes Palmarket ya esta disponible en direccion
+Nuestro boletin de ofertas de Superettes Palmarket ya esta disponible en <a href="">palmarket.com</a>

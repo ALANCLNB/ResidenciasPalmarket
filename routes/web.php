@@ -84,12 +84,17 @@ Route::post('dash/admin/productos', ['as'=>'croppie.upload-image','uses'=>'Produ
 
 Route::post('dash/admin/ofertasimg', ['as'=>'croppie.subir-image','uses'=>'ImgOfertasController@store']);
 
-
+Route::post('dash/admin/categorias', ['as'=>'croppie.upload-image','uses'=>'CategoriasController@store']);
 //Route::post('dash/admin/ofertasimg', ['as'=>'croppie.upload-image','uses'=>'ImgOfertasController@store']);
 //Route::post('dash/admin/usuarios/edit', 'UsuariosController@edit');
 
 Route::post('dash/admin/productos/editar', ['as'=>'croppie.editar-image','uses'=>'ProductosController@editar']);
+
 Route::post('dash/admin/productos/ofertasimg/editar', ['as'=>'croppie.editarOferta-image','uses'=>'ImgOfertasController@editar']);
+
+Route::post('dash/admin/productos/categorias/editar', ['as'=>'croppie.editarcate-image','uses'=>'CategoriasController@editar']);
+
+
 
 
 Route::post('dash/admin/categorias/editar', 'CategoriasController@editar');

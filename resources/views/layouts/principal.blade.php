@@ -29,18 +29,17 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav text-uppercase ml-auto">
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#services">Nosotros</a></li>
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#departamentos">Departamentos</a></li>
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#ofertones">Ofertas de la semana</a></li>
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#cuponzasos">Cupones</a></li>
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#contact">Contacto</a></li>
-                       
-                       
+                        <li class="nav-item"><strong><a class="nav-link js-scroll-trigger" href="#services">Nosotros</a></strong></li>
+                        <li class="nav-item"><strong><a class="nav-link js-scroll-trigger" href="#departamentos">Departamentos</a></strong></li>
+                        <li class="nav-item"><strong><a class="nav-link js-scroll-trigger" href="#ofertones">Ofertas de la semana</a></strong></li>
+                        <li class="nav-item"><strong><a class="nav-link js-scroll-trigger" href="#cuponzasos">Cupones</a></strong></li>
+                        <li class="nav-item"><strong><a class="nav-link js-scroll-trigger" href="#contact">Contacto</a></strong></li>
+                                             
                         @if (Auth::check())
-                                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/login"><strong>{{ Auth::user()->nombre }}</strong></a></li>
+                                <li class="nav-item"><a class="nav-link js-scroll-trigger" style="color:#fed136" href="/login"><strong>{{ Auth::user()->nombre }}</strong></a></li>
                                 {{-- <img class="img-profile rounded-circle w-4 h-4" src="https://gaminguardian.com/wp-content/uploads/2020/03/kanojo-okarishimasu.png" style="height: 50px; width: 50px;"> --}}
                         @else
-                                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/login">Iniciar Sesion</a></li> 
+                                <li class="nav-item"><strong><a class="nav-link js-scroll-trigger" href="/login">Iniciar Sesion</a></strong></li> 
                         @endif 
                         
                     </ul>
@@ -59,7 +58,7 @@
         <section class="page-section" id="services">
             <div class="container">
                 <div class="text-center">
-                    <h2 class="section-heading text-uppercase">Servicios</h2>
+                    <h2 class="section-heading text-uppercase">Nosotros</h2>
                     <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
                 </div>
                 <div class="row text-center">
@@ -70,8 +69,8 @@
                             <i class="fas fa-circle fa-stack-2x text-primary"></i>
                             <i class="fas fa-shopping-cart fa-stack-1x fa-inverse"></i>
                         </span>
-                        <h4 class="my-3">E-Commerce</h4>
-                        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
+                        <h4 class="my-3">La mejor calidad a buenos precios</h4>
+                        <p class="text-muted">Siempre estamos en la busqueda de ofrecer los mejores productos al mejor precio.</p>
                     </div>
                   
 
@@ -81,15 +80,15 @@
                             <i class="fas fa-circle fa-stack-2x text-primary"></i>
                             <i class="fas fa-laptop fa-stack-1x fa-inverse"></i>
                         </span>
-                        <h4 class="my-3">Responsive Design</h4>
-                        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
+                        <h4 class="my-3">Cerca de ti</h4>
+                        <p class="text-muted">Contamos con varias sucursales .</p>
                     </div>
                     <div class="col-md-4">
                         <span class="fa-stack fa-4x">
                             <i class="fas fa-circle fa-stack-2x text-primary"></i>
                             <i class="fas fa-lock fa-stack-1x fa-inverse"></i>
                         </span>
-                        <h4 class="my-3">Web Security</h4>
+                        <h4 class="my-3"> Calidad y confianza </h4>
                         <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
                     </div>
                 </div>
@@ -114,7 +113,7 @@
                                     <div class="departamentos-hover">
                                         <div class="departamentos-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                                     </div>
-                                    <img class="img-fluid" src="{{asset('/principal-archivos/assets/img/departamentos/FRUTERIA.png')}}" alt="" />
+                                    <img class="img-fluid" src="{{asset('/img/categorias/'.$item->imagen)}}" alt="" />
                                 </a>
                                 <div class="departamentos-caption">
                                     <div class="departamentos-caption-heading">{{$item->descripcion}}</div>
@@ -138,12 +137,12 @@
                     <h3 class="section-subheading text-muted">Descubre las ofertas de esta semana que tenemos para ti en Superettes Palmarket.</h3>
                 </div>
 
-
-                {{-- lector PDF ofertas --}}
-                <embed class="col-lg-6 col-md-10 col-sm-12    ml-auto mb-auto mr-auto mt-auto" src="{{asset('/principal-archivos/assets/pdf/miku.pdf')}}" id="pdf" />
                 
-                <a target="_blank" href="{{ asset('pdf/miku.pdf') }}">PDF</a>
-
+                {{-- lector PDF ofertas --}}
+                    <embed class="col-lg-6 col-md-10 col-sm-12    ml-auto mb-auto mr-auto mt-auto" src="{{asset('/principal-archivos/assets/pdf/miku.pdf')}}" id="pdf" />
+                    <div>
+                       <strong><a class="btn btn-primary" target="_blank" href="{{ asset('pdf/miku.pdf') }}">Ver ofertas</a></strong> 
+                    </div>
 
         </section>
                 <section class="page-section" id="">
