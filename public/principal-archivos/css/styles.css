@@ -10,6 +10,8 @@
  * Copyright 2011-2020 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
+ @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
 :root {
   --blue: #007bff;
   --indigo: #6610f2;
@@ -548,22 +550,22 @@ pre code {
 }
 @media (min-width: 576px) {
   .container {
-    max-width: 540px;
+   max-width: 540px;
   }
 }
 @media (min-width: 768px) {
   .container {
-    max-width: 720px;
+   max-width: 720px;
   }
 }
 @media (min-width: 992px) {
   .container {
-    max-width: 960px;
+   max-width: 960px;
   }
 }
 @media (min-width: 1200px) {
   .container {
-    max-width: 1140px;
+   max-width: 1140px;
   }
 }
 
@@ -577,7 +579,7 @@ pre code {
 
 @media (min-width: 576px) {
   .container-sm, .container {
-    max-width: 540px;
+   max-width: 540px;
   }
 }
 @media (min-width: 768px) {
@@ -587,12 +589,12 @@ pre code {
 }
 @media (min-width: 992px) {
   .container-lg, .container-md, .container-sm, .container {
-    max-width: 960px;
+   max-width: 960px;
   }
 }
 @media (min-width: 1200px) {
   .container-xl, .container-lg, .container-md, .container-sm, .container {
-    max-width: 95%;
+   max-width: 95%;
   }
 }
 .row {
@@ -10635,4 +10637,35 @@ b{
 .home--product-item:hover {
   box-shadow: 0 0 15px rgba(0,0,0,0.1);
   border-radius: 3px;
+}
+
+.content--title {
+  font-family: 'Pacifico', cursive;
+  font-size: 50px;
+  margin-top: 40px;
+}
+
+
+.product-item:hover{
+  display: block;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
+
+}
+
+.product-item--add-cart {
+  min-height: 38px;
+  background-color: white;
+  top: 70px;
+  left: 50%;
+  border-radius: 10px;
+  padding: 5px 0;
+  margin-left: -50%;
+  box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
+}
+
+.product-item {
+  display: block;
+ 
 }

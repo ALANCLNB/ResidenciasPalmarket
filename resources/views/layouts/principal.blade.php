@@ -109,7 +109,7 @@
                     @foreach ($categoria as $item)
                         <div class="col-lg-4 col-sm-6 mb-4">
                             <div class="departamentos-item">
-                            <a class="departamentos-link"  href="/products/{{$item->id}}">
+                            <a class="departamentos-link"  href="/products/categoria={{$item->id}}">
                                     <div class="departamentos-hover">
                                         <div class="departamentos-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                                     </div>
