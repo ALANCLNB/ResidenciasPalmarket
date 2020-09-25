@@ -27,7 +27,13 @@ class PrincipalController extends Controller
         ->take(1)
         ->get();
 
-        return view('layouts.principal', compact('categoria','cupones','pdf'));
+        $carrito = DB::table('carritoproductos')
+        ->join('productos','productos.id','=','carritoproductos.id_user')
+        ->select('carritoproductos.*','productos.nombre as Producto')
+        ->orderBy('created_at','DESC')
+        ->get();
+
+        return view('layouts.principal', compact('categoria','cupones','pdf','carrito'));
         //return view('welcome');
     }
 }

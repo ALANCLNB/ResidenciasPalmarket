@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Productos</title>
-    <link rel="icon" type="image/x-icon" href="{{asset('/principal-archivos/assets/img/logos/palmarketlogo2.png')}}" id="logoPrincipal" />
+    <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Superettes Palmarket</title>
+        <link rel="icon" type="image/x-icon" href="{{asset('/principal-archivos/assets/img/logos/palmarketlogo2.png')}}" id="logoPrincipal" />
         <!-- Font Awesome icons (free version)-->
-        <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js" crossorigin="anonymous"></script>      
+        <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js" crossorigin="anonymous"></script>
+        {{-- PDF reader --}}
+        {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.3.200/pdf_viewer.js"></script> --}}
         <!-- Google fonts-->
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
         <link href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
@@ -19,10 +22,10 @@
 
 
 
-<body>
+<body id="page-top">
 
 
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav2">
         <div class="container">
             <a class="navbar-brand js-scroll-trigger" href="#page-top"><img src="{{asset('/principal-archivos/assets/img/logos/palmarketlogo.png')}}" alt="" /></a>
             <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,16 +34,20 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav text-uppercase ml-auto">
+
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/#services">Nosotros</a></li>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/#departamentos">Departamentos</a></li>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/#ofertones">Ofertas de la semana</a></li>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/#cuponzasos">Cupones</a></li>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/#contact">Contacto</a></li>
                    
+
+                       
+                    
                    
                     @if (Auth::check())
                             <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/login"><strong>{{ Auth::user()->nombre }}</strong></a></li>
-                        
+                            
                     @else
                             <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/login">Iniciar Sesion</a></li> 
                     @endif 
@@ -78,7 +85,16 @@
 </div> --}}
 
 
-
+<div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Dropdown button
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      <a class="dropdown-item" >Action</a>
+      <a class="dropdown-item" >Another action</a>
+      <a class="dropdown-item" >Something else here</a>
+    </div>
+  </div> 
 
     {{-- @foreach ($tittle as $titulo)
         <h1 class="text-center content--title">{{$titulo->descripcion}}</h1>
@@ -93,8 +109,8 @@
             <input class="form-control" name="search" type="search" placeholder="Buscar....." aria-label="Search" required>
             <input type="hidden" name="titulo" value="Buscador de productos">
             <div class="input-group-append">
-                <button class="btn btn-success" type="submit">
-                    <i class="fas fa-search"></i> Buscar
+                <button class="btn btn-success" style="background-color: #8cc63e" type="submit">
+                    <i class="fas fa-search"></i> Buscar 
                 </button>
                 {{-- <a href="/products/search=" class="button">Go to Google</a> --}}
             </div>
@@ -103,6 +119,8 @@
         </div>
     </form>
     </div>
+
+
 
     <div class="row justify-content-center" style="margin-top: 5rem;" id="">
 
@@ -114,9 +132,18 @@
                     @foreach ($catego as $category)
                        <li> <a href="/products/categoria={{$category->id}}" style="color: black">{{$category->descripcion}}</a> </li>
                     @endforeach
-                    
-                
             </ul>
+
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Dropdown button
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a class="dropdown-item" >Action</a>
+                  <a class="dropdown-item" >Another action</a>
+                  <a class="dropdown-item" >Something else here</a>
+                </div>
+              </div> 
         </div>
     <div class=" d-block ml-0 mr-auto     col-lg-7 col-md-8 col-sm-12  " style="margin-top: 3rem; float:right; background-color: green; ">
 
@@ -137,24 +164,47 @@
 
 
 
-                    <form class="" action="">
+
+                    @if (Auth::guest())
+                    <div class="form-group">
                         <div id="agregarcarrito" class="mr-auto ml-auto col-xs-12 text-center     product-item  text-center " 
-                             style="width: 75%; height: 30%; top: 0px; left: 0px; right:0px; position: absolute; border-radius: 6px; top: 50px; ">
+                        style="width: 75%; height: 30%; top: 0px; left: 0px; right:0px; position: absolute; border-radius: 6px; top: 50px; ">
+                        
+                        <a href="/login" class="btn btn-primary btn-sesion-carrito">Iniciar Sesion</a> 
+                        <p class="btn-sesion-carrito" style="color: #777; font-size: 15px;">Inicia sesion para añadir al carrito</p>
 
-                            
-                    <input id="cantidad" type="text" class=" text-center cant" value="" placeholder="Cantidad"
-                                style="width: 70%; height: 50%; top: 15px; left: 10px; right:0px; position: absolute; border-radius: 8px; ">
-                                
-                                <button class="btn " id="boton-carrito" type="submit" style="">
-                                    <i class="fas fa-cart-plus " style="color: #8cc63e; font-size:1.5rem; float: left;"></i>
-                                </button>  
+                    </div>
+                       
+                   </div>
+                    @else
+                              {{-- FORMULARIO PARA A;ADIR AL CARRITO --}}
+                            <form  action="/products/carrito" method="POST">
+                                @csrf
 
-                            <div id="embalaje">
-                                <label for="">{{$prod->embalaje}}</label>    
-                            </div>  
+                                <div id="agregarcarrito" class="mr-auto ml-auto col-xs-12 text-center     product-item  text-center " 
+                                    style="width: 75%; height: 30%; top: 0px; left: 0px; right:0px; position: absolute; border-radius: 6px; top: 50px; ">
+                                    
+                                    
+                            <input type="hidden" name="id_user" id="id_user" value="{{ Auth::user()->id }}">
+                            <input type="hidden" name="id_producto" value="{{ $prod->id }}">
+                            <input type="hidden" name="unidad" value="{{ $prod->embalaje }}">
+                                    
+                            <input id="cantidad" name="cantidad" type="text" class=" text-center cant" value="" placeholder="Cantidad"
+                                        style="width: 70%; height: 50%; top: 15px; left: 10px; right:0px; position: absolute; border-radius: 8px; ">
+                                        
+                                        <button class="btn " id="boton-carrito" type="submit" style="">
+                                            <i class="fas fa-cart-plus " style="color: #8cc63e; font-size:1.5rem; float: left;"></i>
+                                        </button>  
 
-                        </div>
-                    </form>
+                                    <div id="embalaje">
+                                        <label for="">{{ $prod->embalaje }}</label>    
+                                    </div>  
+
+                                </div>
+                            </form>
+                    @endif
+
+                   
             
 
 

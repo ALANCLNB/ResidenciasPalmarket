@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class OfertasPdfsMigration extends Migration
+class CarritoMigration extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,13 @@ class OfertasPdfsMigration extends Migration
      */
     public function up()
     {
-        Schema::create('ofertaspdfs', function (Blueprint $table) {
+        Schema::create('carritoproductos', function (Blueprint $table) {
             $table->id();
-            $table->char('id_user');
-            $table->string('nombre');
+            $table->string('id_producto');
+            $table->string('id_user');
+            $table->string('cantidad');
+            $table->string('unidad');
+            $table->string('imagen');
             $table->rememberToken();
             $table->timestamps();
         });
@@ -29,6 +32,6 @@ class OfertasPdfsMigration extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ofertaspdfs');
+        Schema::dropIfExists('carritoproductos');
     }
 }

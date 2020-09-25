@@ -34,7 +34,29 @@
                         <li class="nav-item"><strong><a class="nav-link js-scroll-trigger" href="#ofertones">Ofertas de la semana</a></strong></li>
                         <li class="nav-item"><strong><a class="nav-link js-scroll-trigger" href="#cuponzasos">Cupones</a></strong></li>
                         <li class="nav-item"><strong><a class="nav-link js-scroll-trigger" href="#contact">Contacto</a></strong></li>
-                                             
+                        
+                        <li class="nav-item dropdown no-arrow mx-1">
+                            <a class="nav-link dropdown-toggle" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-shopping-cart"></i>
+                              <!-- Counter - Alerts -->
+                              <span class="badge badge-danger badge-counter">5+</span>
+                            </a>
+                            <div class="dropdown-menu dropdown" aria-labelledby="dropdownMenu">
+                              @foreach ($carrito as $item)
+                                    <a class="dropdown-item d-flex align-items-center" href="#">
+                                        <div class="mr-3">
+                                        <div class="icon-circle bg-primary">
+                                            <i class="fas fa-file-alt text-white"></i>
+                                        </div>
+                                        </div>
+                                        <div>
+                                        <div class="small text-gray-500">{{$item->Producto}}</div>
+                                        <span class="font-weight-bold">{{ $item->cantidad }}</span>
+                                        </div>
+                                    </a>
+                              @endforeach
+                            </div>
+                                       
                         @if (Auth::check())
                                 <li class="nav-item"><a class="nav-link js-scroll-trigger" style="color:#fed136" href="/login"><strong>{{ Auth::user()->nombre }}</strong></a></li>
                                 {{-- <img class="img-profile rounded-circle w-4 h-4" src="https://gaminguardian.com/wp-content/uploads/2020/03/kanojo-okarishimasu.png" style="height: 50px; width: 50px;"> --}}
