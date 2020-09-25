@@ -17,6 +17,8 @@
 </head>
 
 
+
+
 <body>
 
 
@@ -118,28 +120,44 @@
         </div>
     <div class=" d-block ml-0 mr-auto     col-lg-7 col-md-8 col-sm-12  " style="margin-top: 3rem; float:right; background-color: green; ">
 
-    <div class="row no-gutters" style="background-color: white; ">
+
+
+    <div class="row no-gutters" style="background-color: white;">
 
                @foreach ($productos as $prod)
                    
-                    <div class="col-lg-3 col-md-4 col-sm-12  mb-auto mt-auto home--product-item" 
-                    style="margin-bottom: 0.5rem;height:300px background-color: green; text-align: center;  border-radius: 25px;">
+                    <div class="col-lg-3 col-md-4 col-sm-12  mb-2 mt-auto home--product-item" 
+                    style="background-color: white; text-align: center;  border-radius: 25px;">
                            
                     @if ($prod->oferta == '0')
                         <div class="mr-auto ml-auto" style="background:#f50808; width: 95%; height: 10%; top: 0px; left: 0px; right:0px; position: absolute;  border-radius: 25px 25px 0px 0px;">
                             <label for="" style="color: white"><strong>OFERTA</strong></label>
                         </div>
-                    @endif
-                    
+                    @endif                   
 
 
-                        <div class="mr-auto ml-auto col-xs-12     product-item  text-center " 
-                        style="width: 70%; height: 30%; top: 0px; left: 0px; right:0px; position: absolute; border-radius: 6px;top: 50px;">
 
-                            <div class="mr-auto ml-auto mt-auto mb-auto ">
-                                <input type="text" class="product-item  text-center " style="width: 70%; height: 50%; top: 15px; left: 10px; right:0px; position: absolute; border-radius: 8px; ">
-                            </div>
+                    <form class="" action="">
+                        <div id="agregarcarrito" class="mr-auto ml-auto col-xs-12 text-center     product-item  text-center " 
+                             style="width: 75%; height: 30%; top: 0px; left: 0px; right:0px; position: absolute; border-radius: 6px; top: 50px; ">
+
+                            
+                    <input id="cantidad" type="text" class=" text-center cant" value="" placeholder="Cantidad"
+                                style="width: 70%; height: 50%; top: 15px; left: 10px; right:0px; position: absolute; border-radius: 8px; ">
+                                
+                                <button class="btn " id="boton-carrito" type="submit" style="">
+                                    <i class="fas fa-cart-plus " style="color: #8cc63e; font-size:1.5rem; float: left;"></i>
+                                </button>  
+
+                            <div id="embalaje">
+                                <label for="">{{$prod->embalaje}}</label>    
+                            </div>  
+
                         </div>
+                    </form>
+            
+
+
 
 
 
@@ -204,10 +222,20 @@
 
 
 
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+    <script type="text/javascript">
+        $(function() {
+          $('#agregarcarrito').hover(function() {
+            $('#cantidad').css('display', 'block');
+          });
+        });
+    </script>
 
 
 
 
 
 </body>
+
 </html>

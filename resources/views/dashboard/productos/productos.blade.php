@@ -155,7 +155,7 @@ style="float: right" data-toggle="modal" data-target="#modalAgregarP"><i class="
 
 
    <!-- Modal Agregar -->
-   <div class="modal fade" id="modalAgregarP" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="modalAgregarP" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -165,7 +165,7 @@ style="float: right" data-toggle="modal" data-target="#modalAgregarP"><i class="
           </button>
         </div>
 
-        <form action="/dash/admin/productos" method="POST" enctype="multipart/form-data">
+        <form action="/dash/admin/productos/upload" method="POST" enctype="multipart/form-data">
             
           @csrf
             <div class="modal-body">
@@ -186,65 +186,69 @@ style="float: right" data-toggle="modal" data-target="#modalAgregarP"><i class="
               
               </div>
               {{-- Fin Alerta Errores --}}
-
-                <div class="form-group">
-                  <input type="text" class="form-control" id="id_user" name="id_user" placeholder="Usuario" value="{{ Auth::user()->id }}">
-                </div>
-
-                <div class="form-group">
-                  <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre" value="{{ old('nombre') }}">
-                </div>
-
-                <div class="form-group">
-                  <label  class="col-lg-12 col-md-12 col-sm-12">Categoria</label>
+              <div class="form-group">
+                <input type="hidden" class="form-control" id="id_user" name="id_user" placeholder="Usuario" value="{{ Auth::user()->id }}" required>
+              </div>
+            
+              <div class="form-group">
+                <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre" value="{{ old('nombre') }}" required>
+              </div>
+            
+              <div class="form-group">
+                <label  class="col-lg-12 col-md-12 col-sm-12">Categoria</label>
+            
+                <select class="custom-select   col-lg-12 col-md-12 col-sm-12    ml-auto mb-auto mr-auto mt-auto" id="categoria" name="categoria" required>
+                  <option selected disabled value="">Seleccionar</option>
+                  
+                  
+                  @foreach ($categoria as $cat)
+                      <option value="{{ $cat->id }}">{{ $cat->descripcion }}</option>
+                  @endforeach
+                  
+                </select>
+              </div>
+            
+              <div class="form-group">
+                <label  class="col-lg-12 col-md-12 col-sm-12">Oferta</label>
+            
+                <select class="custom-select   col-lg-12 col-md-12 col-sm-12    ml-auto mb-auto mr-auto mt-auto" id="oferta" name="oferta" required>
+                  <option selected disabled value="">Seleccionar</option>
+                  <option value="0">Si</option>
+                  <option value="1">No</option>
+                </select>
+                  
+              </div>
+            
+              <div class="form-group">
+                <label  class="col-lg-12 col-md-12 col-sm-12">Embalaje</label>
+            
+                <select class="custom-select   col-lg-12 col-md-12 col-sm-12    ml-auto mb-auto mr-auto mt-auto" id="embalaje" name="embalaje" required>
+                  <option selected disabled value="">Seleccionar</option>
+                  <option value="Kg">Kg</option>
+                  <option value="Pza">Pza</option>
+                  <option value="Manojo">Manojo</option>
+                </select>
+                  
+              </div>
+            
+              <div class="form-group">
+                  <input type="text" class="form-control" id="marca" name="marca" placeholder="Marca" value="{{ old('marca') }}" required>
+              </div>
+            
+              <div class="form-group">
+                  <input type="text" class="form-control" id="precio" name="precio" placeholder="Precio" value="{{ old('precio') }}" required>
+              </div>
+            
               
-                  <select class="custom-select   col-lg-12 col-md-12 col-sm-12    ml-auto mb-auto mr-auto mt-auto" id="categoria" name="categoria" required>
-                    <option selected disabled value="">Seleccionar</option>
-                    
-                    
-                    @foreach ($categoria as $cat)
-                        <option value="{{ $cat->id }}">{{ $cat->descripcion }}</option>
-                    @endforeach
-                    
-                  </select>
-                </div>
-
-                <div class="form-group">
-                  <label  class="col-lg-12 col-md-12 col-sm-12">Oferta</label>
-              
-                  <select class="custom-select   col-lg-12 col-md-12 col-sm-12    ml-auto mb-auto mr-auto mt-auto" id="oferta" name="oferta" required>
-                    <option selected disabled value="">Seleccionar</option>
-                    <option value="0">Si</option>
-                    <option value="1">No</option>
-                  </select>
-                    
-                </div>
-
-                <div class="form-group">
-                  <label  class="col-lg-12 col-md-12 col-sm-12">Embalaje</label>
-              
-                  <select class="custom-select   col-lg-12 col-md-12 col-sm-12    ml-auto mb-auto mr-auto mt-auto" id="embalaje" name="embalaje" required>
-                    <option selected disabled value="">Seleccionar</option>
-                    <option value="Kg">Kg</option>
-                    <option value="Pza">Pza</option>
-                    <option value="Manojo">Manojo</option>
-                  </select>
-                    
-                </div>
-
-                <div class="form-group">
-                    <input type="text" class="form-control" id="marca" name="marca" placeholder="Marca" value="{{ old('marca') }}">
-                </div>
-
-                <div class="form-group">
-                    <input type="text" class="form-control" id="precio" name="precio" placeholder="Precio" value="{{ old('precio') }}">
-                </div>
-
-                
-
-                <div class="form-group">
-                    <input type="text" class="form-control" id="stock" name="stock" placeholder="Stock" value="{{ old('stock') }}">
-                </div>
+            
+              <div class="form-group">
+                  <input type="text" class="form-control" id="stock" name="stock" placeholder="Stock" value="{{ old('stock') }}" required>
+              </div>
+            
+            
+            
+            
+  
 
              {{-- ////////////////////////////////////////////// --}}
                 
@@ -293,9 +297,7 @@ style="float: right" data-toggle="modal" data-target="#modalAgregarP"><i class="
       </div>
     </div>
 
-  </div>
-
-
+  </div>   
 
   <!-- Modal Eliminar -->
 <div class="modal fade" id="modalEliminar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

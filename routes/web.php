@@ -82,7 +82,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('dash/admin/usuarios/correo', 'UsuariosController@correo');
 
 
-Route::post('dash/admin/productos', ['as'=>'croppie.upload-image','uses'=>'ProductosController@store']);
+Route::post('dash/admin/productos/upload', ['as'=>'croppie.upload-image','uses'=>'ProductosController@store']);
 
 Route::post('dash/admin/ofertasimg', ['as'=>'croppie.subir-image','uses'=>'ImgOfertasController@store']);
 
