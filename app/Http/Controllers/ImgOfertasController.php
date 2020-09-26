@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 class ImgOfertasController extends Controller
 {
     public function __construct(){
-        $this->middleware('auth');
+      $this->middleware(['auth','authadmin']);
     }
     
     public function index()

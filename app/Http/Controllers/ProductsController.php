@@ -6,6 +6,7 @@ use App\Producto;
 use App\Categoria;
 use App\Carritoproducto;
 use Validator;
+use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -29,17 +30,29 @@ class ProductsController extends Controller
         ->get();
 
         //$tittle = Categoria::where('id', $categoria);
+        $carrito = DB::table('carritoproductos')
+        ->join('productos','productos.id','=','carritoproductos.id_user')
+        ->select('carritoproductos.*','productos.nombre as Producto')
+        ->orderBy('created_at','DESC')
+        ->get();
+         
+        $carritocant = Carritoproducto::all()->count();
 
         $tittle2 = DB::table('categorias') 
         ->select('categorias.descripcion')
         ->where('id',$categoria)
         ->get();
+
         foreach ($tittle2 as $tit) {
            $tittle = $tit->descripcion;
         }
-        
-        //dd($tittle);
-        return view('layouts.products', compact('productos','catego','tittle'));
+
+        if (Auth::check()) {
+           $contador = 5;
+        }
+        $count = Carritoproducto::where('id_user','=',Auth::user()->id)->count();
+        //dd($count);
+        return view('layouts.products', compact('productos','catego','tittle','carrito','count'));
         //return view('welcome');
     }
 

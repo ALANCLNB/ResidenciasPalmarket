@@ -25,7 +25,8 @@
 <body id="page-top">
 
 
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav2">
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
         <div class="container">
             <a class="navbar-brand js-scroll-trigger" href="#page-top"><img src="{{asset('/principal-archivos/assets/img/logos/palmarketlogo.png')}}" alt="" /></a>
             <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -34,22 +35,63 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav text-uppercase ml-auto">
-
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/#services">Nosotros</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/#departamentos">Departamentos</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/#ofertones">Ofertas de la semana</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/#cuponzasos">Cupones</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/#contact">Contacto</a></li>
-                   
-
-                       
+                    <li class="nav-item"><strong><a class="nav-link js-scroll-trigger" href="/#services">Nosotros</a></strong></li>
+                    <li class="nav-item"><strong><a class="nav-link js-scroll-trigger" href="/#departamentos">Departamentos</a></strong></li>
+                    <li class="nav-item"><strong><a class="nav-link js-scroll-trigger" href="/#ofertones">Ofertas de la semana</a></strong></li>
+                    <li class="nav-item"><strong><a class="nav-link js-scroll-trigger" href="/#cuponzasos">Cupones</a></strong></li>
+                    <li class="nav-item"><strong><a class="nav-link js-scroll-trigger" href="/#contact">Contacto</a></strong></li>
                     
-                   
+                      <!-- Nav Item - Alerts -->
+            <li class="nav-item dropdown no-arrow mx-1">
+                <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="fas fa-cart-arrow-down"></i>
+                  <!-- Counter - Alerts -->
+            
+
+                <span class="badge badge-danger badge-counter">{{$count}}</span>
+
+                </a>
+                <!-- Dropdown - Alerts -->
+
+                <div class="col-lg-6 col-md-6  col-sm-12     dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown"
+                style="position:absolute;">
+                  <h6 class="dropdown-header">
+                    Productos
+                  </h6>
+                  @foreach ($carrito as $item)
+
+                  @if ($item->id_user == Auth::user()->id)
+                      
+                  
+                  <a class="dropdown-item d-flex align-items-center" href="#">
+                    <div class="mr-3">
+                      <div class="icon-circle ">
+                        <i class="fas fa-shopping-basket" style="color: #8cc63e"></i>
+                      </div>
+                    </div>
+                    <div>
+                      <div class="text-truncate">{{ $item->Producto }}</div>
+                      
+                      <div class="row">
+                            <div class="text-truncate">{{ $item->cantidad }} - {{ $item->unidad }}</div>
+                            <div class="text-cant-precio">{{ $item->cantidad }}</div>
+                      </div>
+                      {{-- <span class="font-weight-bold text-truncate" style="max-width: 10rem;">A new monthly report is ready to download!</span> --}}
+                    </div>
+                  </a>
+                  @endif
+                  @endforeach
+                  
+                 
+                  <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+                </div>
+              </li>
+                                   
                     @if (Auth::check())
-                            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/login"><strong>{{ Auth::user()->nombre }}</strong></a></li>
-                            
+                            <li class="nav-item"><a class="nav-link js-scroll-trigger" style="color:#fed136" href="/login"><strong>{{ Auth::user()->nombre }}</strong></a></li>
+                            {{-- <img class="img-profile rounded-circle w-4 h-4" src="https://gaminguardian.com/wp-content/uploads/2020/03/kanojo-okarishimasu.png" style="height: 50px; width: 50px;"> --}}
                     @else
-                            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/login">Iniciar Sesion</a></li> 
+                            <li class="nav-item"><strong><a class="nav-link js-scroll-trigger" href="/login">Iniciar Sesion</a></strong></li> 
                     @endif 
                     
                 </ul>
@@ -284,7 +326,15 @@
 
 
 
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
+<!-- Third party plugin JS-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+<!-- Contact form JS-->
+<script src="{{asset('/principal-archivos/assets/mail/jqBootstrapValidation.js')}}"></script>
+<script src="{{asset('/principal-archivos/assets/mail/contact_me.js')}}"></script>
+<!-- Core theme JS-->
+<script src="{{asset('/principal-archivos/js/scripts.js')}}"></script>
 
 </body>
 
