@@ -10811,7 +10811,16 @@ b{
 }
 
 .text-cant-precio{
-  right: 20px; 
+  right: 50px; 
+  position: absolute;
+  max-width: 15rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.text-elim-carrito{
+  right: 10px; 
   position: absolute;
   max-width: 15rem;
   overflow: hidden;

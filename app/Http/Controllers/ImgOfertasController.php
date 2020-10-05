@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-use Image;
+//use Image;
+use Intervention\Image\ImageManagerStatic as Image;
 use Validator;
 use App\Ofertasimg;
 use Illuminate\Http\Request;
@@ -57,8 +58,13 @@ class ImgOfertasController extends Controller
               $image_name= time().'oferta'.'.png';
               $path = public_path('/ofertas/img/'.$image_name);
       
-              file_put_contents($path, $image_file);
-      
+              //file_put_contents($path, $image_file);
+              Image::make($image_file)
+                    ->resize(400,300, function ($constraint){ 
+                    $constraint->aspectRatio();
+              })
+              ->save($path,72);
+
               $IOferta = Ofertasimg::create([
                 'nombre' => $image_name,
                 'id_user' => $request->id_user
@@ -111,11 +117,21 @@ class ImgOfertasController extends Controller
 
               if (file_exists(public_path('/ofertas/img/'.$request->nombre))) {
                     unlink($image_path);    
-                    file_put_contents($path, $image_file);
+                    //file_put_contents($path, $image_file);
+                  Image::make($image_file)
+                    ->resize(400,300, function ($constraint){ 
+                    $constraint->aspectRatio();
+              })
+              ->save($path,72);
                     //dd('SIIII');
               }else{
                     //
-                   file_put_contents($path, $image_file);
+                   //file_put_contents($path, $image_file);
+                  Image::make($image_file)
+                    ->resize(400,300, function ($constraint){ 
+                    $constraint->aspectRatio();
+              })
+              ->save($path,72);
                    //dd('NoOOO');
               }
 

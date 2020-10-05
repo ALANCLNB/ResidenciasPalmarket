@@ -176,7 +176,7 @@ style="float: right" data-toggle="modal" data-target="#modalAgregarP"><i class="
                       <div class="col-12 alert alert-danger alert-dismissable fade show" role="alert">
                           <h5>Errores:</h5>
                           <ul>
-                              @foreach ($errors->all() as $error)
+                              @foreach ($validator->all() as $error)
                                   <li>{{ $error }}</li>                    
                               @endforeach    
                           </ul>    
@@ -192,6 +192,8 @@ style="float: right" data-toggle="modal" data-target="#modalAgregarP"><i class="
             
               <div class="form-group">
                 <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre" value="{{ old('nombre') }}" required>
+                <div class="valid-feedback">Ok</div>
+                <div class="invalid-feedback">NOO</div>
               </div>
             
               <div class="form-group">
@@ -280,7 +282,7 @@ style="float: right" data-toggle="modal" data-target="#modalAgregarP"><i class="
   <input name="" type="file" id="image_file">
 
   <div class="btn-group mt-4 d-flex w-100" role="group" >
-    <button class="btn btn-primary upload-image " style="float: right !important;">Guardar</button>
+    <button class="btn btn-primary upload-image " type="submit" style="float: right !important;">Guardar</button>
   <button class="btn btn-secondary "  data-dismiss="modal" style="float: right !important;">Cerrar</button>
   
   </div>
@@ -624,6 +626,9 @@ var resize2 = $('#Edit-demo').croppie({
         console.log(data);
 
           if (data.status == true) {
+            location.href="/dash/admin/productos";
+          }
+          if(data.status == false){
             location.href="/dash/admin/productos";
           }
         }

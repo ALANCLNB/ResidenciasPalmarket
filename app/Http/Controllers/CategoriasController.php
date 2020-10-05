@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Validator;
+use Intervention\Image\ImageManagerStatic as Image;
 use App\Categoria;
 
 class CategoriasController extends Controller
@@ -67,8 +68,12 @@ class CategoriasController extends Controller
               $image_name= time().'cate'.'.png';
               $path = public_path('/img/categorias/'.$image_name);
       
-              file_put_contents($path, $image_file);
-      
+              //file_put_contents($path, $image_file);
+              Image::make($image_file)
+                    ->resize(400,300, function ($constraint){ 
+                    $constraint->aspectRatio();
+              })
+              ->save($path,72);
               
 
             //dd('si se subio');
@@ -176,10 +181,21 @@ class CategoriasController extends Controller
                     } elseif (file_exists($image_path)){
 
                         unlink($image_path);
-                        file_put_contents($path, $image_file);
+                        //file_put_contents($path, $image_file);
+                        Image::make($image_file)
+                            ->resize(400,300, function ($constraint){ 
+                            $constraint->aspectRatio();
+                    })
+                    ->save($path,72);
+
                     }else{
 
-                        file_put_contents($path, $image_file);
+                        //file_put_contents($path, $image_file);
+                        Image::make($image_file)
+                            ->resize(400,300, function ($constraint){ 
+                            $constraint->aspectRatio();
+                    })
+                    ->save($path,72);
                     }
                     
                     

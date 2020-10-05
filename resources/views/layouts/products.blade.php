@@ -40,15 +40,17 @@
                     <li class="nav-item"><strong><a class="nav-link js-scroll-trigger" href="/#ofertones">Ofertas de la semana</a></strong></li>
                     <li class="nav-item"><strong><a class="nav-link js-scroll-trigger" href="/#cuponzasos">Cupones</a></strong></li>
                     <li class="nav-item"><strong><a class="nav-link js-scroll-trigger" href="/#contact">Contacto</a></strong></li>
-                    
+                   
+                   
+                    @if (Auth::check())
                       <!-- Nav Item - Alerts -->
             <li class="nav-item dropdown no-arrow mx-1">
-                <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" href="" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i class="fas fa-cart-arrow-down"></i>
                   <!-- Counter - Alerts -->
             
 
-                <span class="badge badge-danger badge-counter">{{$count}}</span>
+                  <span class="badge badge-danger badge-counter">{{ $count }}</span> 
 
                 </a>
                 <!-- Dropdown - Alerts -->
@@ -58,36 +60,59 @@
                   <h6 class="dropdown-header">
                     Productos
                   </h6>
+
+
                   @foreach ($carrito as $item)
 
                   @if ($item->id_user == Auth::user()->id)
-                      
                   
                   <a class="dropdown-item d-flex align-items-center" href="#">
-                    <div class="mr-3">
-                      <div class="icon-circle ">
-                        <i class="fas fa-shopping-basket" style="color: #8cc63e"></i>
-                      </div>
-                    </div>
-                    <div>
-                      <div class="text-truncate">{{ $item->Producto }}</div>
-                      
-                      <div class="row">
-                            <div class="text-truncate">{{ $item->cantidad }} - {{ $item->unidad }}</div>
-                            <div class="text-cant-precio">{{ $item->cantidad }}</div>
-                      </div>
-                      {{-- <span class="font-weight-bold text-truncate" style="max-width: 10rem;">A new monthly report is ready to download!</span> --}}
-                    </div>
+                        <div class="mr-3">
+                            <div class="icon-circle ">
+                                <i class="fas fa-shopping-basket" style="color: #8cc63e"></i>
+                            </div>
+                        </div>
+
+                        <div>
+                        <div class="text-truncate">{{ $item->Producto }}</div>
+                        
+                        <div class="row">
+                            
+                                <div class="text-truncate color--gray">{{ $item->cantidad }} - {{ $item->unidad }}</div>
+                                <b class="text-cant-precio color--green">$ {{ number_format($item->totalPriceQuantity,2) }}</b>                          
+                                {{-- <div class="text-cant-precio color--gray">$ {{ $item->totalPriceQuantity }}</div>
+                                <div class="text-cant-precio color--gray">X</div> --}}
+
+
+
+                                <form method="POST" action="{{ url("/products/carrito/{$item->id}") }}">
+                                    @csrf
+                                    @method('DELETE')
+                               
+                                   
+                                    <button class="btn text-elim-carrito" type="submit">
+                                        <i class="fa fa-trash"></i></button>
+
+                                  </form>
+
+
+                                         
+                        </div>
+                        {{-- <span class="font-weight-bold text-truncate" style="max-width: 10rem;">A new monthly report is ready to download!</span> --}}
+                        </div>
+
                   </a>
                   @endif
                   @endforeach
-                  
-                 
-                  <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+
+                           @foreach ($valor as $val)
+                           @endforeach       
+                            <a class="dropdown-item text-center small text-gray-500">Precio total: $ {{ number_format($val->totalPQ,2,'.', ',') }}</a>
+
                 </div>
               </li>
                                    
-                    @if (Auth::check())
+                    
                             <li class="nav-item"><a class="nav-link js-scroll-trigger" style="color:#fed136" href="/login"><strong>{{ Auth::user()->nombre }}</strong></a></li>
                             {{-- <img class="img-profile rounded-circle w-4 h-4" src="https://gaminguardian.com/wp-content/uploads/2020/03/kanojo-okarishimasu.png" style="height: 50px; width: 50px;"> --}}
                     @else
@@ -127,16 +152,7 @@
 </div> --}}
 
 
-<div class="dropdown">
-    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      Dropdown button
-    </button>
-    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-      <a class="dropdown-item" >Action</a>
-      <a class="dropdown-item" >Another action</a>
-      <a class="dropdown-item" >Something else here</a>
-    </div>
-  </div> 
+
 
     {{-- @foreach ($tittle as $titulo)
         <h1 class="text-center content--title">{{$titulo->descripcion}}</h1>
@@ -176,16 +192,7 @@
                     @endforeach
             </ul>
 
-            <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Dropdown button
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <a class="dropdown-item" >Action</a>
-                  <a class="dropdown-item" >Another action</a>
-                  <a class="dropdown-item" >Something else here</a>
-                </div>
-              </div> 
+        
         </div>
     <div class=" d-block ml-0 mr-auto     col-lg-7 col-md-8 col-sm-12  " style="margin-top: 3rem; float:right; background-color: green; ">
 
@@ -226,7 +233,7 @@
                                 <div id="agregarcarrito" class="mr-auto ml-auto col-xs-12 text-center     product-item  text-center " 
                                     style="width: 75%; height: 30%; top: 0px; left: 0px; right:0px; position: absolute; border-radius: 6px; top: 50px; ">
                                     
-                                    
+                            
                             <input type="hidden" name="id_user" id="id_user" value="{{ Auth::user()->id }}">
                             <input type="hidden" name="id_producto" value="{{ $prod->id }}">
                             <input type="hidden" name="unidad" value="{{ $prod->embalaje }}">
