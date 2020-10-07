@@ -44,6 +44,8 @@ style="float: right" data-toggle="modal" data-target="#modalAgregarP"><i class="
   
       @endif
   
+
+     
   </div>
 
 <!-- DataTales Example -->
@@ -176,18 +178,23 @@ style="float: right" data-toggle="modal" data-target="#modalAgregarP"><i class="
                       <div class="col-12 alert alert-danger alert-dismissable fade show" role="alert">
                           <h5>Errores:</h5>
                           <ul>
-                              @foreach ($validator->all() as $error)
+                              @foreach ($errors->all() as $error)
                                   <li>{{ $error }}</li>                    
                               @endforeach    
                           </ul>    
                       </div>    
               
                   @endif
-              
+              <div role="alert" id="error-div">
+                  <ul class="custom-errors">
+
+                  </ul>
               </div>
+              
+                  </div>
               {{-- Fin Alerta Errores --}}
               <div class="form-group">
-                <input type="hidden" class="form-control" id="id_user" name="id_user" placeholder="Usuario" value="{{ Auth::user()->id }}" required>
+                <input type="hidden" class="form-control" id="id_user" name="id_user" placeholder="Usuario" value="{{ Auth::user()->id }}" required>                
               </div>
             
               <div class="form-group">
@@ -457,7 +464,7 @@ style="float: right" data-toggle="modal" data-target="#modalAgregarP"><i class="
         <div class="col-md-12 text-center" style="padding:5%;">
         <strong>Seleccione una imagen:</strong>
       {{-- ///////////////////////////////////Input////////////////////////////////// --}}
-        <input name="img" type="file" id="image_fileEdit" value="">
+        <input name="img" type="file" id="image_fileEdit" id="image" value="">
 
         <div class="btn-group mt-4 d-flex w-100" role="group" >
           <button class="btn btn-primary edit-image " style="float: right !important;">Guardar</button>
@@ -491,6 +498,31 @@ style="float: right" data-toggle="modal" data-target="#modalAgregarP"><i class="
 
 <script>
  
+/*
+ $(".upload-image").click(function(e) {
+   e.preventDefault()
+  
+  axios.post(this.action,{
+    'nombre':document.querySelector('#nombre').value
+  })
+.then(function(response)=>{
+  console.log('correcto');
+})
+.catch(function(error)=>{
+  console.log('error');
+});
+
+ // alert("hola");
+ 
+});*/
+
+
+
+
+
+
+
+
 
 
 
@@ -526,18 +558,17 @@ style="float: right" data-toggle="modal" data-target="#modalAgregarP"><i class="
   //  console.log('gg');
 //});
 
-  $('.upload-image').on('click', function (ev) {
+  $('.upload-image').on('click', function (ev) {   
     resize.croppie('result', {
       type: 'canvas',
       size: 'viewport'
-      
 
     }).then(function (img) {
     
       $.ajax({
       url: "{{route('croppie.upload-image')}}",
       type: "POST",
-      data: {"imagen":img, 
+      data: {"imag":img, 
       
         "id_user":$('#id_user').val(),
         "nombre":$('#nombre').val(),
@@ -547,6 +578,7 @@ style="float: right" data-toggle="modal" data-target="#modalAgregarP"><i class="
         "precio":$('#precio').val(),
         "stock":$('#stock').val(),
         "embalaje":$('#embalaje').val(),
+        //"imagen":$('#image_file').val(),
         "_token":$('input[name="_token"]').val()
         
 
@@ -555,15 +587,45 @@ style="float: right" data-toggle="modal" data-target="#modalAgregarP"><i class="
       success: function (data) {
         console.log(data);
 
+        if (data.code !==200) {
+          let errors = data.msg,
+
+          error_div = $('#error-div'),
+          error_list = $('.custom-errors');
+
+          error_div.addClass('col-12 alert alert-danger alert-dismissable fade show');
+          ///Vaciar <li>'s
+          $('.custom-errors').empty();
+          
+          //console.log(data);
+          $.each(errors,function(index,error){
+            //$('.custom-errors').empty();
+            error_list.append('<li>' +error+ '</li>')
+          })
+        }
+        
+        
+        
+        //alert(data);
+
           if (data.status == true) {
             location.href="/dash/admin/productos";
           }
+          /*if(data.success == false){
+            location.href="/dash/admin/productos";
+          }*/
         }
         
        });
        
     });
   });
+
+
+
+
+
+
 
 
 
@@ -581,7 +643,10 @@ var resize2 = $('#Edit-demo').croppie({
           height: 400
       }
   });
-  
+
+ 
+
+
   $('#image_fileEdit').on('change', function () { 
     var reader = new FileReader();
       reader.onload = function (e) {
@@ -628,9 +693,7 @@ var resize2 = $('#Edit-demo').croppie({
           if (data.status == true) {
             location.href="/dash/admin/productos";
           }
-          if(data.status == false){
-            location.href="/dash/admin/productos";
-          }
+          
         }
         
        });

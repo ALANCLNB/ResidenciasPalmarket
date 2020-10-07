@@ -29,7 +29,18 @@
               </div>    
 
           @endif
-
+          
+          @if ($message = Session::get('ErrorInsert'))
+          <div class="col-12 alert alert-danger alert-dismissable fade show" role="alert">
+              <h5>Errores:</h5>
+              <ul>
+                  @foreach ($errors->all() as $error)
+                      <li>{{ $error }}</li>                    
+                  @endforeach    
+              </ul>    
+          </div>    
+    
+      @endif
         </div>
     
 
@@ -180,29 +191,29 @@
 
             @csrf
 
-            <input type="hidden" class="form-control" name="id_user" placeholder="Usuario ID Pruebas" value="{{ Auth::user()->id }}">
-            
+            <input type="hidden" class="form-control" name="id_user" placeholder="Usuario ID Pruebas" value="{{ Auth::user()->id }}">       
             <input type="hidden" class="form-control" name="email" placeholder="email Pruebas" value="{{ Auth::user()->email}}">
 
             <div class="form-group">
               <label for="exampleFormControlTextarea1">Escriba aquí su comentario.</label>
-              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="contenido"></textarea>
+              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="contenido" placeholder="Contenido..." ></textarea>
             </div>
             
             
             <div class="col-md-3 mb-3      col-lg-10 col-md-10 col-sm-12    ml-auto mb-auto mr-auto mt-auto">
-              <label for="validationCustom04">Tipo</label>
+            {{-- ////////////////////////////// --}}
+              <label for="validationCustom04" class="col-lg-auto col-md-0 col-sm-12 ">Tipo</label>
               
-                  <select class="custom-select    col-lg-4 col-md-6 col-sm-10    ml-auto mb-auto mr-auto mt-auto" name="tipo" id="validationCustom04" required>
+                  <select class="custom-select    col-lg-4 col-md-12 col-sm-10    ml-auto mb-auto mr-auto mt-auto" name="tipo" id="validationCustom04" >
                     <option selected disabled value="">Seleccionar</option>
                     <option value="1">Queja</option>
                     <option value="2">Sugerencia</option>
                   </select>
 
-            
-              <label for="validationCustom04">Sucursal</label>
+            {{-- ////////////////////////////// --}}
+              <label for="validationCustom04" class="col-lg-auto col-md-0 col-sm-12">Sucursal</label>
               
-                  <select class="custom-select   col-lg-4 col-md-6 col-sm-10    ml-auto mb-auto mr-auto mt-auto" name="sucursal" id="validationCustom04" required>
+                  <select class="custom-select   col-lg-4 col-md-12 col-sm-10    ml-auto mb-auto mr-auto mt-auto" name="sucursal" id="validationCustom04" >
                     <option selected disabled value="">Seleccionar</option>
                     
                     
@@ -218,7 +229,8 @@
 
               {{-- <div class="col-lg-5 col-md-3 col-sm-1    ml-auto mb-auto mr-auto mt-auto"></div> --}}
 
-                  <button type="submit" id="btnSubirPDF" class="btn btn-outline-success    col-lg-2 col-md-6 col-sm-10      ml-auto mb-auto mr-auto mt-auto" style="margin-top: 30px;">Enviar</button>
+                  <button type="submit" id="btnSubirPDF" class="btn btn-outline-success  col-lg-2 col-md-6 col-sm-10  float-lg-right    ml-auto mb-auto mr-auto mt-auto" 
+                  style="margin-top: 30px;">Enviar</button>
 
               {{-- <div class="col-lg-5 col-md-3 col-sm-1    ml-auto mb-auto mr-auto mt-auto"></div> --}}
 

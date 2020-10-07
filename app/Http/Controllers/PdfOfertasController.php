@@ -54,7 +54,6 @@ class PdfOfertasController extends Controller
 
         }else{
 
-
             if ($request->hasFile('archivo')) {
                 $file = $request->file('archivo');
                 $name = time().'_PDF_'.$file->getClientOriginalName();

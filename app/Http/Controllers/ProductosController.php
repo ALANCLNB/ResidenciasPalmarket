@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Validator;
-//use Image;
-use Intervention\Image\ImageManagerStatic as Image;
 use App\Mail\TestMail;
+use Illuminate\Http\Request;
+//use Image;
+use Illuminate\Support\Facades\DB;
+use Symfony\Component\Console\Input\Input;
+use Intervention\Image\ImageManagerStatic as Image;
 use App\Producto,Categoria;//modelo al que se va a referir
+
 class ProductosController extends Controller
 {
 
@@ -51,30 +53,51 @@ class ProductosController extends Controller
         //dd($request->all());
        $validator = Validator::make($request->all(),[
                 'nombre' => 'required|min:2|max:50',
-                'categoria' => 'required|min:1|max:3',
+                'categoria' => 'required|min:1|max:4',
                 'marca' => 'required|min:2|max:50',
-                'precio' => 'required|min:4|max:10',
+                'precio' => 'required|regex:/^\d+(\.\d{1,2})?$/',
+                'embalaje' => 'required',
+                //'imag' => 'required|mimes:jpg,jpeg,png,gif,svg',
+                //'imagen' => 'required|image|mimes:jpg,jpeg,png,gif,svg|max:2048',
                 //'imagen' => 'required|image|mimes:jpg,jpeg,png,gif,svg|max:2048',
                 
                 //'precio_ant' => 'required|min:5|max:50',
-                'stock' => 'required|min:1|max:5',
+                'stock' => 'required|min:1|numeric',
                 'id_user' => 'required|min:1|max:5'
 
         ]);
 
         if($validator -> fails()){
-            //dd('Llena todos los campos');
-            return response()->json(['status'=>false]);
+            //dd($request->imag);
+            
+            return response()->json(['code'=>401,'msg'=>$validator->errors()->all()]);
+            //return response()->json($request->all());
+            //return response()->json(['code'=>401,'msg'=>json_encode($validator->errors()->all())]);
+
+           /* return Response::json(array(
+                'success'=>false,
+                'errors' =>$validator->getMessageBag()->toArray()
+            ),400);*/
+
+            
+
+            //return response()->json(array('status'=>'success', 'error'=>'Success!'));
+
+            //dd($validator);
+            //return response()->json(Input::all());
+            
             //return $validator->getMessageBag()->toarray();
+            //return response()->json(['status'=>false]);
+            /*return response()->json();
 
             return back()
             ->withInput()
             ->with('ErrorInsert', 'Favor de llenar todos los campos')
-            ->withErrors($validator);
-
+            ->withErrors($validator);*/
+            //dd($validator);
         }else{
          
-            $image_file = $request->imagen;
+            $image_file = $request->imag;
 
             list($type, $image_file) = explode(';', $image_file);
             list(, $image_file)      = explode(',', $image_file);
