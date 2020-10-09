@@ -128,7 +128,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Agregar Cupon</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Agregar PDF</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -159,11 +159,11 @@
             <div class="form-group">
                 <label for="archivo"><b>Archivo: </b></label><br>
                 
-                <input type="text" name="id_user" placeholder="Usuario" value="{{ Auth::user()->id }}" >
+                <input type="hidden" name="id_user" placeholder="Usuario" value="{{ Auth::user()->id }}" >
                 {{-- Input Archivo --}}
-                <input type="file" name="archivo" accept="application/pdf">
+                <input type="file" name="pdf" accept="application/pdf">
 
-                <input class="btn btn-success" type="submit" value="Enviar" >
+                {{-- <input class="btn btn-success" type="submit" value="Enviar" > --}}
             </div>
 
 
@@ -194,7 +194,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Agregar PDF</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Modificar PDF</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -223,18 +223,18 @@
               {{-- Fin Alerta Errores --}}
               
               <div class="form-group">
-                <input type="text" class="form-control" id="idEdit" name="id" placeholder="Id" >
+                <input type="hidden" class="form-control" id="idEdit" name="id" placeholder="Id" >
               </div>
 
               <div class="form-group">
-                  <input type="text" class="form-control" id="id_userEdit" name="id_user" placeholder="Usuario" value="{{ Auth::user()->id }}" >
+                  <input type="hidden" class="form-control" id="id_userEdit" name="id_user" placeholder="Usuario" value="{{ Auth::user()->id }}" >
               </div>
 
               <div class="form-group">
                 <label for="archivo"><b>Archivo: </b></label><br>
                 
                 {{-- Input Archivo --}}
-                <input type="file" name="archivo" accept="application/pdf">
+                <input type="file" name="pdf" accept="application/pdf">
 
                 
             </div>

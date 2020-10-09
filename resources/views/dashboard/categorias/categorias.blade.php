@@ -118,7 +118,7 @@ style="float: right" data-toggle="modal" data-target="#modalAgregar"><i class="f
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Agregar producto</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Agregar Categoría</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -142,20 +142,27 @@ style="float: right" data-toggle="modal" data-target="#modalAgregar"><i class="f
                         </div>    
                 
                     @endif
-                
+                  {{-- //////////////////////// --}}
+                  <div role="alert" id="error-div">
+                      <ul class="custom-errors">
+    
+                      </ul>
+                  </div>
                 </div>
                 {{-- Fin Alerta Errores --}}
 
                     <div class="form-group">
-                        <input type="text" class="form-control" id="id_user" name="id_user" placeholder="Usuario" value="{{ auth()->user()->id }}">
+                        <input type="hidden" class="form-control" id="id_user" name="id_user" placeholder="Usuario" value="{{ auth()->user()->id }}">
                     </div>
 
 
                     <div class="form-group">
-                        <input type="text" class="form-control" id="descripcion" name="descripcion" placeholder="Descripción" value="{{ old('descripcion') }}">
+                        <input type="hidden" class="form-control" id="descripcion" name="descripcion" placeholder="Descripción" value="{{ old('descripcion') }}">
                     </div>
     
-  
+                    <div class="form-group">
+                      <input type="hidden" class="form-control" id="valorimg" name="valorimg" placeholder="tipo" >
+                    </div> 
                {{-- ////////////////////////////////////////////// --}}
                   
   
@@ -183,7 +190,7 @@ style="float: right" data-toggle="modal" data-target="#modalAgregar"><i class="f
     <div class="col-md-12 text-center" style="padding:5%;">
     <strong>Seleccione una imagen:</strong>
   {{-- ///////////////////////////////////Input////////////////////////////////// --}}
-    <input name="" type="file" id="image_file">
+    <input name="" type="file" id="image_fileC" accept="image/*">
   
     <div class="btn-group mt-4 d-flex w-100" role="group" >
       <button class="btn btn-primary upload-image " style="float: right !important;">Guardar</button>
@@ -269,20 +276,30 @@ style="float: right" data-toggle="modal" data-target="#modalAgregar"><i class="f
                       </div>    
               
                   @endif
-              
+
+                <div role="alert" id="error-divEdit">
+                    <ul class="custom-errorsEdit">
+  
+                    </ul>
+                </div>
+
               </div>
               {{-- Fin Alerta Errores --}}
               <div class="form-group">
-              <input type="text" name="id_user" id="id_userEdit" value="{{Auth::user()->id}}">
+              <input type="hidden" name="id_user" id="id_userEdit" value="{{Auth::user()->id}}">
               </div>
 
               <div class="form-group">
-                  <input type="text" name="id" id="idEdit">
+                  <input type="hidden" name="id" id="idEdit">
               </div>
 
               <div class="form-group">
-                <input type="text" class="form-control" id="descripcionEdit" name="descripcionEdit" placeholder="Descripcion" >
+                <input type="hidden" class="form-control" id="descripcionEdit" name="descripcionEdit" placeholder="Descripcion" >
               </div>
+
+              <div class="form-group">
+                <input type="hidden" class="form-control" id="valorimgEdit" name="valorimgEdit" placeholder="tipo" value="image/webp" >
+              </div> 
  
           </div>
 
@@ -308,7 +325,7 @@ style="float: right" data-toggle="modal" data-target="#modalAgregar"><i class="f
         <div class="col-md-12 text-center" style="padding:5%;">
         <strong>Seleccione una imagen:</strong>
       {{-- ///////////////////////////////////Input////////////////////////////////// --}}
-        <input name="img" type="file" id="image_fileEdit" value="">
+        <input name="img" type="file" id="image_fileEdit" accept="image/*">
 
         <div class="btn-group mt-4 d-flex w-100" role="group" >
           <button class="btn btn-primary edit-image " style="float: right !important;">Guardar</button>
@@ -359,7 +376,7 @@ style="float: right" data-toggle="modal" data-target="#modalAgregar"><i class="f
       }
   });
   
-  $('#image_file').on('change', function () { 
+  $('#image_fileC').on('change', function () { 
     var reader = new FileReader();
       reader.onload = function (e) {
         resize.croppie('bind',{
@@ -377,6 +394,19 @@ style="float: right" data-toggle="modal" data-target="#modalAgregar"><i class="f
   //  console.log('gg');
 //});
 
+$('#image_fileC').change(function(){
+        var fileName = this.files[0].name;
+        var fileSize = this.files[0].size;
+        var fileType = this.files[0].type;
+        var file = this.files[0];
+        console.log(file);
+        ///////////////CARGAR TYPE
+        $("#valorimg").val(fileType);
+        //alert('FileName : ' + fileName + '\nFileSize : ' + fileSize + ' bytes' + '\nTipo:' +fileType);
+        //alert(file);
+    });
+
+
   $('.upload-image').on('click', function (ev) {
     resize.croppie('result', {
       type: 'canvas',
@@ -386,12 +416,13 @@ style="float: right" data-toggle="modal" data-target="#modalAgregar"><i class="f
     }).then(function (img) {
     
       $.ajax({
-      url: "{{route('croppie.upload-image')}}",
+      url: "{{route('croppie.upload-imageC')}}",
       type: "POST",
-      data: {"imagen":img, 
+      data: {"image":img, 
       
         "id_user":$('#id_user').val(),
         "descripcion":$('#descripcion').val(),
+        "imagen":$('#valorimg').val(),
         "_token":$('input[name="_token"]').val()
         
 
@@ -399,6 +430,23 @@ style="float: right" data-toggle="modal" data-target="#modalAgregar"><i class="f
     
       success: function (data) {
         console.log(data);
+
+        if (data.code !==200) {
+          let errors = data.msg,
+
+          error_div = $('#error-div'),
+          error_list = $('.custom-errors');
+
+          error_div.addClass('col-12 alert alert-danger alert-dismissable fade show');
+          ///Vaciar <li>'s
+          $('.custom-errors').empty();
+          
+          //console.log(data);
+          $.each(errors,function(index,error){
+            //$('.custom-errors').empty();
+            error_list.append('<li>' +error+ '</li>')
+          })
+        }
 
           if (data.status == true) {
             location.href="/dash/admin/categorias";
@@ -439,6 +487,18 @@ var resize2 = $('#Edit-demo').croppie({
       reader.readAsDataURL(this.files[0]);
   });
 
+  $('#image_fileEdit').change(function(){
+        var fileName = this.files[0].name;
+        var fileSize = this.files[0].size;
+        var fileType = this.files[0].type;
+        var file = this.files[0];
+        console.log(file);
+        ///////////////CARGAR TYPE
+        $("#valorimgEdit").val(fileType);
+        //alert('FileName : ' + fileName + '\nFileSize : ' + fileSize + ' bytes' + '\nTipo:' +fileType);
+        //alert(file);
+    });
+
   $('.edit-image').on('click', function (ev) {
     resize2.croppie('result', {
       type: 'canvas',
@@ -455,6 +515,7 @@ var resize2 = $('#Edit-demo').croppie({
         "id":$('#idEdit').val(),
         "id_user":$('#id_userEdit').val(),
         "descripcion":$('#descripcionEdit').val(),
+        "imagen":$('#valorimgEdit').val(),
         "_token":$('input[name="_token"]').val()
        
         
@@ -463,6 +524,25 @@ var resize2 = $('#Edit-demo').croppie({
     
       success: function (data) {
         console.log(data);
+
+        if (data.code !==200) {
+          let errors = data.msg,
+
+          error_div = $('#error-divEdit'),
+          error_list = $('.custom-errorsEdit');
+
+          error_div.addClass('col-12 alert alert-danger alert-dismissable fade show');
+          ///Vaciar <li>'s
+          $('.custom-errorsEdit').empty();
+          
+          //console.log(data);
+          $.each(errors,function(index,error){
+            //$('.custom-errors').empty();
+            error_list.append('<li>' +error+ '</li>')
+          })
+        }
+
+
 
           if (data.status == true) {
             location.href="/dash/admin/categorias";

@@ -32,22 +32,26 @@ class ImgOfertasController extends Controller
 
 
 
+
+
     public  function store(Request $request)
     {
-      dd($request->all());
-      /* $validator = Validator::make($request->all(),[
+     // dd($request->all());
+      $validator = Validator::make($request->all(),[
                 'id_user' => 'required|min:1|max:50',
-                'nombre' => 'required|min:3|max:30'
+                'imagen' => 'required|regex:/^(image)\/(\w)+$/',
+                //'nombre' => 'min:3|max:30'
         ]);
 
         if($validator -> fails()){
             //dd('Llena todos los campos');
-            return back()
-            ->withInput()
-            ->with('ErrorInsert', 'Favor de llenar todos los campos')
-            ->withErrors($validator);
+            return response()->json(['code'=>401,'msg'=>$validator->errors()->all()]);
 
-        }else{*/
+
+        }else{
+
+
+
 
             $image_file = $request->image;
 
@@ -75,7 +79,7 @@ class ImgOfertasController extends Controller
             
             return response()->json(['status'=>true]);
            
-            //}
+            }//llave else
     }
 
 
@@ -94,10 +98,47 @@ class ImgOfertasController extends Controller
 
 
 
+
+
+
+
+
+
+
+
+
     public function editar(Request $request)
     {
         //dd(Ofertasimg::find($request ->id));
        $ioferta = Ofertasimg::find($request ->id);
+
+
+       $validator = Validator::make($request->all(),[
+        'nombre' => 'required|min:2|max:50',
+        'imagen' => 'regex:/^(image)\/(\w)+$/',
+        'id_user' => 'required|min:1|max:5'
+
+]);
+
+    if($validator -> fails()){
+        //dd('Llena todos los campos');
+        //dd($request->imagen);
+        return response()->json(['code'=>401,'msg'=>$validator->errors()->all()]);
+
+    }else{
+
+
+    
+       if(strlen ($request->image) < 5000){
+            $ioferta ->nombre = $request->nombre;
+            $ioferta ->id_user = $request->id_user;
+            
+            $ioferta->save();
+            return response()->json(['status'=>true]);
+
+        } else {
+
+
 
 
 
@@ -148,13 +189,13 @@ class ImgOfertasController extends Controller
 
         
 
-    }
+    }//Llave else imagen
+  }//Llave else validator
 
 
+  
 
-
-
-
+    }//Llave editar
 
 
 

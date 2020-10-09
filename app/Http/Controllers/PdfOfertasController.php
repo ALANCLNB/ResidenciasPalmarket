@@ -40,7 +40,7 @@ class PdfOfertasController extends Controller
        
        $validator = Validator::make($request->all(),[
                 'id_user' => 'required|min:1|max:5',
-                'archivo' => 'required|mimetypes:application/pdf|max:3000'
+                'pdf' => 'required|mimetypes:application/pdf|max:3000'
                 
                 
 
@@ -53,13 +53,13 @@ class PdfOfertasController extends Controller
             ->withErrors($validator);
 
         }else{
-
-            if ($request->hasFile('archivo')) {
-                $file = $request->file('archivo');
+            //dd($request->archivo);
+            if ($request->hasFile('pdf')) {
+                $file = $request->file('pdf');
                 $name = time().'_PDF_'.$file->getClientOriginalName();
                
                 
-                    if (file_exists(public_path('/ofertas/pdf/'.$request->archivo))) {
+                    if (file_exists(public_path('/ofertas/pdf/'.$request->pdf))) {
                         unlink(public_path().'/ofertas/pdf/',$name);    
                         $file->move(public_path().'/ofertas/pdf/',$name);
                         
@@ -129,7 +129,7 @@ class PdfOfertasController extends Controller
 
        $validator = Validator::make($request->all(),[
         'id_user' => 'required|min:1|max:5',
-        'archivo' => 'required|mimetypes:application/pdf|max:3000'        
+        'pdf' => 'required|mimetypes:application/pdf|max:3000'        
         ]);
 
             if($validator -> fails()){
@@ -139,13 +139,13 @@ class PdfOfertasController extends Controller
                 ->withErrors($validator);        
 
             }else{    
-              
-              if ($request->hasFile('archivo')) {
-                $file = $request->file('archivo');
+              //dd($request->pdf);
+              if ($request->hasFile('pdf')) {
+                $file = $request->file('pdf');
                 $name = time().'_PDF_'.$file->getClientOriginalName();
                
                 
-                    if (file_exists(public_path('/ofertas/pdf/'.$request->archivo))) {
+                    if (file_exists(public_path('/ofertas/pdf/'.$request->pdf))) {
                         unlink(public_path().'/ofertas/pdf/',$name);    
                         $file->move(public_path().'/ofertas/pdf/',$name);
                         

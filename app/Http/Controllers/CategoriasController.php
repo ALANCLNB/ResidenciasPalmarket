@@ -38,6 +38,7 @@ class CategoriasController extends Controller
         $validator = Validator::make($request->all(),[
                 'id_user' => 'required|min:1|max:3',
                 'descripcion' => 'required|min:1|max:50',
+                'imagen' => 'required|regex:/^(image)\/(\w)+$/'
                 //'token' => 'required|min:1|max:3',
                 //'imagen' => 'required|min:3|max:100'
 
@@ -45,10 +46,11 @@ class CategoriasController extends Controller
 
         if($validator -> fails()){
             //dd('Llena todos los campos');
-            return back()
+            return response()->json(['code'=>402,'msg'=>$validator->errors()->all()]);
+           /* return back()
             ->withInput()
             ->with('ErrorInsert', 'Favor de llenar todos los campos')
-            ->withErrors($validator);
+            ->withErrors($validator);*/
 
         }else{
             //dd('Guardado'.$request->nombre);
@@ -59,7 +61,7 @@ class CategoriasController extends Controller
             //]);
             return back()
             ->with('Listo', 'Se ha insertado el producto correctamente');*/
-            $image_file = $request->imagen;
+            $image_file = $request->image;
 
             list($type, $image_file) = explode(';', $image_file);
             list(, $image_file)      = explode(',', $image_file);
@@ -127,18 +129,18 @@ class CategoriasController extends Controller
 
         $validator = Validator::make($request->all(),[
             'id_user' => 'required|min:1|max:3',
-            'descripcion' => 'required|min:1|max:50'
+            'descripcion' => 'required|min:1|max:50',
+            'imagen' => 'regex:/^(image)\/(\w)+$/'
 
     ]);
-/*9
+
         if($validator -> fails()){
             //dd('Llena todos los campos');
-            return back()
-            ->withInput()
-            ->with('ErrorInsert', 'Favor de llenar todos los campos')
-            ->withErrors($validator);
-        }else{
+            
+            return response()->json(['code'=>401,'msg'=>$validator->errors()->all()]);
 
+        }else{
+/*
             $cate ->id_user = $request ->id_user;
             $cate ->descripcion = $request ->descripcion;
             
@@ -158,7 +160,7 @@ class CategoriasController extends Controller
                     $cate->save();
                     return response()->json(['status'=>true]);
 
-            } else {
+                } else {
                 //////////SI SE CARGO IMAGEN SE ACTUALIZA/////////////
                     $image_file = $request->image;
 
@@ -209,6 +211,7 @@ class CategoriasController extends Controller
                     return response()->json(['status'=>true]);
             
             }//else imagen
+        }
     }
 
 

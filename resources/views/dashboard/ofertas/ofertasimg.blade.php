@@ -201,12 +201,21 @@
               
                   @endif
               
+                  <div role="alert" id="error-div">
+                    <ul class="custom-errors">
+  
+                    </ul>
+                </div>
+
               </div>
               {{-- Fin Alerta Errores --}}
 
               <div class="form-group">
-              <input type="text" class="form-control" id="id_user" name="id_user" placeholder="Usuario" value="1">
+              <input type="hidden" class="form-control" id="id_user" name="id_user" placeholder="Usuario" value="1">
               </div>
+              <div class="form-group">
+                <input type="hidden" class="form-control" id="valorimg" name="valorimg" placeholder="tipo" >
+              </div> 
 
 
            {{-- ////////////////////////////////////////////// --}}
@@ -236,7 +245,7 @@
 <div class="col-md-12 text-center" style="padding:5%;">
 <strong>Seleccione una imagen:</strong>
 {{-- ///////////////////////////////////Input////////////////////////////////// --}}
-<input name="" type="file" id="image_file">
+<input name="" type="file" id="image_file" accept="image/*">
 
 <div class="btn-group mt-4 d-flex w-100" role="group" >
   <button class="btn btn-primary upload-image " style="float: right !important;">Guardar</button>
@@ -288,7 +297,13 @@
                       </div>    
               
                   @endif
-              
+            
+                  <div role="alert" id="error-divEdit">
+                    <ul class="custom-errorsEdit">
+  
+                    </ul>
+                  </div>
+
               </div>
               {{-- Fin Alerta Errores --}}
               
@@ -303,6 +318,10 @@
               <div class="form-group">
                 <input type="hidden" class="form-control" id="nombreEdit" name="" placeholder="Nombre" >
               </div>
+
+              <div class="form-group">
+                <input type="hidden" class="form-control" id="valorimgEdit" name="valorimgEdit" placeholder="tipo" value="image/webp">
+              </div> 
 
               
 
@@ -333,7 +352,7 @@
       <div class="col-md-12 text-center" style="padding:5%;">
       <strong>Seleccione una imagen:</strong>
     {{-- ///////////////////////////////////Input////////////////////////////////// --}}
-      <input name="" type="file" id="image_fileEdit">
+      <input name="" type="file" id="image_fileEdit" accept="image/*">
 
       <div class="btn-group mt-4 d-flex w-100" role="group" >
         <button class="btn btn-primary edit-image " style="float: right !important;">Guardar</button>
@@ -428,6 +447,18 @@
   //  console.log('gg');
 //});
 
+$('#image_file').change(function(){
+        var fileType = this.files[0].type;
+        var file = this.files[0];
+        console.log(file);
+        ///////////////CARGAR TYPE
+        $("#valorimg").val(fileType);
+        //$("#pesoimg").val(fileSize/1000/1000);
+        //alert('FileName : ' + fileName + '\nFileSize : ' + fileSize + ' bytes' + '\nTipo:' +fileType);
+        //alert(file);
+    });
+
+
   $('.upload-image').on('click', function (ev) {
     resize.croppie('result', {
       type: 'canvas',
@@ -443,6 +474,7 @@
 
         "nombre":$('#nombreEdit').val(),
         "id_user":$('#id_user').val(),
+        "imagen":$('#valorimg').val(),
         "_token":$('input[name="_token"]').val()
         
 
@@ -450,6 +482,25 @@
     
       success: function (data) {
         console.log(data);
+
+        if (data.code !==200) {
+          let errors = data.msg,
+
+          error_div = $('#error-div'),
+          error_list = $('.custom-errors');
+
+          error_div.addClass('col-12 alert alert-danger alert-dismissable fade show');
+          ///Vaciar <li>'s
+          $('.custom-errors').empty();
+          
+          //console.log(data);
+          $.each(errors,function(index,error){
+            //$('.custom-errors').empty();
+            error_list.append('<li>' +error+ '</li>')
+          })
+        }
+
+
 
           if (data.status == true) {
             location.href="/dash/admin/ofertasimg";
@@ -490,6 +541,20 @@ var resize2 = $('#Edit-demo').croppie({
       reader.readAsDataURL(this.files[0]);
   });
 
+
+
+
+  $('#image_fileEdit').change(function(){
+        var fileType = this.files[0].type;
+        var file = this.files[0];
+        console.log(file);
+        ///////////////CARGAR TYPE
+        $("#valorimgEdit").val(fileType);
+          
+    });
+
+
+
   $('.edit-image').on('click', function (ev) {
     resize2.croppie('result', {
       type: 'canvas',
@@ -506,6 +571,7 @@ var resize2 = $('#Edit-demo').croppie({
         "id":$('#idEdit').val(),
         "id_user":$('#id_userEdit').val(),
         "nombre":$('#nombreEdit').val(),
+        "imagen":$('#valorimgEdit').val(),
         "_token":$('input[name="_token"]').val()
         
 
@@ -513,6 +579,26 @@ var resize2 = $('#Edit-demo').croppie({
     
       success: function (data) {
         console.log(data);
+
+        if (data.code !==200) {
+          let errors = data.msg,
+
+          error_div = $('#error-divEdit'),
+          error_list = $('.custom-errorsEdit');
+
+          error_div.addClass('col-12 alert alert-danger alert-dismissable fade show');
+          ///Vaciar <li>'s
+          $('.custom-errorsEdit').empty();
+          
+          //console.log(data);
+          $.each(errors,function(index,error){
+            //$('.custom-errors').empty();
+            error_list.append('<li>' +error+ '</li>')
+          })
+        }
+
+
+
 
           if (data.status == true) {
             location.href="/dash/admin/ofertasimg";

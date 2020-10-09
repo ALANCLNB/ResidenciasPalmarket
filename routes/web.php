@@ -89,7 +89,7 @@ Route::post('dash/admin/productos/upload', ['as'=>'croppie.upload-image','uses'=
 
 Route::post('dash/admin/ofertasimg', ['as'=>'croppie.subir-image','uses'=>'ImgOfertasController@store']);
 
-Route::post('dash/admin/categorias', ['as'=>'croppie.upload-image','uses'=>'CategoriasController@store']);
+Route::post('dash/admin/categorias', ['as'=>'croppie.upload-imageC','uses'=>'CategoriasController@store']);
 //Route::post('dash/admin/ofertasimg', ['as'=>'croppie.upload-image','uses'=>'ImgOfertasController@store']);
 //Route::post('dash/admin/usuarios/edit', 'UsuariosController@edit');
 

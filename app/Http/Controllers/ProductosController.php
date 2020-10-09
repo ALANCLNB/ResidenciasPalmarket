@@ -49,7 +49,9 @@ class ProductosController extends Controller
 
     public  function store(Request $request)
     {       
-        
+        $messages = [
+            'imagen.required'    => 'se reuiere una imagen'
+         ];
         //dd($request->all());
        $validator = Validator::make($request->all(),[
                 'nombre' => 'required|min:2|max:50',
@@ -58,9 +60,10 @@ class ProductosController extends Controller
                 'precio' => 'required|regex:/^\d+(\.\d{1,2})?$/',
                 'embalaje' => 'required',
                 //'imag' => 'required|mimes:jpg,jpeg,png,gif,svg',
-                //'imagen' => 'required|image|mimes:jpg,jpeg,png,gif,svg|max:2048',
-                //'imagen' => 'required|image|mimes:jpg,jpeg,png,gif,svg|max:2048',
-                
+                //'prueba' => 'required|image|mimes:jpg,jpeg,png,gif,svg,webp|max:2048',
+                'imagen' => 'required|regex:/^(image)\/(\w)+$/',
+                //'Imagen' => 'numeric|max:3',
+                //'prueba' => 'required',
                 //'precio_ant' => 'required|min:5|max:50',
                 'stock' => 'required|min:1|numeric',
                 'id_user' => 'required|min:1|max:5'
@@ -68,9 +71,9 @@ class ProductosController extends Controller
         ]);
 
         if($validator -> fails()){
-            //dd($request->imag);
+            //dd($request->prueba);
             
-            return response()->json(['code'=>401,'msg'=>$validator->errors()->all()]);
+            return response()->json(['code'=>401,'msg'=>$validator->errors()->all(),'valid'=>$messages]);
             //return response()->json($request->all());
             //return response()->json(['code'=>401,'msg'=>json_encode($validator->errors()->all())]);
 
@@ -185,19 +188,18 @@ class ProductosController extends Controller
             'marca' => 'required|min:2|max:50',
             'precio' => 'required|min:4|max:10',
             'stock' => 'required|min:1|max:5',
+            'imagen' => 'regex:/^(image)\/(\w)+$/',
             'id_user' => 'required|min:1|max:5'
 
     ]);
 
         if($validator -> fails()){
             //dd('Llena todos los campos');
-            return back()
-            ->withInput()
-            ->with('ErrorInsert', 'Favor de llenar todos los campos')
-            ->withErrors($validator);
+            //dd($request->imagen);
+            return response()->json(['code'=>401,'msg'=>$validator->errors()->all()]);
 
         }else{
-            //dd($request->image);
+            //dd($request->imagen);
             
             
                 ////////INFORMACION QUE MANDA EL CROPPIE AL ESTAR VACIO//////////
@@ -233,13 +235,32 @@ class ProductosController extends Controller
                     
                     $image_path = public_path('/img/'.$prod->imagen);  // Value is not URL but directory file path
                     
-                    unlink($image_path);
+                    /*unlink($image_path);
                     //file_put_contents($path, $image_file);
                     Image::make($image_file)
                     ->resize(400,300, function ($constraint){ 
                         $constraint->aspectRatio();
                     })
-                    ->save($path,72);
+                    ->save($path,72);*/
+                    if (file_exists(public_path('/ofertas/img/'.$request->nombre))) {
+                        unlink($image_path);    
+                        //file_put_contents($path, $image_file);
+                      Image::make($image_file)
+                        ->resize(400,300, function ($constraint){ 
+                        $constraint->aspectRatio();
+                  })
+                  ->save($path,72);
+                        //dd('SIIII');
+                  }else{
+                        //
+                       //file_put_contents($path, $image_file);
+                      Image::make($image_file)
+                        ->resize(400,300, function ($constraint){ 
+                        $constraint->aspectRatio();
+                  })
+                  ->save($path,72);
+                       //dd('NoOOO');
+                  }
 
                     
                     $prod ->nombre = $request ->nombre;

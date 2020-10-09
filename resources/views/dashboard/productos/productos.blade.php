@@ -254,8 +254,17 @@ style="float: right" data-toggle="modal" data-target="#modalAgregarP"><i class="
                   <input type="text" class="form-control" id="stock" name="stock" placeholder="Stock" value="{{ old('stock') }}" required>
               </div>
             
-            
-            
+              {{-- <div class="form-group">
+                <input type="file" class="form-control" id="prueba" name="prueba" placeholder="prueba" accept="image/*">
+              </div>--}}
+
+              <div class="form-group">
+                <input type="hidden" class="form-control" id="valorimg" name="valorimg" placeholder="tipo" >
+              </div> 
+
+              <div class="form-group">
+                <input type="hidden" class="form-control" id="pesoimg" name="pesoimg" placeholder="peso" >
+              </div> 
             
   
 
@@ -286,7 +295,7 @@ style="float: right" data-toggle="modal" data-target="#modalAgregarP"><i class="
   <div class="col-md-12 text-center" style="padding:5%;">
   <strong>Seleccione una imagen:</strong>
 {{-- ///////////////////////////////////Input////////////////////////////////// --}}
-  <input name="" type="file" id="image_file">
+  <input name="" type="file" id="image_file" accept="image/*">
 
   <div class="btn-group mt-4 d-flex w-100" role="group" >
     <button class="btn btn-primary upload-image " type="submit" style="float: right !important;">Guardar</button>
@@ -369,6 +378,12 @@ style="float: right" data-toggle="modal" data-target="#modalAgregarP"><i class="
               
                   @endif
               
+                <div role="alert" id="error-divEdit">
+                    <ul class="custom-errorsEdit">
+  
+                    </ul>
+                </div>
+
               </div>
               {{-- Fin Alerta Errores --}}
               <div class="form-group">
@@ -438,6 +453,12 @@ style="float: right" data-toggle="modal" data-target="#modalAgregarP"><i class="
                     <input type="text" class="form-control" id="stockEdit" name="stock" placeholder="Stock" >
                 </div>
 
+                <div class="form-group">
+                  <input type="hidden" class="form-control" id="valorimgEdit" name="valorimgEdit" placeholder="tipo" value="image/webp">
+                </div> 
+
+                
+
                
 
           </div>
@@ -464,7 +485,7 @@ style="float: right" data-toggle="modal" data-target="#modalAgregarP"><i class="
         <div class="col-md-12 text-center" style="padding:5%;">
         <strong>Seleccione una imagen:</strong>
       {{-- ///////////////////////////////////Input////////////////////////////////// --}}
-        <input name="img" type="file" id="image_fileEdit" id="image" value="">
+        <input name="img" type="file" id="image_fileEdit" id="image" accept="image/*">
 
         <div class="btn-group mt-4 d-flex w-100" role="group" >
           <button class="btn btn-primary edit-image " style="float: right !important;">Guardar</button>
@@ -546,7 +567,7 @@ style="float: right" data-toggle="modal" data-target="#modalAgregarP"><i class="
         resize.croppie('bind',{
           url: e.target.result
         }).then(function(){
-          console.log('jQuery bind complete');
+          console.log('jQuery bind complete');          
         });
       }
       reader.readAsDataURL(this.files[0]);
@@ -558,14 +579,38 @@ style="float: right" data-toggle="modal" data-target="#modalAgregarP"><i class="
   //  console.log('gg');
 //});
 
+$('#image_file').change(function(){
+        var fileName = this.files[0].name;
+        var fileSize = this.files[0].size;
+        var fileType = this.files[0].type;
+        var file = this.files[0];
+        console.log(file);
+        ///////////////CARGAR TYPE
+        $("#valorimg").val(fileType);
+        //$("#pesoimg").val(fileSize/1000/1000);
+        //alert('FileName : ' + fileName + '\nFileSize : ' + fileSize + ' bytes' + '\nTipo:' +fileType);
+        //alert(file);
+    });
+
+
+
+
   $('.upload-image').on('click', function (ev) {   
     resize.croppie('result', {
       type: 'canvas',
       size: 'viewport'
 
+      
+      //var file = $('#prueba').files[0];
     }).then(function (img) {
-    
-      $.ajax({
+      
+       /* var fd = new FormData();
+        var files = $('#prueba')[0].files[0];
+        fd.append('file',files);
+        console.log(files);*/
+        //console.log($('#image_file').val());
+        
+     $.ajax({
       url: "{{route('croppie.upload-image')}}",
       type: "POST",
       data: {"imag":img, 
@@ -578,11 +623,14 @@ style="float: right" data-toggle="modal" data-target="#modalAgregarP"><i class="
         "precio":$('#precio').val(),
         "stock":$('#stock').val(),
         "embalaje":$('#embalaje').val(),
-        //"imagen":$('#image_file').val(),
+        "imagen":$('#valorimg').val(),
+        "Imagen":$('#pesoimg').val(),
+        //"prueba":$('#image_file').val(),
         "_token":$('input[name="_token"]').val()
         
 
        },
+    
     
       success: function (data) {
         console.log(data);
@@ -629,7 +677,7 @@ style="float: right" data-toggle="modal" data-target="#modalAgregarP"><i class="
 
 
 
-//////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 var resize2 = $('#Edit-demo').croppie({
       enableExif: true,
       enableOrientation: true,    
@@ -658,12 +706,23 @@ var resize2 = $('#Edit-demo').croppie({
       }
       reader.readAsDataURL(this.files[0]);
   });
+      
+  $('#image_fileEdit').change(function(){
+        var fileType = this.files[0].type;
+        var file = this.files[0];
+        console.log(file);
+        ///////////////CARGAR TYPE
+        $("#valorimgEdit").val(fileType);
+          
+    });
+
+
 
   $('.edit-image').on('click', function (ev) {
     resize2.croppie('result', {
       type: 'canvas',
       size: 'viewport'
-      
+
 
     }).then(function (img) {
     
@@ -682,6 +741,7 @@ var resize2 = $('#Edit-demo').croppie({
         "precio":$('#precioEdit').val(),
         "precio_ant":$('#precio_antEdit').val(),
         "stock":$('#stockEdit').val(),
+        "imagen":$('#valorimgEdit').val(),
         "_token":$('input[name="_token"]').val()
         
 
@@ -689,6 +749,29 @@ var resize2 = $('#Edit-demo').croppie({
     
       success: function (data) {
         console.log(data);
+
+
+        if (data.code !==200) {
+         // console.log("tas bien wey");
+          let errors = data.msg,
+
+          error_div = $('#error-divEdit'),
+          error_list = $('.custom-errorsEdit');
+
+          error_div.addClass('col-12 alert alert-danger alert-dismissable fade show');
+          ///Vaciar <li>'s
+          $('.custom-errorsEdit').empty();
+          
+          //console.log(data);
+          $.each(errors,function(index,error){
+            //$('.custom-errors').empty();
+            error_list.append('<li>' +error+ '</li>')
+          })
+        }
+
+
+
+
 
           if (data.status == true) {
             location.href="/dash/admin/productos";
