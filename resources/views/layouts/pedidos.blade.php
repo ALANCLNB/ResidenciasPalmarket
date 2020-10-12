@@ -274,7 +274,7 @@
                     
                 </div>
 
-                    <div class="row justify-content-center mr-auto ml-auto mt-4" style="text-align: center">
+                    <div class="row justify-content-center mr-auto ml-auto mt-4 mb-5 text-center" >
 
                     {{-- <div class="col-lg-5 col-md-3 col-sm-1    ml-auto mb-auto mr-auto mt-auto"></div> --}}
 
@@ -285,6 +285,15 @@
 
                     </div>
             </form>
+
+            <div class="row justify-content-center mr-auto ml-auto mt- text-center w-75 color--gray">
+
+                <p>*Los productos con la unidad de medida de KG deben tener un margen de precio de 5 pesos debido a que su pesaje no puede ser exacto, 
+                    en dado caso de que el precio final no supere el margen se le devolvera su dinero.</p>
+
+                <p>**Precio maximo a pagar, el pago final puede ser menor</p>
+
+            </div>
     </div>
     
 
