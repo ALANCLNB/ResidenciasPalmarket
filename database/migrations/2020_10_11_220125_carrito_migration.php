@@ -17,9 +17,11 @@ class CarritoMigration extends Migration
             $table->id();
             $table->string('id_producto');
             $table->string('id_user');
+            $table->string('id_pedido');
             $table->string('cantidad');
             $table->string('unidad');
             $table->string('imagen');
+            $table->string('status');
             $table->rememberToken();
             $table->timestamps();
         });

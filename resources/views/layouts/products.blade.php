@@ -55,8 +55,7 @@
                 </a>
                 <!-- Dropdown - Alerts -->
 
-                <div class="col-lg-6 col-md-6  col-sm-12     dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown"
-                style="position:absolute;">
+                <div class="col-lg-6 col-md-6  col-sm-12  car-prod   dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
                   <h6 class="dropdown-header">
                     Productos
                   </h6>
@@ -69,7 +68,8 @@
                   <a class="dropdown-item d-flex align-items-center" href="#">
                         <div class="mr-3">
                             <div class="icon-circle ">
-                                <i class="fas fa-shopping-basket" style="color: #8cc63e"></i>
+                                {{-- <i class="fas fa-shopping-basket" style="color: #8cc63e"></i> --}}
+                            <img src="{{ asset('img/'.$item->Image) }}" alt="" style="height: 30px; width:40px;">
                             </div>
                         </div>
 
@@ -79,7 +79,8 @@
                         <div class="row">
                             
                                 <div class="text-truncate color--gray">{{ $item->cantidad }} - {{ $item->unidad }}</div>
-                                <b class="text-cant-precio color--green">$ {{ number_format($item->totalPriceQuantity,2) }}</b>                          
+                                <b class="text-cant-precio color--green">$ {{ number_format($item->totalPriceQuantity,2) }}</b>  
+                                        
                                 {{-- <div class="text-cant-precio color--gray">$ {{ $item->totalPriceQuantity }}</div>
                                 <div class="text-cant-precio color--gray">X</div> --}}
 
@@ -91,7 +92,7 @@
                                
                                    
                                     <button class="btn text-elim-carrito" type="submit">
-                                        <i class="fa fa-trash"></i></button>
+                                        <i class="fa fa-trash "></i></button>
 
                                   </form>
 
@@ -107,7 +108,8 @@
 
                            @foreach ($valor as $val)
                            @endforeach       
-                            <a class="dropdown-item text-center small text-gray-500">Precio total: $ {{ number_format($val->totalPQ,2,'.', ',') }}</a>
+                            <a class="dropdown-item text-center small text-gray-500 preciotot">Precio total: $ {{ number_format($val->totalPQ,2,'.', ',') }}</a>
+                            <a class="btn btn-primary mr-auto ml-auto mt-2" href="/cart" style="text-align: center">Realizar pedido</a>
 
                 </div>
               </li>

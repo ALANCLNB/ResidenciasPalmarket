@@ -20,6 +20,8 @@ Route::post('/products/carrito','ProductsController@carrito');
 Route::delete('/products/carrito/{id}', 'ProductsController@destroy')->name('carritoproductos.destroy');
 
 Route::get('/','PrincipalController@index' );
+
+Route::get('/cart','CarritoController@index' );
 //Route::get('/', function () {
 
     //return view('layouts.principal');

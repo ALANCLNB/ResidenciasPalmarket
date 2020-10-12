@@ -32,7 +32,7 @@ class ProductsController extends Controller
         //$tittle = Categoria::where('id', $categoria);
         $carrito = DB::table('carritoproductos')
         ->join('productos','productos.id','=','carritoproductos.id_producto')
-        ->select('carritoproductos.*','productos.nombre as Producto','productos.precio as Precio',DB::raw("(cantidad * productos.precio) as totalPriceQuantity"))
+        ->select('carritoproductos.*','productos.nombre as Producto','productos.imagen as Image','productos.precio as Precio',DB::raw("(cantidad * productos.precio) as totalPriceQuantity"))
         ->orderBy('created_at','ASC')
         ->get();
       
@@ -42,7 +42,7 @@ class ProductsController extends Controller
         ->select(DB::raw("SUM(cantidad * productos.precio) as totalPQ"))
         ->get();
 
-        $carritocant = Carritoproducto::all()->count();
+        $carritocant = Carritoproducto::where('status'==0)->count();
 
         $tittle2 = DB::table('categorias') 
         ->select('categorias.descripcion')
@@ -199,7 +199,9 @@ if ($id_u->isEmpty()) {
         'id_producto' => $request->id_producto,
         'id_user' => $request->id_user,
         'cantidad' => $request->cantidad,
-        'unidad' => $request->unidad
+        'unidad' => $request->unidad,
+        'id_pedido' => 0,
+        'status' => 0
 
     ]);
     return back();
