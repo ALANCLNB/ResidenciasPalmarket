@@ -32,17 +32,22 @@ class ProductsController extends Controller
         //$tittle = Categoria::where('id', $categoria);
         $carrito = DB::table('carritoproductos')
         ->join('productos','productos.id','=','carritoproductos.id_producto')
+        ->where('status','=','0')
         ->select('carritoproductos.*','productos.nombre as Producto','productos.imagen as Image','productos.precio as Precio',DB::raw("(cantidad * productos.precio) as totalPriceQuantity"))
         ->orderBy('created_at','ASC')
         ->get();
       
         
         $valor = DB::table("carritoproductos")
+        ->where('status','=','0')
         ->join('productos','productos.id','=','carritoproductos.id_producto')
         ->select(DB::raw("SUM(cantidad * productos.precio) as totalPQ"))
         ->get();
 
-        $carritocant = Carritoproducto::where('status'==0)->count();
+        $carritocant = Carritoproducto::all()
+        ->where('status','=','0')
+        ->count();
+        //dd($carritocant);
 
         $tittle2 = DB::table('categorias') 
         ->select('categorias.descripcion')
@@ -58,7 +63,9 @@ class ProductsController extends Controller
            $contador = 5;
         }*/
         if (Auth::check()) {
-        $count = Carritoproducto::where('id_user','=',Auth::user()->id)->count();
+        $count = Carritoproducto::where('id_user','=',Auth::user()->id)
+        ->where('status','=','0')
+        ->count();
 
         
 
@@ -187,6 +194,7 @@ class ProductsController extends Controller
         $id_u = DB::table('carritoproductos')
         ->select('carritoproductos.*')
         ->where('id_user', '=', Auth::user()->id)
+        ->where('status','=','0')
         ->where('id_producto', '=', $request->id_producto)
         ->get();
 

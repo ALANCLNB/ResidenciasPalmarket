@@ -22,6 +22,8 @@ Route::delete('/products/carrito/{id}', 'ProductsController@destroy')->name('car
 Route::get('/','PrincipalController@index' );
 
 Route::get('/cart','CarritoController@index' );
+
+Route::resource('/cart/pedido', 'PedidosController');
 //Route::get('/', function () {
 
     //return view('layouts.principal');
@@ -51,6 +53,7 @@ Route::group(['prefix' => 'dash', 'as' => 'dash'], function () {
    
     Route::get('/', 'AdminController@index' );
     
+    
     /*Route::get('/admin', function () {
         return view('dashboard.admin.admindash');
     });
@@ -79,6 +82,7 @@ Route::group(['prefix' => 'dash', 'as' => 'dash'], function () {
     Route::resource('admin/cupones', 'CuponesController');
     Route::resource('admin/ofertasimg', 'ImgOfertasController');
     Route::resource('admin/ofertaspdf', 'PdfOfertasController');
+    Route::resource('admin/pedidos', 'PedidosController');
     
 });
 Auth::routes();
@@ -116,7 +120,7 @@ Route::post('dash/admin/ofertaspdf/editar', 'PdfOfertasController@editar');
 
 Route::post('dash/admin/usuarios/{usuario}', 'UsuariosController@estado');
 
-
+Route::post('dash/admin/pedidos/{pedido}', 'PedidosController@estado');
 
 
 

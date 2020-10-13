@@ -19,6 +19,14 @@
         <link href="{{asset('/principal-archivos/css/styles.css')}}" rel="stylesheet" />
     </head>
     <body id="page-top">
+
+        <div class="centrado" id="onload">
+            <div class="lds-ripple">
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
             <div class="container">

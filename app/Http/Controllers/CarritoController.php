@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Carritoproducto;
+use App\Pedido;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Validator;
 
 class CarritoController extends Controller
 {
@@ -18,7 +20,7 @@ class CarritoController extends Controller
         ->select('carritoproductos.*','productos.nombre as Producto','productos.imagen as Image','productos.precio as Precio',DB::raw("(cantidad * productos.precio) as totalPriceQuantity"))
         ->orderBy('created_at','ASC')
         ->paginate(10);
-
+        
         $carritocant = Carritoproducto::all()->count();
 
         $valor = DB::table("carritoproductos")
@@ -56,7 +58,7 @@ class CarritoController extends Controller
 
 
 
-
+    
 
 
 }

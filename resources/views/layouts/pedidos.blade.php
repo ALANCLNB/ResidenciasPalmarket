@@ -22,7 +22,14 @@
 
 
 
-<body id="page-top">
+<body class="" id="page-top">
+
+        <div class="centrado" id="onload">
+            <div class="lds-ripple">
+                <div></div>
+                <div></div>
+            </div>
+        </div>
 
 
     <!-- Navigation-->
@@ -160,10 +167,28 @@
         <h1 class="text-center content--title">{{$titulo->descripcion}}</h1>
     @endforeach  --}}
 
-
-
+    
 
     <div class="row justify-content-center mr-auto ml-auto" style="margin-top: 5rem; width:80%" id="">
+
+        <div class="alert alert-success text-center" role="alert" id="alertaS">
+            <h4 class="alert-heading">Pedido realizado con exito</h4>
+            <p>Tu pedido se encuentra en proceso. Puedes consultar el proceso en la sección de Pedidos de tu cuenta. 
+                Recuerda tener tu codigo a la mano al momento de pasar por tu pedido.</p>
+            <hr>
+
+            @if ($message = Session::get('code'))
+                           
+                @foreach ($errors->all() as $codigo)
+                <p class="mb-0">Codigo: {{ $codigo }}</p>                    
+                @endforeach                         
+                                                    
+            @endif
+            
+        </div>
+    </div>
+
+    <div class="row justify-content-center mr-auto ml-auto" style="margin-top: 5rem; width:80%" id="ContPedido">
 
         
 
@@ -209,7 +234,7 @@
             <div class="row justify-content-center mr-auto ml-auto" style="margin-top: 5rem;">
                 {{$carrito->links()}}
             </div>
-</div>
+        </div>
 
 
 
@@ -222,87 +247,108 @@
 
 
 
-<div class="row justify-content-center mr-auto ml-auto w-100"  id="">
+    <div class="row justify-content-center mr-auto ml-auto w-100"  id="">
 
 
-    <div class="div_cart">
-
-            <form action="" method="POST" id="formCart">
-
-                    @csrf
-
-                    <input type="hidden" class="form-control" name="id_user" placeholder="Usuario ID " value="{{ Auth::user()->id }}">       
-                    <input type="hidden" class="form-control" name="email" placeholder="email " value="{{ Auth::user()->email}}">
-
-                
-                    <div class="row justify-content-center">
-                        
-                        <label for="" class="">Sucursal</label>
-                    </div>
-                    
-                    <div class="row justify-content-center">
-                    
-                    
-                        <select class="custom-select   col-lg-4 col-md-8 col-sm-10" name="sucursal" id="" >
-                            <option selected disabled value="">Seleccionar</option>
-                            
-                            
-                            @foreach ($sucursales as $sucursal)
-                                <option value="{{ $sucursal->id }}">{{ $sucursal->nombre }}</option>
-                            @endforeach
-                            
-                        </select>
-
-                    </div>
-
-
-                    <div class="row justify-content-center mr-auto ml-auto mt-5">
-                        @foreach ($valor as $i)
-                            <h5 class="text-gray">Subtotal: $ {{ number_format($val->totalPQ,2,'.', ',') }}</h5>
-                        @endforeach
-                    </div>
-
-                    <div class="row justify-content-center mr-auto ml-auto mt-2">
-                        
-                            <h5 class="text-gray">*Margen de precio: $ {{ number_format($margenKG,2,'.', ',') }}</h5>
-                        
-                    </div>
-
-                    <div class="row justify-content-center mr-auto ml-auto mt-2">
-                        
-                        <h5 class="text-gray">**Total aproximado: $ {{ number_format($totalAprox,2,'.', ',') }}</h5>
-                    
-                </div>
-
-                    <div class="row justify-content-center mr-auto ml-auto mt-4 mb-5 text-center" >
-
-                    {{-- <div class="col-lg-5 col-md-3 col-sm-1    ml-auto mb-auto mr-auto mt-auto"></div> --}}
-
-                        <button type="submit" id="btnSubirPDF" class="btn btn-outline-success  col-lg-2 col-md-6 col-sm-10  float-lg-right    ml-auto mb-auto mr-auto mt-auto" 
-                        style="margin-top: 30px;">Realizar pedido</button>
-
-                    {{-- <div class="col-lg-5 col-md-3 col-sm-1    ml-auto mb-auto mr-auto mt-auto"></div> --}}
-
-                    </div>
-            </form>
-
-            <div class="row justify-content-center mr-auto ml-auto mt- text-center w-75 color--gray">
-
-                <p>*Los productos con la unidad de medida de KG deben tener un margen de precio de 5 pesos debido a que su pesaje no puede ser exacto, 
-                    en dado caso de que el precio final no supere el margen se le devolvera su dinero.</p>
-
-                <p>**Precio maximo a pagar, el pago final puede ser menor</p>
-
+        <div class="div_cart">
+        
+            <div class="row justify-content-center">
+                <h3>Realizar pedido</h3>
             </div>
+                    {{-- ERRORES --}}
+                    <div class="row">
+                        @if ($message = Session::get('ErrorInsert'))
+                            <div class="col-12 alert alert-danger alert-dismissable fade show" role="alert">
+                                <h5>Errores:</h5>
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>                    
+                                    @endforeach    
+                                </ul>    
+                            </div>    
+                    
+                        @endif
+                    
+                    </div>
+
+                <form action="/cart/pedido/" method="POST" id="">
+
+                        @csrf
+
+                        <input type="hidden" class="form-control" name="id_user" placeholder="Usuario ID " value="{{ Auth::user()->id }}">       
+                        <input type="hidden" class="form-control" name="email" placeholder="email " value="{{ Auth::user()->email}}">
+
+                    
+                        <div class="row justify-content-center">
+                            
+                            <label for="" class="">Sucursal</label>
+                        </div>
+                        
+                        <div class="row justify-content-center">
+                        
+                        
+                            <select class="custom-select   col-lg-4 col-md-8 col-sm-10" name="sucursal" id="" >
+                                <option selected disabled value="">Seleccionar</option>
+                                
+                                
+                                @foreach ($sucursales as $sucursal)
+                                    <option value="{{ $sucursal->id }}">{{ $sucursal->nombre }}</option>
+                                @endforeach
+                                
+                            </select>
+
+                        </div>
+
+
+                        <div class="row justify-content-center mr-auto ml-auto mt-5">
+                            @foreach ($valor as $i)
+                                <h5 class="text-gray">Subtotal: $ {{ number_format($val->totalPQ,2,'.', ',') }}</h5>
+                            @endforeach
+                        </div>
+
+                        <div class="row justify-content-center mr-auto ml-auto mt-2">
+                            
+                                <h5 class="text-gray">*Margen de precio: $ {{ number_format($margenKG,2,'.', ',') }}</h5>
+                                
+                            
+                        </div>
+
+                        <div class="row justify-content-center mr-auto ml-auto mt-2">
+                            
+                            <h5 class="text-gray">**Total aproximado: $ {{ number_format($totalAprox,2,'.', ',') }}</h5>
+
+                        
+                    </div>
+
+                        <div class="row justify-content-center mr-auto ml-auto mt-4 mb-5 text-center" >
+
+                        {{-- <div class="col-lg-5 col-md-3 col-sm-1    ml-auto mb-auto mr-auto mt-auto"></div> --}}
+
+                            <button type="submit" id="" class="btn btn-outline-success  col-lg-2 col-md-6 col-sm-10  ml-auto mb-auto mr-auto mt-auto" 
+                            style="margin-top: 30px;">Realizar pedido</button>
+
+                        {{-- <div class="col-lg-5 col-md-3 col-sm-1    ml-auto mb-auto mr-auto mt-auto"></div> --}}
+
+                        </div>
+                </form>
+
+                <div class="row justify-content-center mr-auto ml-auto mt- text-center w-75 color--gray">
+
+                    <p>*Los productos con la unidad de medida de KG deben tener un margen de precio de 5 pesos debido a que su pesaje no puede ser exacto, 
+                        en dado caso de que el precio final no supere el margen se le devolvera su dinero.</p>
+
+                    <p>**Precio maximo a pagar, el pago final puede ser menor</p>
+
+                </div>
+        </div>
+        
+
+
+
+
     </div>
-    
-
-
-
 
 </div>
-
-
 
 
 
@@ -332,6 +378,22 @@
         });
     </script>
 
+
+
+
+ <script>
+    var msg = '{{Session::get('alert')}}';
+    var exist = '{{Session::has('alert')}}';
+
+    if(exist){
+    document.getElementById("alertaS").style.display = "block";
+    document.getElementById("ContPedido").style.display = "none";
+     /* alert(msg).on('closed.bs.alert', function () {
+        location.href="/";
+});*/
+    }
+  
+  </script>
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

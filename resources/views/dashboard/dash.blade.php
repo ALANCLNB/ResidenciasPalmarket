@@ -102,6 +102,9 @@
       </li>
   @endif
 
+
+
+
   
 
 @if (Auth::user()->rol == 1 && Auth::user()->estado == 1)
@@ -131,6 +134,14 @@
 @endif
 
 
+@if (Auth::user()->estado == 1)
+      {{-- Nav Item  - Quejas y sugerencias --}}
+      <li class="nav-item active">
+        <a class="nav-link" href="/dash/admin/pedidos">
+          <i class="fas fa-fw fa-file-alt"></i>
+          <span>Pedidos</span></a>
+      </li>
+  @endif
 
 
 
@@ -322,6 +333,9 @@
 @yield('qysadmin')
 
 @yield('qysuser')
+
+@yield('pedidosadmin')
+@yield('pedidosuser')
 
 @yield('ofertasimg')
 @yield('ofertaspdf')
