@@ -23,7 +23,7 @@ Route::get('/','PrincipalController@index' );
 
 Route::get('/cart','CarritoController@index' );
 
-Route::resource('/cart/pedido', 'PedidosController');
+//Route::resource('/cart/pedido', 'PedidosController');
 //Route::get('/', function () {
 
     //return view('layouts.principal');
@@ -82,7 +82,7 @@ Route::group(['prefix' => 'dash', 'as' => 'dash'], function () {
     Route::resource('admin/cupones', 'CuponesController');
     Route::resource('admin/ofertasimg', 'ImgOfertasController');
     Route::resource('admin/ofertaspdf', 'PdfOfertasController');
-    Route::resource('admin/pedidos', 'PedidosController');
+    //Route::resource('admin/pedidos', 'PedidosController');
     
 });
 Auth::routes();
@@ -121,7 +121,8 @@ Route::post('dash/admin/ofertaspdf/editar', 'PdfOfertasController@editar');
 Route::post('dash/admin/usuarios/{usuario}', 'UsuariosController@estado');
 
 Route::post('dash/admin/pedidos/{pedido}', 'PedidosController@estado');
-
+Route::get('dash/admin/pedidos', 'PedidosController@index');
+Route::get('dash/admin/pedidos/ped={id}', 'PedidosController@detallesPedido');
 
 
 //Route::post('admin', ['as'=>'croppie.upload-image','uses'=>'ImageCropController@imageCrop']);

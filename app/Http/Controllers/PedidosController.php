@@ -16,16 +16,59 @@ class PedidosController extends Controller
 
     public function index(){
 
+
         $pedidos = DB::table('pedidos') 
         ->join('users','users.id','=','pedidos.id_user')
         ->join('sucursales','sucursales.id','=','pedidos.id_sucursal')
         ->select('pedidos.*','users.email as Correo','sucursales.nombre as Sucursal')
         ->orderBy('id','DESC')
         ->get();
-        
 
-        return view('dashboard.pedidos.pedidos',compact('pedidos') );
+    
+
+
+        return view('dashboard.pedidos.pedidos',compact('pedidos'));
     }
+
+
+
+
+
+
+
+    public function detallesPedido($id){
+
+
+        $pedidos = DB::table('pedidos') 
+        ->join('users','users.id','=','pedidos.id_user')
+        ->join('sucursales','sucursales.id','=','pedidos.id_sucursal')
+        ->select('pedidos.*','users.email as Correo','sucursales.nombre as Sucursal')
+        ->orderBy('id','DESC')
+        ->get();
+
+        $carritoV = DB::table('carritoproductos')
+        ->where('status','=','1')
+        ->where('id_pedido','=',$id)
+        ->join('productos','productos.id','=','carritoproductos.id_producto')
+        ->select('carritoproductos.*','productos.nombre as Producto','productos.imagen as Image','productos.precio as Precio',DB::raw("(cantidad * productos.precio) as totalPriceQuantity"))
+        ->orderBy('created_at','ASC')
+        ->paginate(10);
+       
+
+        $valor = DB::table("carritoproductos")
+        ->where('status','=','0')
+        ->join('productos','productos.id','=','carritoproductos.id_producto')
+        ->select(DB::raw("SUM(cantidad * productos.precio) as totalPQ"))
+        ->get();
+
+
+
+        return view('dashboard.pedidos.pedidosDetalle',compact('pedidos','carritoV','valor'));
+    }
+
+
+
+
 
 
 

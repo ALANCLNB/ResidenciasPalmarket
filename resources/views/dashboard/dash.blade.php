@@ -344,7 +344,7 @@
 @yield('categorias')
 @yield('roles')
 
-  
+@yield('detallesPedido')
 
 
   </div>

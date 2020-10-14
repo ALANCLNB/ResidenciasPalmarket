@@ -95,7 +95,13 @@
                         <button data-id="{{ $pedido->id }}"
                             class="estado btn btn-{{ $pedido->status == 1 ? "success" : "warning"}}">                          
                             <i class="fa {{ $pedido->status == 1 ? "fa-eye" : "fa-eye-slash"}}"></i>
-                        </button>                                 
+                        </button>    
+                        
+                      <a data-id="{{ $pedido->id }}" href="pedidos/ped={{ $pedido->id }}"
+                          class="btnPedidoDetalles btn btn-dark" >                          
+                          <i class="fas fa-th-list"></i>
+                          {{-- data-toggle="modal" data-target="#pedidoProductos" --}}
+                        </a> 
                         
                     </td>
 
@@ -114,13 +120,22 @@
 
 @endif
 
+
+
+
+
+
 @endsection
 
 
 
 
 
+
+
+
 @section('pedidosuser')
+
 {{-- ----------------------------------------------------------------------------------------- --}}
 @if (Auth::user()->rol == 3)
 
@@ -299,6 +314,13 @@ var idEliminar=0;
 }));
 
 
+//Cargar datos en el formulario
+$(".btnPedidoDetalles").click(function(){ 
+
+$("#id_pedido").val($(this).data('id'));
+
+
+});
 
 
 </script>
