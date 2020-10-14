@@ -13,6 +13,10 @@ use Validator;
 class PedidosController extends Controller
 {
     
+    public function __construct(){
+        $this->middleware(['auth','authadmin']);
+    }
+
 
     public function index(){
 
@@ -42,7 +46,7 @@ class PedidosController extends Controller
         $pedidos = DB::table('pedidos') 
         ->join('users','users.id','=','pedidos.id_user')
         ->join('sucursales','sucursales.id','=','pedidos.id_sucursal')
-        ->select('pedidos.*','users.email as Correo','sucursales.nombre as Sucursal')
+        ->select('pedidos.*','users.email as Correo','users.nombre as Name','sucursales.nombre as Sucursal')
         ->orderBy('id','DESC')
         ->get();
 
@@ -61,17 +65,16 @@ class PedidosController extends Controller
         ->select(DB::raw("SUM(cantidad * productos.precio) as totalPQ"))
         ->get();
 
+        $datos = DB::table('pedidos') 
+        ->where('pedidos.id','=',$id)
+        ->join('users','users.id','=','pedidos.id_user')
+        ->join('sucursales','sucursales.id','=','pedidos.id_sucursal')
+        ->select('pedidos.*','users.email as Correo','users.nombre as Name','sucursales.nombre as Sucursal')
+        ->get();
 
 
-        return view('dashboard.pedidos.pedidosDetalle',compact('pedidos','carritoV','valor'));
+        return view('dashboard.pedidos.pedidosDetalle',compact('pedidos','carritoV','valor','datos'));
     }
-
-
-
-
-
-
-
 
 
     public function store(Request $request){

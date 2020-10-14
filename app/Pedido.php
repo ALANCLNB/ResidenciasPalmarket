@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Pedido extends Model
 {
-    protected $fillable =['id_user','id_sucursal','cantidad_articulos','total','codigo','status'];
+    protected $fillable =['id_user','id_sucursal','cantidad_articulos','total','codigo','status','created_at'];
 }
