@@ -23,7 +23,7 @@ Route::get('/','PrincipalController@index' );
 
 Route::get('/cart','CarritoController@index' );
 
-//Route::resource('/cart/pedido', 'PedidosController');
+Route::resource('/cart/pedido', 'PedidosController');
 //Route::get('/', function () {
 
     //return view('layouts.principal');

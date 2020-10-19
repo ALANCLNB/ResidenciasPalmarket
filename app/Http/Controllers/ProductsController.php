@@ -67,8 +67,6 @@ class ProductsController extends Controller
         ->where('status','=','0')
         ->count();
 
-        
-
         //dd($valor);
         }else{
             $count = 0;

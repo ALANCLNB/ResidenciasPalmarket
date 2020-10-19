@@ -134,19 +134,20 @@
 @endif
 
 
-@if (Auth::user()->estado == 1)
+@if (Auth::user()->rol <= 3 && Auth::user()->estado == 1)
       {{-- Nav Item  - Quejas y sugerencias --}}
       <li class="nav-item active">
         <a class="nav-link" href="/dash/admin/pedidos">
           <i class="fas fa-fw fa-file-alt"></i>
           <span>Pedidos</span></a>
       </li>
+      
   @endif
 
 
 
 
-@if (Auth::user()->estado == 1)
+@if (Auth::user()->rol == 1 && Auth::user()->estado == 1)
     
 
  <!-- Divider -->
@@ -322,7 +323,7 @@
 
 
 <!-- Begin Page Content -->
-<div class="container-fluid">
+<div class="container-fluid p-lg-4 p-md-0" style="padding: 0">
  
 @yield('principal')
 @yield('sucursal')

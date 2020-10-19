@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-class AuthUsuario
+class AuthCliente
 {
     /**
      * Handle an incoming request.
@@ -16,7 +16,7 @@ class AuthUsuario
     public function handle($request, Closure $next)
     {
         
-        if (Auth::user()->rol == "1") {
+        if (Auth::user()->rol == "3") {
             return $next($request);
 
         }else{

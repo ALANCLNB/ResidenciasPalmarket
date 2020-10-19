@@ -75,7 +75,7 @@
 
 
 
-    <div class="modal-body">
+    <div class="modal-body sm-col-12">
 
       {{-- Alerta Error al llenar campos --}}
       <div class="row">
@@ -172,10 +172,10 @@
 
 
  <!-- Modal Agregar -->
- <div class="modal fade" id="modalAgregarP" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
+ <div class="modal fade col-lg-12 col-md-12 col-sm-12" id="modalAgregarP" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="margin: auto; max-width: 900px;">
+    <div class="modal-content overflow-auto" >
+      <div class="modal-header" style="width: 900px">
         <h5 class="modal-title" id="exampleModalLabel">Agregar oferta (imagen)</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -232,17 +232,17 @@
 
       
     {{-- ///////////////////CROPPIE/////////////////////////// --}}
-<div class="row">
+<div class="row" style="width: 900px">
 
-<div class="col-md-12 text-center">
+<div class="col-lg-12 col-md-12 col-sm-12 text-center" style="max-width: 900px">
   <label   class="col-lg-12 col-md-12 col-sm-12">Imagen</label>
 <div id="upload-demo"></div>
 </div>
 </div>
 
 
-<div class="row">
-<div class="col-md-12 text-center" style="padding:5%;">
+<div class="row" style="width: 900px">
+<div class="col-lg-12 col-md-12 col-sm-12 ml-auto mr-auto text-center" style="padding:5%;">
 <strong>Seleccione una imagen:</strong>
 {{-- ///////////////////////////////////Input////////////////////////////////// --}}
 <input name="" type="file" id="image_file" accept="image/*">
@@ -419,12 +419,12 @@
       enableExif: true,
       enableOrientation: true,    
       viewport: { // Default { width: 100, height: 100, type: 'square' } 
-          width: 400,
+          width: 800,
           height: 300,
           type: 'square' //square,circle
       },
       boundary: {
-          width: 500,
+          width: 900,
           height: 400
       }
   });

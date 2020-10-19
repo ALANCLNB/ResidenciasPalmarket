@@ -109,7 +109,8 @@
                            @foreach ($valor as $val)
                            @endforeach       
                             <a class="dropdown-item text-center small text-gray-500 preciotot">Precio total: $ {{ number_format($val->totalPQ,2,'.', ',') }}</a>
-                            <a class="btn btn-primary mr-auto ml-auto mt-2" href="/cart" style="text-align: center">Realizar pedido</a>
+                            
+                            <a class="btn btn-primary mr-auto ml-auto mt-2 w-100" href="/cart" style="text-align: center">Realizar pedido</a>
 
                 </div>
               </li>
@@ -186,7 +187,8 @@
 
         
 
-        <div class="container mr-1 ml-auto  d-none d-sm-block      col-lg-2 col-md-3 col-sm-0" style="margin-top: 2rem; background-color: PINK;">
+        {{-- <div class="container mr-1 ml-auto  d-none d-sm-block      col-lg-2 col-md-3 col-sm-0" style="margin-top: 2rem; background-color: PINK;"> --}}
+            <div class="container mr-1 ml-auto  d-none d-sm-block      col-lg-2 col-md-3 col-sm-0" style="margin-top: 2rem;">
             <b>Categorias</b>
             <ul class="list-inline ml-3" style= "list-style-type: circle">
                     @foreach ($catego as $category)
@@ -196,8 +198,8 @@
 
         
         </div>
-    <div class=" d-block ml-0 mr-auto     col-lg-7 col-md-8 col-sm-12  " style="margin-top: 3rem; float:right; background-color: green; ">
-
+    {{-- <div class=" d-block ml-0 mr-auto     col-lg-7 col-md-8 col-sm-12  " style="margin-top: 3rem; float:right; background-color: green; "> --}}
+        <div class=" d-block ml-0 mr-auto     col-lg-7 col-md-8 col-sm-12  " style="margin-top: 3rem; float:right; ">
 
 
     <div class="row no-gutters" style="background-color: white;">

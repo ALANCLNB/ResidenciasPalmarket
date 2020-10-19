@@ -14,19 +14,32 @@ class PedidosController extends Controller
 {
     
     public function __construct(){
-        $this->middleware(['auth','authadmin']);
+        $this->middleware(['auth']);
     }
 
 
     public function index(){
 
+if (Auth::user()->rol == 3) {
 
-        $pedidos = DB::table('pedidos') 
+    $pedidos = DB::table('pedidos') 
+        ->where('id_user','=',Auth::user()->id)
         ->join('users','users.id','=','pedidos.id_user')
         ->join('sucursales','sucursales.id','=','pedidos.id_sucursal')
         ->select('pedidos.*','users.email as Correo','sucursales.nombre as Sucursal')
         ->orderBy('id','DESC')
         ->get();
+} elseif(Auth::user()->rol <= 2) {
+    
+    $pedidos = DB::table('pedidos') 
+        ->join('users','users.id','=','pedidos.id_user')
+        ->join('sucursales','sucursales.id','=','pedidos.id_sucursal')
+        ->select('pedidos.*','users.email as Correo','sucursales.nombre as Sucursal')
+        ->orderBy('id','DESC')
+        ->get();
+}
+
+        
 
     
 
@@ -42,6 +55,17 @@ class PedidosController extends Controller
 
     public function detallesPedido($id){
 
+    if (Auth::user()->rol == 3) {
+
+        $pedidos = DB::table('pedidos')
+        ->where('id_user','=',Auth::user()->id) 
+        ->join('users','users.id','=','pedidos.id_user')
+        ->join('sucursales','sucursales.id','=','pedidos.id_sucursal')
+        ->select('pedidos.*','users.email as Correo','users.nombre as Name','sucursales.nombre as Sucursal')
+        ->orderBy('id','DESC')
+        ->get();
+
+    } else {
 
         $pedidos = DB::table('pedidos') 
         ->join('users','users.id','=','pedidos.id_user')
@@ -49,6 +73,9 @@ class PedidosController extends Controller
         ->select('pedidos.*','users.email as Correo','users.nombre as Name','sucursales.nombre as Sucursal')
         ->orderBy('id','DESC')
         ->get();
+    }
+
+        
 
         $carritoV = DB::table('carritoproductos')
         ->where('status','=','1')
@@ -60,7 +87,7 @@ class PedidosController extends Controller
        
 
         $valor = DB::table("carritoproductos")
-        ->where('status','=','0')
+        ->where('status','=','1')
         ->join('productos','productos.id','=','carritoproductos.id_producto')
         ->select(DB::raw("SUM(cantidad * productos.precio) as totalPQ"))
         ->get();

@@ -14,6 +14,9 @@ class ImgOfertasController extends Controller
       $this->middleware(['auth','authadmin']);
     }
     
+
+
+
     public function index()
     {
         $ofertaimg = DB::table('ofertasimgs')
@@ -59,15 +62,15 @@ class ImgOfertasController extends Controller
             list(, $image_file)      = explode(',', $image_file);
       
               $image_file = base64_decode($image_file);
-              $image_name= time().'oferta'.'.png';
+              $image_name= time().'oferta'.'.webp';
               $path = public_path('/ofertas/img/'.$image_name);
       
               //file_put_contents($path, $image_file);
               Image::make($image_file)
-                    ->resize(400,300, function ($constraint){ 
+                    ->resize(800,300, function ($constraint){ 
                     $constraint->aspectRatio();
               })
-              ->save($path,72);
+              ->save($path,100);
 
               $IOferta = Ofertasimg::create([
                 'nombre' => $image_name,
@@ -148,7 +151,7 @@ class ImgOfertasController extends Controller
             list(, $image_file)      = explode(',', $image_file);
       
               $image_file = base64_decode($image_file);
-              $image_name= time().'oferta'.'.png';
+              $image_name= time().'oferta'.'.webp';
               $path = public_path('/ofertas/img/'.$image_name);
             
                 //dd($request->nombre);

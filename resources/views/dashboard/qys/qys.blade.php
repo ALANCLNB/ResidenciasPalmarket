@@ -4,7 +4,7 @@
 
 
 @section('qysadmin')
-@if (Auth::user()->rol == 1)
+@if (Auth::user()->rol == 1 || Auth::user()->rol == 2)
 
 <div class="container-fluid">
  
@@ -62,7 +62,9 @@
                     <th>Tipo</th>
                     <th>Fecha</th>
                     <th>Sucursal</th>
+                    @if (Auth::user()->rol == 1)
                     <th>Acciones</th>
+                    @endif
                 </thead>
     
                 <tfoot>
@@ -72,11 +74,14 @@
                     <th>Tipo</th>
                     <th>Fecha</th>
                     <th>Sucursal</th>
+                    @if (Auth::user()->rol == 1)
                     <th>Acciones</th>
+                    @endif
                 </tfoot>
     
                 {{-- CAMPOS --}}
                 @foreach ($qysug as $qys)
+
                     <tr>
                       <td>{{ $qys ->id }}</td>
                       <td>{{ $qys ->email }}</td>
@@ -114,21 +119,22 @@
 
                       @endif --}}
 
+                      @if (Auth::user()->rol == 1)                    
+                          <td>
+                              
+                                  {{-- <a href="" class="btn btn-info "><i class="fa fa-edit"></i></a> --}}
                       
-                      <td>
-                          
-                              <a href="" class="btn btn-info "><i class="fa fa-edit"></i></a>
-                  
 
-                      <button class="btn btn-danger  btnEliminar" data-id="{{ $qys->id }}" data-toggle="modal" data-target="#modalEliminar">
-                        <i class="fa fa-trash"></i></button>
-                                  
-                                  <form action="{{ url('/dash/admin/qys', ['id'=>$qys->id] ) }}" method="POST" id="formEli_{{ $qys->id }}">
-                                      @csrf
-                                      <input type="hidden" name="id" value="{{ $qys->id }}">
-                                      <input type="hidden" name="_method" value="delete">
-                                  </form>
-                      </td>
+                          <button class="btn btn-danger  btnEliminar" data-id="{{ $qys->id }}" data-toggle="modal" data-target="#modalEliminar">
+                            <i class="fa fa-trash"></i></button>
+                                      
+                                      <form action="{{ url('/dash/admin/qys', ['id'=>$qys->id] ) }}" method="POST" id="formEli_{{ $qys->id }}">
+                                          @csrf
+                                          <input type="hidden" name="id" value="{{ $qys->id }}">
+                                          <input type="hidden" name="_method" value="delete">
+                                      </form>
+                          </td>
+                      @endif
                     </tr>
           @endforeach
               

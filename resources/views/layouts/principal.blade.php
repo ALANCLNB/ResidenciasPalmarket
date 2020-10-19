@@ -43,35 +43,86 @@
                         <li class="nav-item"><strong><a class="nav-link js-scroll-trigger" href="#cuponzasos">Cupones</a></strong></li>
                         <li class="nav-item"><strong><a class="nav-link js-scroll-trigger" href="#contact">Contacto</a></strong></li>
                         
-                        <li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link dropdown-toggle" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-shopping-cart"></i>
-                              <!-- Counter - Alerts -->
-                              <span class="badge badge-danger badge-counter">5+</span>
-                            </a>
-                            <div class="dropdown-menu dropdown" aria-labelledby="dropdownMenu">
-                              @foreach ($carrito as $item)
-                                    <a class="dropdown-item d-flex align-items-center" href="#">
-                                        <div class="mr-3">
-                                        <div class="icon-circle bg-primary">
-                                            <i class="fas fa-file-alt text-white"></i>
-                                        </div>
-                                        </div>
-                                        <div>
-                                        <div class="small text-gray-500">{{$item->Producto}}</div>
-                                        <span class="font-weight-bold">{{ $item->cantidad }}</span>
-                                        </div>
-                                    </a>
-                              @endforeach
-                            </div>
-                                       
                         @if (Auth::check())
-                                <li class="nav-item"><a class="nav-link js-scroll-trigger" style="color:#fed136" href="/login"><strong>{{ Auth::user()->nombre }}</strong></a></li>
-                                {{-- <img class="img-profile rounded-circle w-4 h-4" src="https://gaminguardian.com/wp-content/uploads/2020/03/kanojo-okarishimasu.png" style="height: 50px; width: 50px;"> --}}
-                        @else
-                                <li class="nav-item"><strong><a class="nav-link js-scroll-trigger" href="/login">Iniciar Sesion</a></strong></li> 
-                        @endif 
+                      <!-- Nav Item - Alerts -->
+            <li class="nav-item dropdown no-arrow mx-1">
+                <a class="nav-link dropdown-toggle" href="" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="fas fa-cart-arrow-down"></i>
+                  <!-- Counter - Alerts -->
+            
+
+                  <span class="badge badge-danger badge-counter">{{ $count }}</span> 
+
+                </a>
+                <!-- Dropdown - Alerts -->
+
+                <div class="col-lg-6 col-md-6  col-sm-12  car-prod   dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
+                  <h6 class="dropdown-header">
+                    Productos
+                  </h6>
+
+
+                  @foreach ($carrito as $item)
+
+                  @if ($item->id_user == Auth::user()->id)
+                  
+                  <a class="dropdown-item d-flex align-items-center" href="#">
+                        <div class="mr-3">
+                            <div class="icon-circle ">
+                                {{-- <i class="fas fa-shopping-basket" style="color: #8cc63e"></i> --}}
+                            <img src="{{ asset('img/'.$item->Image) }}" alt="" style="height: 30px; width:40px;">
+                            </div>
+                        </div>
+
+                        <div>
+                        <div class="text-truncate">{{ $item->Producto }}</div>
                         
+                        <div class="row">
+                            
+                                <div class="text-truncate color--gray">{{ $item->cantidad }} - {{ $item->unidad }}</div>
+                                <b class="text-cant-precio color--green">$ {{ number_format($item->totalPriceQuantity,2) }}</b>  
+                                        
+                                {{-- <div class="text-cant-precio color--gray">$ {{ $item->totalPriceQuantity }}</div>
+                                <div class="text-cant-precio color--gray">X</div> --}}
+
+
+
+                                <form method="POST" action="{{ url("/products/carrito/{$item->id}") }}">
+                                    @csrf
+                                    @method('DELETE')
+                               
+                                   
+                                    <button class="btn text-elim-carrito" type="submit">
+                                        <i class="fa fa-trash "></i></button>
+
+                                  </form>
+
+
+                                         
+                        </div>
+                        {{-- <span class="font-weight-bold text-truncate" style="max-width: 10rem;">A new monthly report is ready to download!</span> --}}
+                        </div>
+
+                  </a>
+                  @endif
+                  @endforeach
+
+                           @foreach ($valor as $val)
+                           @endforeach       
+                            <a class="dropdown-item text-center small text-gray-500 preciotot">Precio total: $ {{ number_format($val->totalPQ,2,'.', ',') }}</a>
+                        
+                            <a class="btn btn-primary mr-auto ml-auto mt-2 w-100" href="/cart" style="text-align: center;">Realizar pedido</a>
+                            
+                </div>
+              </li>
+                                   
+                    
+                            <li class="nav-item"><a class="nav-link js-scroll-trigger" style="color:#fed136" href="/login"><strong>{{ Auth::user()->nombre }}</strong></a></li>
+                            {{-- <img class="img-profile rounded-circle w-4 h-4" src="https://gaminguardian.com/wp-content/uploads/2020/03/kanojo-okarishimasu.png" style="height: 50px; width: 50px;"> --}}
+                    @else
+                            <li class="nav-item"><strong><a class="nav-link js-scroll-trigger" href="/login">Iniciar Sesion</a></strong></li> 
+                    @endif 
+                                                                             
                     </ul>
                 </div>
             </div>
@@ -80,7 +131,7 @@
         <header class="masthead">
             <div class="container">
                 <div class="masthead-subheading">¡Menos pasos. Más barato!</div>
-                <div class="masthead-heading text-uppercase">Superettes Palmarket</div>
+                <div class="masthead-heading text-uppercase" style="font-size: 3rem">Superettes Palmarket</div>
                 <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="#services">Conocenos</a>
             </div>
         </header>
@@ -129,7 +180,7 @@
         <section class="page-section bg-light" id="departamentos">
             <div class="container">
                 <div class="text-center">
-                    <h2 class="section-heading text-uppercase">Departamentos</h2>
+                    <h2 class="section-heading text-uppercase" style="font-size: 1.5rem">Departamentos</h2>
                     <h3 class="section-subheading text-muted">Consulta precios y ofertas.</h3>
                 </div>
                 <div class="row">
@@ -160,7 +211,7 @@
 
 
         {{-- Aqui va la seccion de ofertas en PDF --}}
-        <section class="page-section" id="ofertones">
+        <section class="page-section h-lg-20" id="ofertones">
             
                 <div class="text-center">
                     <h2 class="section-heading text-uppercase">Ofertas de la semana</h2>
@@ -169,34 +220,47 @@
 
                 
                 {{-- lector PDF ofertas --}}
-                    <embed class="col-lg-6 col-md-10 col-sm-12    ml-auto mb-auto mr-auto mt-auto" src="{{asset('/principal-archivos/assets/pdf/miku.pdf')}}" id="pdf" />
+                    <embed class="col-lg-6 col-md-10 col-sm-12    ml-auto mb-auto mr-auto mt-auto d-lg-block pdf" src="{{asset('/principal-archivos/assets/pdf/miku.pdf')}}" id="pdf" />
                     <div>
                        <strong><a class="btn btn-primary" target="_blank" href="{{ asset('pdf/miku.pdf') }}">Ver ofertas</a></strong> 
                     </div>
 
         </section>
-                <section class="page-section" id="">
-                    <div class="container">
+
+
+        
+        {{-- ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// --}}
+        <section class="page-section" id="">
+        
                 {{-- Carrusel de imagenes --}}
                 
 
-                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" >
+                
+                  <div id="carouselExampleIndicators" class="carousel slide carru col-lg-10" data-ride="carousel">
                     <ol class="carousel-indicators">
                       <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                      <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                      <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                        
+                      @foreach ($carrusel as $imgs2)                      
+                            <li data-target="#carouselExampleIndicators" data-slide-to="{{ $loop->iteration }}"></li>
+                        @endforeach
                     </ol>
-                    <div class="carousel-inner" style="height: 500px">
-                      <div class="carousel-item active">
-                        <img src="{{asset('/principal-archivos/assets/img/departamentos/FRUTERIA.png')}}" class="d-block w-100" alt="...">
-                      </div>
-                      <div class="carousel-item"  style="height: 500px">
-                        <img src="{{asset('/principal-archivos/assets/img/departamentos/FRUTERIA.png')}}" class="d-block w-100" alt="...">
-                      </div>
-                      <div class="carousel-item"  style="height: 500px">
-                        <img src="{{asset('/principal-archivos/assets/img/departamentos/FRUTERIA.png')}}" class="d-block w-100" alt="...">
-                      </div>
+
+
+                    <div class="carousel-inner">
+                        <div class="carousel-item active" data-interval="2000">
+                            <img src="{{asset('/ofertas/img/default/oferta.webp')}}" class="d-block w-100" alt="...">
+                        </div>
+                        @foreach ($carrusel as $imgs)
+
+                            <div class="carousel-item">
+                                <img src="{{asset('/ofertas/img/'.$imgs->nombre)}}" class="d-block w-100" alt="...">
+                            </div>
+
+                        @endforeach
+
+                    
                     </div>
+
                     <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
                       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                       <span class="sr-only">Previous</span>
@@ -206,11 +270,9 @@
                       <span class="sr-only">Next</span>
                     </a>
                   </div>
-
-                
                 {{-- Fin Carrusel de imagenes --}}
 
-            </div>
+           
         </section>
 
        

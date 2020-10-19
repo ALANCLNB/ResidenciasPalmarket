@@ -6,6 +6,7 @@ use Validator;
 use App\Sucursale;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use App\Comentario;//modelo al que se va a referir
 
 class QySController extends Controller
@@ -19,12 +20,30 @@ class QySController extends Controller
     public function index()
     {
 
-        $qysug = \DB::table('comentarios')
+
+    if (Auth::user()->rol == 2) {
+        
+        $qysug = DB::table('comentarios')
+        ->where('sucursal','=',Auth::user()->sucursal)
         ->join('sucursales','sucursales.id','=','comentarios.sucursal')
         ->select('comentarios.*','sucursales.nombre as Sucursal')
         ->orderBy('created_at','DESC')
         ->get();
 
+    } else{
+        
+        $qysug = DB::table('comentarios')
+        ->join('sucursales','sucursales.id','=','comentarios.sucursal')
+        ->select('comentarios.*','sucursales.nombre as Sucursal')
+        ->orderBy('created_at','DESC')
+        ->get();
+    }
+/*if (Auth::check()) {
+    $count = Carritoproducto::where('id_user','=',Auth::user()->id)
+    ->where('status','=','0')
+    ->count();*/
+
+        
         $sucursales = \DB::table('sucursales')
         ->orderBy('created_at','DESC')
         ->get();
