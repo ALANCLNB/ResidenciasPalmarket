@@ -420,12 +420,12 @@
       enableOrientation: true,    
       viewport: { // Default { width: 100, height: 100, type: 'square' } 
           width: 800,
-          height: 300,
+          height: 450,
           type: 'square' //square,circle
       },
       boundary: {
           width: 900,
-          height: 400
+          height: 550
       }
   });
   

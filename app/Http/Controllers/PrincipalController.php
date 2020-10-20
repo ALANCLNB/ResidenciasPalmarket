@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 //use App\Categoria;
+use App\Sucursale;
 use App\Ofertasimg;
 use App\Carritoproducto;
 use Illuminate\Http\Request;
@@ -61,7 +62,21 @@ class PrincipalController extends Controller
         ->get();
         
 
-        return view('layouts.principal', compact('categoria','cupones','pdf','carrito','count','valor','carritocant','carrusel'));
+
+        $prim = DB::table("sucursales")
+        ->orderBy('created_at','ASC')
+        ->take(1)
+        ->get();
+        
+        //dd($prim[0]->id);
+
+        $next = DB::table("sucursales")
+        ->where('id', '>', 1)
+        ->orderBy('id', 'ASC')
+        ->get();
+
+        //dd($next);
+        return view('layouts.principal', compact('categoria','cupones','pdf','carrito','count','valor','carritocant','carrusel','next','prim'));
         //return view('welcome');
     }
 }

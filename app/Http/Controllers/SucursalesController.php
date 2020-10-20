@@ -33,7 +33,7 @@ class SucursalesController extends Controller
     {
         $validator = Validator::make($request->all(),[
                 'nombre' => 'required|min:3|max:30',
-                'direccion' => 'required|min:3|max:80'
+                'direccion' => 'required|min:3|max:400'
 
         ]);
 
@@ -83,7 +83,7 @@ class SucursalesController extends Controller
 
         $validator = Validator::make($request->all(),[
             'nombre' => 'required|min:3|max:50',
-            'direccion' => 'required|min:1|max:90'
+            'direccion' => 'required|min:1|max:400'
 
     ]);
 

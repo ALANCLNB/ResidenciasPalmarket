@@ -17,6 +17,9 @@
         <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="{{asset('/principal-archivos/css/styles.css')}}" rel="stylesheet" />
+
+    
+
     </head>
     <body id="page-top">
 
@@ -222,7 +225,7 @@
                 {{-- lector PDF ofertas --}}
                     <embed class="col-lg-6 col-md-10 col-sm-12    ml-auto mb-auto mr-auto mt-auto d-lg-block pdf" src="{{asset('/principal-archivos/assets/pdf/miku.pdf')}}" id="pdf" />
                     <div>
-                       <strong><a class="btn btn-primary" target="_blank" href="{{ asset('pdf/miku.pdf') }}">Ver ofertas</a></strong> 
+                       <strong><a class="btn btn-primary" style="margin-top: 25px" target="_blank" href="{{ asset('pdf/miku.pdf') }}">Ver ofertas</a></strong> 
                     </div>
 
         </section>
@@ -317,57 +320,90 @@
         <div class="py-5">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-3 col-sm-6 my-3">
-                        <a href="#!"><img class="img-fluid d-block mx-auto" src="{{asset('/principal-archivos/assets/img/logos/cocalogo.png')}}" alt="" /></a>
+                    <div class="col-md-3 col-sm-6 my-3 ml-auto mr-auto">
+                        <a href=""><img class="img-fluid d-block mx-auto ml-auto mr-auto" src="{{asset('/principal-archivos/assets/img/logos/cocalogo.png')}}" alt="" /></a>
                     </div>
-                    <div class="col-md-3 col-sm-6 my-3">
-                        <a href="#!"><img class="img-fluid d-block mx-auto" src="{{asset('/principal-archivos/assets/img/logos/lalalogo.png')}}" alt="" /></a>
+                    <div class="col-md-3 col-sm-6 my-3 ml-auto mr-auto">
+                        <a href=""><img class="img-fluid d-block mx-auto ml-auto mr-auto" src="{{asset('/principal-archivos/assets/img/logos/lalalogo.png')}}" alt="" /></a>
                     </div>
-                    <div class="col-md-3 col-sm-6 my-3">
-                        <a href="#!"><img class="img-fluid d-block mx-auto" src="{{asset('/principal-archivos/assets/img/logos/sigmalogo.png')}}" alt="" /></a>
+                    <div class="col-md-3 col-sm-6 my-3 ml-auto mr-auto">
+                        <a href=""><img class="img-fluid d-block mx-auto ml-auto mr-auto" src="{{asset('/principal-archivos/assets/img/logos/sigmalogo.png')}}" alt="" /></a>
                     </div>
-                    <div class="col-md-3 col-sm-6 my-3">
-                        <a href="#!"><img class="img-fluid d-block mx-auto" src="{{asset('/principal-archivos/assets/img/logos/costenalogo.png')}}" alt="" /></a>
+                    <div class="col-md-3 col-sm-6 my-3 ml-auto mr-auto">
+                        <a href=""><img class="img-fluid d-block mx-auto ml-auto mr-auto" src="{{asset('/principal-archivos/assets/img/logos/costenalogo.png')}}" alt="" /></a>
                     </div>
                 </div>
             </div>
         </div>
+
+
+
         <!-- Contact-->
         <section class="page-section" id="contact">
+            
             <div class="container">
-                <div class="text-center">
-                    <h2 class="section-heading text-uppercase">Quejas y sugerencias</h2>
-                    <h3 class="section-subheading text-muted">Aportanos tu opinion para seguir mejorando y brindarte el mejor servicio.</h3>
-                </div>
-                <form id="contactForm" name="sentMessage" novalidate="novalidate">
-                    <div class="row align-items-stretch mb-5">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <input class="form-control" id="name" type="text" placeholder="Your Name *" required="required" data-validation-required-message="Please enter your name." />
-                                <p class="help-block text-danger"></p>
-                            </div>
-                            <div class="form-group">
-                                <input class="form-control" id="email" type="email" placeholder="Your Email *" required="required" data-validation-required-message="Please enter your email address." />
-                                <p class="help-block text-danger"></p>
-                            </div>
-                            <div class="form-group mb-md-0">
-                                <input class="form-control" id="phone" type="tel" placeholder="Your Phone *" required="required" data-validation-required-message="Please enter your phone number." />
-                                <p class="help-block text-danger"></p>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group form-group-textarea mb-md-0">
-                                <textarea class="form-control" id="message" placeholder="Your Message *" required="required" data-validation-required-message="Please enter a message."></textarea>
-                                <p class="help-block text-danger"></p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="text-center">
-                        <div id="success"></div>
-                        <button class="btn btn-primary btn-xl text-uppercase" id="sendMessageButton" type="submit">Send Message</button>
-                    </div>
-                </form>
+
+            <h2 class="section-heading text-uppercase text-center">Contacto</h2>
+    <!--The div element for the map -->
+    <div class="row">
+
+    <div id="carouselExampleControls" class="carousel slide col-sm-10 col-md-6 col-lg-6" data-ride="carousel" >
+        <div class="carousel-inner">
+
+            <div class="carousel-item active map">
+
+                @foreach ($prim as $f)
+                    <iframe src={{ $f->direccion }} 
+                    frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0" class="w-100 h-100 map"></iframe>
+                    <input type="text" value="{{ $f->nombre }} ">
+                 @endforeach
+
             </div>
+            
+          
+            @foreach ($next as $n)
+                <div class="carousel-item map">
+                    
+                        <iframe src={{ $n->direccion }}
+                        frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0" class="w-100 h-100 map"></iframe>
+                    
+                </div>
+            @endforeach
+            
+            <a class="carousel-map-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+
+            <a class="carousel-map-control-next" href="#carouselExampleControls" role="button" data-slide="next" style="right: 0">
+                <span class="carousel-control-next-icon" aria-hidden="true" ></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+        
+    </div> 
+
+
+    <div>
+        <div>
+            <a class="btn btn-light btn-social m-2" href="https://www.facebook.com/SuperettesPalmarket"><i class="fab fa-facebook-f"></i></a>
+            <label class="labredes" for="">Facebook</label>
+        </div>
+
+        <div>
+            <a class="btn btn-light btn-social m-2"><i class="fas fa-phone"></i></a>
+            <label class="labredes" for="">636-101-1113</label>
+        </div>
+
+        <div>
+            <a class="btn btn-light btn-social m-2"><i class="fas fa-envelope"></i></a>
+            <label class="labredes" for="">palmarket-soporte@gmail.com</label>
+        </div>
+      
+    </div>
+
+    
+    </div>
         </section>
 
         
