@@ -112,6 +112,7 @@ Route::post('dash/admin/categorias/editar', 'CategoriasController@editar');
 Route::post('dash/admin/roles/editar', 'RolesController@editar');
 Route::post('dash/admin/sucursales/editar', 'SucursalesController@editar');
 Route::post('dash/admin/cupones/editar', 'CuponesController@editar');
+Route::post('dash/admin/pedidos/editar', 'PedidosController@preciofinal');
 Route::post('dash/admin/usuarios/editar', 'UsuariosController@editar');
 Route::post('dash/admin/ofertaspdf/editar', 'PdfOfertasController@editar');
 

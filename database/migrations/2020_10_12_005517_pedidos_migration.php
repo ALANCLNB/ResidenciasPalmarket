@@ -19,6 +19,7 @@ class PedidosMigration extends Migration
             $table->string('id_sucursal');
             $table->string('cantidad_articulos');
             $table->string('total');
+            $table->string('total_final');
             $table->string('codigo');
             $table->string('status');//0: Preparacion 1:Listo 2: Recibido
             $table->rememberToken();

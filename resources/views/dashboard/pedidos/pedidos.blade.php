@@ -4,6 +4,10 @@
 
 
 @section('pedidosadmin')
+<a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm ml-auto mr-auto" 
+style="float: right" data-toggle="modal" data-target="#modalAgregar"><i class="fas fa-plus fa-sm text-white-50"></i> Nuevo Cupon</a>
+<h1 class="h3 mb-2 text-gray-800">Pedidos</h1>
+<p class="mb-4">Bienvenido a pedidos.</p>
 @if (Auth::check())
 
 <div class="container-fluid">
@@ -67,8 +71,8 @@
                       <td style="color: white">{{ $pedido ->Correo }}</td>
                       <td style="color: white">{{ $pedido ->Sucursal }}</td>                  
                       <td style="color: white">{{ $pedido ->cantidad_articulos }}</td>
-                      <td style="color: white">{{ $pedido ->total }}</td>
-                      <td style="color: white">Falta</td>
+                      <td style="color: white">$ {{ $pedido ->total }}</td>
+                      <td style="color: white">$ {{ $pedido ->total_final }}</td>
                       <td style="color: white">{{ $pedido ->codigo }}</td>
                      
 
@@ -79,8 +83,17 @@
                           <button data-id="{{ $pedido->id }}"
                               class="estado btn btn-{{ $pedido->status == 1 ? "success" : "warning"}}">                          
                               <i class="fa {{ $pedido->status == 1 ? "fa-eye" : "fa-eye-slash"}}"></i>
-                          </button>    
+                          </button>   
+
+                        @if ($pedido->total_final == 'No Asignado')
+                        <button class="btn btn-info  btnEditar"                               
+                            data-id="{{ $pedido->id }}" 
+                            data-toggle="modal" data-target="#modalEditar"><i class="fa fa-edit"></i>
+                        </button>
+                        @endif  
+                          
                         @endif
+
 
                         <a data-id="{{ $pedido->id }}" href="pedidos/ped={{ $pedido->id }}"
                             class="btnPedidoDetalles btn btn-dark" >                          
@@ -106,6 +119,68 @@
 
 
 @endif
+
+<!-- Modal Editar -->
+<div class="modal fade" id="modalEditar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Editar Precio</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+
+      <form action="/dash/admin/pedidos/editar" method="POST">
+          @csrf
+          <div class="modal-body">
+
+              {{-- Alerta Error al llenar campos --}}
+              <div class="row">
+                  @if ($message = Session::get('ErrorInsert'))
+                      <div class="col-12 alert alert-danger alert-dismissable fade show" role="alert">
+                          <h5>Errores:</h5>
+                          <ul>
+                              @foreach ($errors->all() as $error)
+                                  <li>{{ $error }}</li>                    
+                              @endforeach    
+                          </ul>    
+                      </div>    
+              
+                  @endif
+              
+              </div>
+              
+              {{-- Fin Alerta Errores --}}
+              <div class="form-group">
+                <input type="hidden" name="id" id="idEdit">
+              </div>
+
+              <div class="form-group">
+                <input type="text" class="form-control" name="precio_final" id="precio_final" placeholder="Precio final" value="">
+              </div>
+
+
+              
+          </div>
+
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+              <button type="submit" class="btn btn-primary">Guardar</button>
+          </div>
+
+      </form>
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
 
 @endsection
 
@@ -159,6 +234,13 @@ var idEliminar=0;
 }));
 
 
+$(document).ready(function(){
+        @if ($message = Session::get('ErrorInsert'))
+                $("#modalEditar").modal('show');  
+        
+            @endif
+      });
+
 //Cargar datos en el formulario
 $(".btnPedidoDetalles").click(function(){ 
 
@@ -168,6 +250,10 @@ $("#id_pedido").val($(this).data('id'));
 });
 
 
+$(".btnEditar").click(function(){ 
+
+$("#idEdit").val($(this).data('id'));
+});
 </script>
 
 @endsection

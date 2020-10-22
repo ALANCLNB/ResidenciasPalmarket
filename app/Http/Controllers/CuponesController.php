@@ -91,7 +91,7 @@ class CuponesController extends Controller
     public function editar(Request $request)
     {
         //dd($request);
-        $cupon = cUPONE::find($request ->id);
+        $cupon = Cupone::find($request ->id);
 
 
         $validator = Validator::make($request->all(),[

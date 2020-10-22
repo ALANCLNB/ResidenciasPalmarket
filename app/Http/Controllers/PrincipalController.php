@@ -75,8 +75,14 @@ class PrincipalController extends Controller
         ->orderBy('id', 'ASC')
         ->get();
 
+        $pdfs = DB::table("ofertaspdfs")
+        ->orderBy('created_at','DESC')
+        ->take(1)
+        ->get();
+        
+        $pdf = $pdfs[0]->nombre;
         //dd($next);
-        return view('layouts.principal', compact('categoria','cupones','pdf','carrito','count','valor','carritocant','carrusel','next','prim'));
+        return view('layouts.principal', compact('categoria','cupones','pdf','carrito','count','valor','carritocant','carrusel','next','prim','pdf'));
         //return view('welcome');
     }
 }

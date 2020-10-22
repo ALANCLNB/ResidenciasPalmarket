@@ -123,7 +123,7 @@
                             <li class="nav-item"><a class="nav-link js-scroll-trigger" style="color:#fed136" href="/login"><strong>{{ Auth::user()->nombre }}</strong></a></li>
                             {{-- <img class="img-profile rounded-circle w-4 h-4" src="https://gaminguardian.com/wp-content/uploads/2020/03/kanojo-okarishimasu.png" style="height: 50px; width: 50px;"> --}}
                     @else
-                            <li class="nav-item"><strong><a class="nav-link js-scroll-trigger" href="/login">Iniciar Sesion</a></strong></li> 
+                            <li class="nav-item"><strong><a class="nav-link js-scroll-trigger" href="/login">Iniciar Sesión</a></strong></li> 
                     @endif 
                                                                              
                     </ul>
@@ -143,7 +143,7 @@
             <div class="container">
                 <div class="text-center">
                     <h2 class="section-heading text-uppercase">Nosotros</h2>
-                    <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
+                    <h3 class="section-subheading text-muted">Siempre buscando brindar el mejor servicio.</h3>
                 </div>
                 <div class="row text-center">
 
@@ -154,7 +154,7 @@
                             <i class="fas fa-shopping-cart fa-stack-1x fa-inverse"></i>
                         </span>
                         <h4 class="my-3">La mejor calidad a buenos precios</h4>
-                        <p class="text-muted">Siempre estamos en la busqueda de ofrecer los mejores productos al mejor precio.</p>
+                        <p class="text-muted">Siempre estamos en la búsqueda  de ofrecer los mejores productos al mejor precio.</p>
                     </div>
                   
 
@@ -165,7 +165,7 @@
                             <i class="fas fa-laptop fa-stack-1x fa-inverse"></i>
                         </span>
                         <h4 class="my-3">Cerca de ti</h4>
-                        <p class="text-muted">Contamos con varias sucursales .</p>
+                        <p class="text-muted">Contamos con varias sucursales a tu disposicion abiertas los 7 dias de la semana.</p>
                     </div>
                     <div class="col-md-4">
                         <span class="fa-stack fa-4x">
@@ -223,9 +223,13 @@
 
                 
                 {{-- lector PDF ofertas --}}
-                    <embed class="col-lg-6 col-md-10 col-sm-12    ml-auto mb-auto mr-auto mt-auto d-lg-block pdf" src="{{asset('/principal-archivos/assets/pdf/miku.pdf')}}" id="pdf" />
-                    <div>
-                       <strong><a class="btn btn-primary" style="margin-top: 25px" target="_blank" href="{{ asset('pdf/miku.pdf') }}">Ver ofertas</a></strong> 
+                
+                
+                    <embed class="col-lg-6 col-md-10 col-sm-12    ml-auto mb-auto mr-auto mt-auto d-lg-block pdf" src="{{ asset('/ofertas/pdf/'.$pdf) }}" id="pdf" />
+               
+            
+                        <div>
+                       <strong><a class="btn btn-primary" style="margin-top: 25px" target="_blank" href="{{ asset('/ofertas/pdf/'.$pdf) }}">Ver ofertas</a></strong> 
                     </div>
 
         </section>
@@ -284,7 +288,7 @@
             <div class="container">
                 <div class="text-center">
                     <h2 class="section-heading text-uppercase">Cupones</h2>
-                    <h3 class="section-subheading text-muted">Presenta este cupon en caja y recibe tu descuento.</h3>
+                    <h3 class="section-subheading text-muted">Presenta este cupón  en caja y recibe tu descuento.</h3>
                 
 
                 <div class="row  col-lg-12 col-md-12 col-sm-12    ml-auto mb-auto mr-auto mt-auto" >

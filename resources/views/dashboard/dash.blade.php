@@ -2,8 +2,8 @@
 <html lang="en">
 
 <head>
-  {{-- CROPPIE --}}
-@yield('head')
+  
+
   
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -23,7 +23,7 @@
 
 
 
-
+@yield('head')
 
 
 </head>
@@ -53,7 +53,8 @@
       <!-- Nav Item - Dashboard -->
       <li class="nav-item active">
         <a class="nav-link" href="/dash">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
+          {{-- <i class="fas fa-fw fa-tachometer-alt"></i> --}}
+          <i class="fas fa-home"></i>
           <span>Principal</span></a>
       </li>
 
@@ -69,7 +70,7 @@
 
       <!-- Heading -->
       <div class="sidebar-heading">
-        Gestion
+        Gestión
       </div>
     @endif
 
@@ -112,7 +113,7 @@
 <li class="nav-item active">
   <a class="nav-link" href="/dash/admin/categorias">
     <i class="fas fa-fw fa-stream"></i>
-    <span>Categorias</span></a>
+    <span>Categorías</span></a>
 </li>
 
 
@@ -126,7 +127,7 @@
 {{-- Nav Item  - Sucursales --}}
 <li class="nav-item active">
   <a class="nav-link" href="/dash/admin/sucursales">
-    <i class="fas fa-fw fa-store"></i>
+    <i class="fas fa-hand-holding-usd"></i>
     <span>Sucursales</span></a>
 </li>
 
@@ -154,7 +155,7 @@
  <hr class="sidebar-divider">
 
  <!-- Heading -->
- <div class="sidebar-heading">
+ <div class="sidebar-heading ">
    PROMOCIONES
  </div>
 
@@ -173,14 +174,14 @@
  
 
    <!-- Nav Item - OFERTAS -->
-   <li class="nav-item">
+   <li class="nav-item active">
      <a class="nav-link" href="/dash/admin/ofertasimg">
        <i class="fas fa-fw fa-tags"></i>
-       <span>Ofertas Imagenes</span></a>
+       <span>Ofertas Imágenes</span></a>
    </li>
 
   <!-- Nav Item - OFERTAS -->
-  <li class="nav-item">
+  <li class="nav-item active">
     <a class="nav-link" href="/dash/admin/ofertaspdf">
       <i class="fas fa-fw fa-tags"></i>
       <span>Ofertas PDF</span></a>
@@ -189,7 +190,7 @@
 
   
    <!-- Nav Item - CUPONES -->
-   <li class="nav-item">
+   <li class="nav-item active">
      <a class="nav-link" href="/dash/admin/cupones">
        <i class="fas fa-fw fa fa-ticket"></i>
        <span>Cupones</span></a>
@@ -264,16 +265,20 @@
 
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
-              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small" style="font-size: 1.6rem">{{ Auth::user()->nombre }}</span>
-                <img class="img-profile rounded-circle" src="https://gaminguardian.com/wp-content/uploads/2020/03/kanojo-okarishimasu.png" >
+              <a class="nav-link dropdown-toggle" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small" style="font-size: 1.6rem">{{ Auth::user()->nombre." ".Auth::user()->apellidos }}</span>
+                {{-- <img class="img-profile rounded-circle" src="https://gaminguardian.com/wp-content/uploads/2020/03/kanojo-okarishimasu.png" > --}}
+
+                <img class="img-profile rounded-circle" src="{{asset("dashboard-archivos/img/user.jpg")}}" >
+
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="#">
+                {{-- <a class="dropdown-item" href="#">
                   <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                   Perfil
-                </a>
+                </a> --}}
+                
                 <div class="dropdown-divider"></div>
                 {{-- <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                   <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -284,6 +289,7 @@
                 <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
+                                                     <i class="fas fa-sign-out-alt"></i>
                                         {{ __('Logout') }}
                                     </a>
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">

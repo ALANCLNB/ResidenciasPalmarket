@@ -200,7 +200,7 @@ style="float: right" data-toggle="modal" data-target="#modalAgregar"><i class="f
 
 
 
-<!-- Modal Agregar -->
+<!-- Modal Editar -->
 <div class="modal fade" id="modalEditar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">

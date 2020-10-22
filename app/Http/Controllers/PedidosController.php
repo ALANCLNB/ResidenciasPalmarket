@@ -29,9 +29,18 @@ if (Auth::user()->rol == 3) {
         ->select('pedidos.*','users.email as Correo','sucursales.nombre as Sucursal')
         ->orderBy('id','DESC')
         ->get();
-} elseif(Auth::user()->rol <= 2) {
+} elseif(Auth::user()->rol == 2) {
     
     $pedidos = DB::table('pedidos') 
+        ->where('id_sucursal','=',Auth::user()->sucursal)
+        ->join('users','users.id','=','pedidos.id_user')
+        ->join('sucursales','sucursales.id','=','pedidos.id_sucursal')
+        ->select('pedidos.*','users.email as Correo','sucursales.nombre as Sucursal')
+        ->orderBy('id','DESC')
+        ->get();
+}elseif(Auth::user()->rol == 1) {
+    
+    $pedidos = DB::table('pedidos')
         ->join('users','users.id','=','pedidos.id_user')
         ->join('sucursales','sucursales.id','=','pedidos.id_sucursal')
         ->select('pedidos.*','users.email as Correo','sucursales.nombre as Sucursal')
@@ -104,6 +113,7 @@ if (Auth::user()->rol == 3) {
     }
 
 
+
     public function store(Request $request){
 
         $valor = DB::table("carritoproductos")
@@ -150,6 +160,7 @@ if (Auth::user()->rol == 3) {
             'id_user' => Auth::user()->id,
             'cantidad_articulos' => $count,
             'total' => $totalAprox,
+            'status' => 'No Asignado',
             'codigo' => $code,
             'status' => 0
     
@@ -187,4 +198,34 @@ if (Auth::user()->rol == 3) {
         return response()->json($pedido->status);
         
     }
+
+
+    public function preciofinal(Request $request){
+    //dd($request->precio_final);
+        $precioPedido = Pedido::find($request->id);
+
+        $validator = Validator::make($request->all(),[
+            'precio_final' => 'required|regex:/^\d+(\.\d{1,2})?$/'
+            
+
+    ]);
+
+        if($validator -> fails()){
+            //dd('Llena todos los campos');
+            return back()
+            ->withInput()
+            ->with('ErrorInsert', 'Favor de llenar correctamente el campo')
+            ->withErrors($validator);
+
+        }else{
+                $precioPedido->total_final = $request->precio_final;
+        
+                $precioPedido->save();
+                return back()
+                ->with('Listo', 'El precio se actualizó correctamente');
+        
+            }//else imagen
+        }///llave function
+    
+
 }
