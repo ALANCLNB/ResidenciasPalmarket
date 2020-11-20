@@ -1,12 +1,24 @@
 
+@extends('dashboard.dash')
 
+
+
+@section('head')
+{{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.min.css"> --}}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.2/croppie.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.2/croppie.js"></script>
+
+{{-- <meta name="csrf-token" content="{{ csrf_token() }}"> --}}
+
+@endsection
 
 @section('categorias')
 
 <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm ml-auto mr-auto" 
-style="float: right" data-toggle="modal" data-target="#modalAgregar"><i class="fas fa-plus fa-sm text-white-50"></i> Nueva Categoria</a>
-<h1 class="h3 mb-2 text-gray-800">Categorias</h1>
-<p class="mb-4">Bienvenido a categorias.</p>
+style="float: right" data-toggle="modal" data-target="#modalAgregar"><i class="fas fa-plus fa-sm text-white-50"></i> Nueva Categoría</a>
+<h1 class="h3 mb-2 text-gray-800">Categorías </h1>
+<p class="mb-4">Bienvenido a Categorías .</p>
 
 
 {{-- Alerta Error al llenar campos --}}
@@ -34,7 +46,7 @@ style="float: right" data-toggle="modal" data-target="#modalAgregar"><i class="f
             <tr>
               <th>ID</th>
               <th>Registrado</th>
-              <th>Descripcion</th>
+              <th>Descripción</th>
               <th>Imagen</th>
               <th>Acciones</th>
           </thead>
@@ -42,7 +54,7 @@ style="float: right" data-toggle="modal" data-target="#modalAgregar"><i class="f
           <tfoot>
               <th>ID</th>
               <th>Registrado</th>
-              <th>Descripcion</th>
+              <th>Descripción</th>
               <th>Imagen</th>
               <th>Acciones</th>
           </tfoot>
@@ -147,7 +159,7 @@ style="float: right" data-toggle="modal" data-target="#modalAgregar"><i class="f
 
 
                     <div class="form-group">
-                        <input type="hidden" class="form-control" id="descripcion" name="descripcion" placeholder="Descripción" value="{{ old('descripcion') }}">
+                        <input type="text" class="form-control" id="descripcion" name="descripcion" placeholder="Descripción" value="{{ old('descripcion') }}">
                     </div>
     
                     <div class="form-group">
@@ -166,32 +178,32 @@ style="float: right" data-toggle="modal" data-target="#modalAgregar"><i class="f
           </form>
   
           
-        {{-- ///////////////////CROPPIE/////////////////////////// --}}
-  <div class="row">
-    
-    <div class="col-md-12 text-center">
-      <label   class="col-lg-12 col-md-12 col-sm-12">Imagen</label>
-    <div id="upload-demo"></div>
-    </div>
+       {{-- ///////////////////CROPPIE/////////////////////////// --}}
+<div class="row">
+  
+  <div class="col-md-12 text-center">
+    <label   class="col-lg-12 col-md-12 col-sm-12">Imagen</label>
+  <div id="upload-demo"></div>
   </div>
+</div>
+
+
+<div class="row">
+  <div class="col-md-12 text-center" style="padding:5%;">
+  <strong>Seleccione una imagen:</strong>
+{{-- ///////////////////////////////////Input////////////////////////////////// --}}
+  <input name="" type="file" id="image_file" accept="image/*">
+
+  <div class="btn-group mt-4 d-flex w-100" role="group" >
+    <button class="btn btn-primary upload-image " type="submit" style="float: right !important;">Guardar</button>
+  <button class="btn btn-secondary "  data-dismiss="modal" style="float: right !important;">Cerrar</button>
   
-  
-  <div class="row">
-    <div class="col-md-12 text-center" style="padding:5%;">
-    <strong>Seleccione una imagen:</strong>
-  {{-- ///////////////////////////////////Input////////////////////////////////// --}}
-    <input name="" type="file" id="image_fileC" accept="image/*">
-  
-    <div class="btn-group mt-4 d-flex w-100" role="group" >
-      <button class="btn btn-primary upload-image " style="float: right !important;">Guardar</button>
-    <button class="btn btn-secondary "  data-dismiss="modal" style="float: right !important;">Cerrar</button>
-    
-    </div>
-    {{-- <div class="alert alert-success" id="upload-success" style="display: none;margin-top:10px;"></div> --}}
-    </div> 
   </div>
-  
-  {{-- ///////////////////FIN CROPPIE/////////////////////////// --}}
+  {{-- <div class="alert alert-success" id="upload-success" style="display: none;margin-top:10px;"></div> --}}
+  </div> 
+</div>
+
+{{-- ///////////////////FIN CROPPIE/////////////////////////// --}}
   
   
   
@@ -243,7 +255,7 @@ style="float: right" data-toggle="modal" data-target="#modalAgregar"><i class="f
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Editar Caregoria</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Editar Caregoría</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -284,7 +296,7 @@ style="float: right" data-toggle="modal" data-target="#modalAgregar"><i class="f
               </div>
 
               <div class="form-group">
-                <input type="hidden" class="form-control" id="descripcionEdit" name="descripcionEdit" placeholder="Descripcion" >
+                <input type="text" class="form-control" id="descripcionEdit" name="descripcionEdit" placeholder="Descripcion" >
               </div>
 
               <div class="form-group">
@@ -352,7 +364,7 @@ style="float: right" data-toggle="modal" data-target="#modalAgregar"><i class="f
 
 
 
-  var resize = $('#upload-demo').croppie({
+var resize = $('#upload-demo').croppie({
       enableExif: true,
       enableOrientation: true,    
       viewport: { // Default { width: 100, height: 100, type: 'square' } 
@@ -366,13 +378,13 @@ style="float: right" data-toggle="modal" data-target="#modalAgregar"><i class="f
       }
   });
   
-  $('#image_fileC').on('change', function () { 
+  $('#image_file').on('change', function () { 
     var reader = new FileReader();
       reader.onload = function (e) {
         resize.croppie('bind',{
           url: e.target.result
         }).then(function(){
-          console.log('jQuery bind complete');
+          console.log('jQuery bind complete');          
         });
       }
       reader.readAsDataURL(this.files[0]);
@@ -384,7 +396,7 @@ style="float: right" data-toggle="modal" data-target="#modalAgregar"><i class="f
   //  console.log('gg');
 //});
 
-$('#image_fileC').change(function(){
+$('#image_file').change(function(){
         var fileName = this.files[0].name;
         var fileSize = this.files[0].size;
         var fileType = this.files[0].type;
@@ -392,9 +404,11 @@ $('#image_fileC').change(function(){
         console.log(file);
         ///////////////CARGAR TYPE
         $("#valorimg").val(fileType);
+        //$("#pesoimg").val(fileSize/1000/1000);
         //alert('FileName : ' + fileName + '\nFileSize : ' + fileSize + ' bytes' + '\nTipo:' +fileType);
         //alert(file);
     });
+
 
 
   $('.upload-image').on('click', function (ev) {

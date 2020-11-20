@@ -10967,3 +10967,17 @@ b{
   color: white;
   font-size: 1.1rem;
 }
+
+/* .textobienvenida{ es para la imagen del carrito del dash
+  color: pink;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  width: 90%;
+  height: auto;
+  margin: 0 auto;
+  z-index: 100;
+  text-align: center;
+  
+} */

@@ -42,13 +42,18 @@ class QySController extends Controller
     $count = Carritoproducto::where('id_user','=',Auth::user()->id)
     ->where('status','=','0')
     ->count();*/
-
+    $qysuguser = DB::table('comentarios')
+    ->where('id_user','=',Auth::user()->id)
+    ->join('sucursales','sucursales.id','=','comentarios.sucursal')
+    ->select('comentarios.*','sucursales.nombre as Sucursal')
+    ->orderBy('created_at','DESC')
+    ->get();
         
         $sucursales = \DB::table('sucursales')
         ->orderBy('created_at','DESC')
         ->get();
 
-       return view('dashboard.qys.qys',['qysug' => $qysug,'sucursales' => $sucursales]);
+       return view('dashboard.qys.qys',['qysug' => $qysug,'sucursales' => $sucursales ,'qysuguser' => $qysuguser]);
 
 
         //return view('dashboard.qys.qys');

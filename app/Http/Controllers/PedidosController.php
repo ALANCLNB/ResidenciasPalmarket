@@ -62,7 +62,7 @@ if (Auth::user()->rol == 3) {
 
 
 
-    public function detallesPedido($id){
+    public function detallesPedido($id,$cod){
 
     if (Auth::user()->rol == 3) {
 
@@ -97,8 +97,19 @@ if (Auth::user()->rol == 3) {
 
         $valor = DB::table("carritoproductos")
         ->where('status','=','1')
+        ->where('id_pedido','=',$id)
+        ->where('carritoproductos.id_user','=',Auth::user()->id)
         ->join('productos','productos.id','=','carritoproductos.id_producto')
         ->select(DB::raw("SUM(cantidad * productos.precio) as totalPQ"))
+        ->get();
+
+        $pedi = DB::table('pedidos')
+        ->where('id_user','=',Auth::user()->id)
+        ->where('codigo','=',$cod)
+        ->join('users','users.id','=','pedidos.id_user')
+        ->join('sucursales','sucursales.id','=','pedidos.id_sucursal')
+        ->select('pedidos.*','users.email as Correo','users.nombre as Name','sucursales.nombre as Sucursal')
+        ->orderBy('id','DESC')
         ->get();
 
         $datos = DB::table('pedidos') 
@@ -109,7 +120,7 @@ if (Auth::user()->rol == 3) {
         ->get();
 
 
-        return view('dashboard.pedidos.pedidosDetalle',compact('pedidos','carritoV','valor','datos'));
+        return view('dashboard.pedidos.pedidosDetalle',compact('pedidos','carritoV','valor','datos','pedi'));
     }
 
 
@@ -159,8 +170,8 @@ if (Auth::user()->rol == 3) {
             'id_sucursal' => $request->sucursal,
             'id_user' => Auth::user()->id,
             'cantidad_articulos' => $count,
-            'total' => $totalAprox,
-            'status' => 'No Asignado',
+            'total' => number_format($totalAprox,2),
+            'total_final' => 'No Asignado',
             'codigo' => $code,
             'status' => 0
     

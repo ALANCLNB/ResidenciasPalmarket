@@ -4,8 +4,6 @@
 
 
 @section('pedidosadmin')
-<a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm ml-auto mr-auto" 
-style="float: right" data-toggle="modal" data-target="#modalAgregar"><i class="fas fa-plus fa-sm text-white-50"></i> Nuevo Cupon</a>
 <h1 class="h3 mb-2 text-gray-800">Pedidos</h1>
 <p class="mb-4">Bienvenido a pedidos.</p>
 @if (Auth::check())
@@ -71,11 +69,16 @@ style="float: right" data-toggle="modal" data-target="#modalAgregar"><i class="f
                       <td style="color: white">{{ $pedido ->Correo }}</td>
                       <td style="color: white">{{ $pedido ->Sucursal }}</td>                  
                       <td style="color: white">{{ $pedido ->cantidad_articulos }}</td>
-                      <td style="color: white">$ {{ $pedido ->total }}</td>
-                      <td style="color: white">$ {{ $pedido ->total_final }}</td>
+                      <td style="color: white">$ {{ number_format($pedido->total,2) }}</td>
+                      @if ($pedido->total_final == 'No Asignado')
+                        <td style="color: white">$ {{ ($pedido->total_final) }}</td>
+                      @else
+                        <td style="color: white">$ {{ number_format($pedido->total_final,2) }}</td>
+                      @endif
+                      
                       <td style="color: white">{{ $pedido ->codigo }}</td>
                      
-
+                      
                                      
                       <td>    
 
@@ -95,7 +98,7 @@ style="float: right" data-toggle="modal" data-target="#modalAgregar"><i class="f
                         @endif
 
 
-                        <a data-id="{{ $pedido->id }}" href="pedidos/ped={{ $pedido->id }}"
+                        <a data-id="{{ $pedido->id }}" href="pedidos/ped={{ $pedido->id }}/cod={{ $pedido->codigo }}"
                             class="btnPedidoDetalles btn btn-dark" >                          
                             <i class="fas fa-th-list"></i>
                             {{-- data-toggle="modal" data-target="#pedidoProductos" --}}

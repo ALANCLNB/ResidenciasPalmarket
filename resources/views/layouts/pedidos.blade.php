@@ -335,9 +335,9 @@
                 <div class="row justify-content-center mr-auto ml-auto mt- text-center w-75 color--gray">
 
                     <p>*Los productos con la unidad de medida de KG deben tener un margen de precio de 5 pesos debido a que su pesaje no puede ser exacto, 
-                        en dado caso de que el precio final no supere el margen se le devolvera su dinero.</p>
+                        en dado caso de que el precio final no supere el margen se le devolverá  su dinero.</p>
 
-                    <p>**Precio maximo a pagar, el pago final puede ser menor</p>
+                    <p>**Precio máximo  a pagar, el pago final puede ser menor</p>
 
                 </div>
         </div>

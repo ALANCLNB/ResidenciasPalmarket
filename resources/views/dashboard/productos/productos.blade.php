@@ -5,7 +5,7 @@
 
 
 @section('head')
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.min.css">
+{{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.min.css"> --}}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.2/croppie.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.2/croppie.js"></script>
@@ -25,8 +25,11 @@
 {{-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm ml-auto mr-auto col-sm-4" 
 style="float: right" data-toggle="modal" data-target="#modalAgregarP"><i class="fas fa-plus fa-sm text-white-50"></i> Nuevo Producto</a> --}}
 
-<button class="btn btn-sm btn-primary ml-auto mr-auto" style="float: right" data-toggle="modal" data-target="#modalAgregarP">
-  <i class="fas fa-plus fa-sm text-white-50"></i>Nuevo Producto</button>
+{{-- <button class="btn btn-sm btn-primary ml-auto mr-auto" style="float: right" data-toggle="modal" data-target="#modalAgregarP">
+  <i class="fas fa-plus fa-sm text-white-50"></i>Nuevo Producto</button> --}}
+
+  <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm ml-auto mr-auto" 
+style="float: right" data-toggle="modal" data-target="#modalAgregarP"><i class="fas fa-plus fa-sm text-white-50"></i> Nuevo Producto</a>
 
 <h1 class="h3 mb-2 text-gray-800">Productos</h1>
 <p class="mb-4">Bienvenido a productos.</p>
@@ -231,7 +234,7 @@ style="float: right" data-toggle="modal" data-target="#modalAgregarP"><i class="
               <div class="form-group">
                 <label  class="col-lg-12 col-md-12 col-sm-12">Embalaje</label>
             
-                <select class="custom-select   col-lg-12 col-md-12 col-sm-12    ml-auto mb-auto mr-auto mt-auto" id="embalaje" name="embalaje" required>
+                <select class="custom-select   col-lg-12 col-md-12 col-sm-12    ml-auto mb-auto mr-auto mt-auto" id="embalaj" name="embalaj" required>
                   <option selected disabled value="">Seleccionar</option>
                   <option value="Kg">Kg</option>
                   <option value="Pza">Pza</option>
@@ -322,7 +325,7 @@ style="float: right" data-toggle="modal" data-target="#modalAgregarP"><i class="
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Eleminar producto</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Eliminar producto</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -622,7 +625,7 @@ $('#image_file').change(function(){
         "marca":$('#marca').val(),
         "precio":$('#precio').val(),
         "stock":$('#stock').val(),
-        "embalaje":$('#embalaje').val(),
+        "embalaje":$('#embalaj').val(),
         "imagen":$('#valorimg').val(),
         "Imagen":$('#pesoimg').val(),
         //"prueba":$('#image_file').val(),

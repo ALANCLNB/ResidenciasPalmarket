@@ -18,6 +18,7 @@
   <script src="https://kit.fontawesome.com/f37ec6fd07.js" crossorigin="anonymous"></script>
   <!-- Custom styles for this template-->
   <link href="{{asset('/dashboard-archivos/css/sb-admin-2.min.css')}}" rel="stylesheet">
+  <link href="{{asset('/principal-archivos/css/styles.css')}}" rel="stylesheet">
   <link href="{{asset('/dashboard-archivos/vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
   {{-- <link rel="stylesheet" href="{{ asset('css/imgareaselect-default.css') }}" /> --}}
 
@@ -139,7 +140,7 @@
       {{-- Nav Item  - Quejas y sugerencias --}}
       <li class="nav-item active">
         <a class="nav-link" href="/dash/admin/pedidos">
-          <i class="fas fa-fw fa-file-alt"></i>
+          <i class="far fa-clipboard"></i>
           <span>Pedidos</span></a>
       </li>
       
@@ -176,8 +177,8 @@
    <!-- Nav Item - OFERTAS -->
    <li class="nav-item active">
      <a class="nav-link" href="/dash/admin/ofertasimg">
-       <i class="fas fa-fw fa-tags"></i>
-       <span>Ofertas Imágenes</span></a>
+      <i class="far fa-images"></i>
+      <span>Ofertas Imágenes</span></a>
    </li>
 
   <!-- Nav Item - OFERTAS -->
@@ -285,8 +286,8 @@
                   Cerrar Sesión
                 </a> --}}
 
-
-                <a class="dropdown-item" href="{{ route('logout') }}"
+                
+                {{-- <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                                      <i class="fas fa-sign-out-alt"></i>
@@ -294,7 +295,11 @@
                                     </a>
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                       @csrf
-                                  </form>
+                                  </form> --}}
+                                  <a class="dropdown-item" data-toggle="modal" data-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                    {{ __('Logout') }}
+                                  </a>
               </div>
             </li>
 
@@ -420,7 +425,7 @@
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Your Website 2020</span>
+            <span>Copyright &copy; Superettes Palmarket 2020</span>
           </div>
         </div>
       </footer>
@@ -442,15 +447,26 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Cerrar Sesión</h5>
           <button class="close" type="button" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
           </button>
         </div>
-        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+        <div class="modal-body">¿Estás  seguro de que quieres salir?</div>
         <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="login.html">Logout</a>
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+          
+          <a class="btn btn-primary" href="{{ route('logout') }}"
+          onclick="event.preventDefault();
+                        document.getElementById('logout-form').submit();">
+                        <i class="fas fa-sign-out-alt"></i>
+           {{ __('Logout') }} {{-- muestra el texto cerrar sesion  --}}
+           </a>
+       <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+         @csrf
+     </form>
+
+
         </div>
       </div>
     </div>

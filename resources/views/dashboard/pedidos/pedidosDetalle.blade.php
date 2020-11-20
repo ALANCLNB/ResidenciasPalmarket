@@ -67,10 +67,19 @@
           </tbody>
         </table>
 
-        <div class="row justify-content-right  float-right mr-auto ml-auto">
-            @foreach ($valor as $val)
-                <h5 class="text-gray">Subtotal: $ {{ number_format($val->totalPQ,2,'.', ',') }}</h5>
+        <div class="justify-content-right  float-right mr-auto ml-auto">
+            @foreach ($pedi as $pedido)
+
+            <h5 class="text-gray mb-2">Subtotal: $ {{ number_format($pedido->total,2,'.', ',') }}</h5>
+            
+
+                @if ($pedido->total_final == 'No Asignado')   
+                    <h5 class="text-gray">Total Final: $ {{ $pedido->total_final }}</h5>
+                @else
+                    <h5 class="text-gray">Total Final: $ {{ number_format($pedido->total_final,2,'.', ',') }}</h5>
+                @endif
             @endforeach
+           
         </div>
 
         <div class="row justify-content-center mr-auto ml-auto" style="margin-top: 5rem;">

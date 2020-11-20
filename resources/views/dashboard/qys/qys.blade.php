@@ -90,11 +90,11 @@
                        
                         @if ($qys ->tipo=='1')
                                 <td>
-                                  <button class="btn btn-danger boton">Responder</button>                   
+                                  <button class="btn btn-danger boton">Queja</button>                   
                               </td> 
                         @else     
                               <td>
-                                <button class="btn btn-info boton">Responder</button>                   
+                                <button class="btn btn-info boton">Sugerencia</button>                   
                               </td>
                         @endif 
                         
@@ -151,6 +151,17 @@
 @endif
 
 @endsection
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -235,9 +246,10 @@
 
               {{-- <div class="col-lg-5 col-md-3 col-sm-1    ml-auto mb-auto mr-auto mt-auto"></div> --}}
 
-                  <button type="submit" id="btnSubirPDF" class="btn btn-outline-success  col-lg-2 col-md-6 col-sm-10  float-lg-right    ml-auto mb-auto mr-auto mt-auto" 
+                  <button type="submit" id="" class="btn btn-outline-success  col-lg-2 col-md-6 col-sm-10  ml-auto mb-auto mr-auto mt-auto" 
                   style="margin-top: 30px;">Enviar</button>
-
+                  {{-- <button type="submit" id="" class="btn btn-outline-success  col-lg-2 col-md-6 col-sm-10  float-lg-right    ml-auto mb-auto mr-auto mt-auto" 
+                  style="margin-top: 30px;">Enviar</button> --}}
               {{-- <div class="col-lg-5 col-md-3 col-sm-1    ml-auto mb-auto mr-auto mt-auto"></div> --}}
 
             </div>
@@ -279,9 +291,65 @@
     </div>
   </div>
 </div>
+{{-- ////////////////////////////////////////////////////////////////////// --}}
+
+
+ <!-- DataTales Example -->
+ <div class="card shadow mt-5">
+  <div class="card-header py-3">
+    {{-- <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6> --}}
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <thead>
+          <tr>
+            <th>E-mail</th>
+            <th>Contenido</th>
+            <th>Tipo</th>
+            <th>Fecha</th>
+            <th>Sucursal</th>
+        </thead>
+
+        <tfoot>
+            <th>E-mail</th>
+            <th>Contenido</th>
+            <th>Tipo</th>
+            <th>Fecha</th>
+            <th>Sucursal</th>
+        </tfoot>
+
+        {{-- CAMPOS --}}
+        @foreach ($qysuguser as $qys)
+
+            <tr>
+              <td>{{ $qys ->email }}</td>
+              <td>{{ $qys ->contenido }}</td>
+              @if ($qys ->tipo=='1')
+                <td>
+                  <button class="btn btn-danger boton">Queja</button>                   
+                </td> 
+              @else     
+                <td>
+                  <button class="btn btn-info boton">Sugerencia</button>                   
+                </td>
+              @endif 
+              <td>{{ $qys ->created_at }}</td>
+              <td>{{ $qys ->Sucursal }}</td>
+            </tr>
+            
+        @endforeach 
+      
+      
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
 </div>
 
 @endif
+
 
 @endsection
 

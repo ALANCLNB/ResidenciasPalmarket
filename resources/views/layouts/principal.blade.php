@@ -35,7 +35,7 @@
             <div class="container">
                 <a class="navbar-brand js-scroll-trigger" href="#page-top"><img src="{{asset('/principal-archivos/assets/img/logos/palmarketlogo.png')}}" alt="" /></a>
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                    Menu
+                    Menú
                     <i class="fas fa-bars ml-1"></i>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
@@ -151,18 +151,18 @@
                     <div class="col-md-4">
                         <span class="fa-stack fa-4x">
                             <i class="fas fa-circle fa-stack-2x text-primary"></i>
-                            <i class="fas fa-shopping-cart fa-stack-1x fa-inverse"></i>
+                            <i class="fas fa-tags fa-stack-1x fa-inverse"></i>
                         </span>
                         <h4 class="my-3">La mejor calidad a buenos precios</h4>
                         <p class="text-muted">Siempre estamos en la búsqueda  de ofrecer los mejores productos al mejor precio.</p>
                     </div>
                   
-
+              
 
                     <div class="col-md-4">
                         <span class="fa-stack fa-4x">
                             <i class="fas fa-circle fa-stack-2x text-primary"></i>
-                            <i class="fas fa-laptop fa-stack-1x fa-inverse"></i>
+                            <i class="fas fa-map-marker-alt fa-stack-1x fa-inverse"></i>
                         </span>
                         <h4 class="my-3">Cerca de ti</h4>
                         <p class="text-muted">Contamos con varias sucursales a tu disposicion abiertas los 7 dias de la semana.</p>
@@ -170,10 +170,10 @@
                     <div class="col-md-4">
                         <span class="fa-stack fa-4x">
                             <i class="fas fa-circle fa-stack-2x text-primary"></i>
-                            <i class="fas fa-lock fa-stack-1x fa-inverse"></i>
+                            <i class="fas fa-shopping-cart fa-stack-1x fa-inverse"></i>
                         </span>
-                        <h4 class="my-3"> Calidad y confianza </h4>
-                        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
+                        <h4 class="my-3">Calidad y confianza</h4>
+                        <p class="text-muted">Siéntete con la confianza de que siempre llevaras los productos con la mejor calidad.</p>
                     </div>
                 </div>
             </div>
@@ -376,12 +376,12 @@
             
             <a class="carousel-map-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
+                <span class="sr-only">Anterior</span>
             </a>
 
             <a class="carousel-map-control-next" href="#carouselExampleControls" role="button" data-slide="next" style="right: 0">
                 <span class="carousel-control-next-icon" aria-hidden="true" ></span>
-                <span class="sr-only">Next</span>
+                <span class="sr-only">Siguiente</span>
             </a>
         </div>
         
@@ -400,8 +400,8 @@
         </div>
 
         <div>
-            <a class="btn btn-light btn-social m-2"><i class="fas fa-envelope"></i></a>
-            <label class="labredes" for="">palmarket-soporte@gmail.com</label>
+            <a class="btn btn-light btn-social m-2" href="mailto:palmarket.info@gmail.com"><i class="fas fa-envelope"></i></a>
+            <label class="labredes" for="">palmarket.info@gmail.com</label>
         </div>
       
     </div>

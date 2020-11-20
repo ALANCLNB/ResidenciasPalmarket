@@ -123,7 +123,7 @@ Route::post('dash/admin/usuarios/{usuario}', 'UsuariosController@estado');
 
 Route::post('dash/admin/pedidos/{pedido}', 'PedidosController@estado');
 Route::get('dash/admin/pedidos', 'PedidosController@index');
-Route::get('dash/admin/pedidos/ped={id}', 'PedidosController@detallesPedido');
+Route::get('dash/admin/pedidos/ped={id}/cod={cod}', 'PedidosController@detallesPedido');
 
 
 //Route::post('admin', ['as'=>'croppie.upload-image','uses'=>'ImageCropController@imageCrop']);
